@@ -60,10 +60,8 @@ export const hero = {
   subheadline:
     "A practical course for U.S. Renal Care Business Analysts, Business Systems Analysts, and technical teams who need to turn product discussions into prototype drafts, test ideas with stakeholders, and judge the quality of AI-generated UI concepts.",
   meta: [
-    { value: "3", label: "phases" },
     { value: "11", label: "modules" },
     { value: "~21h", label: "of learning" },
-    { value: "7", label: "AI tools" },
     { value: "Web + Mobile", label: "" },
   ],
 };
