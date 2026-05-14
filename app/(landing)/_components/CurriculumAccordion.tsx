@@ -1,19 +1,19 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { RiArrowDownSLine, RiArrowRightUpLine } from "@remixicon/react";
-import { curriculum, type Module, type Resource, type ResourceType } from "../_data/course";
+import { RiArrowDownSLine, RiArrowRightUpLine, RiGroupLine, RiTaskLine } from "@remixicon/react";
+import { curriculum, courseStructure, type Module, type Resource, type ResourceType } from "../_data/course";
 import { cn } from "../../_lib/cn";
 import { useStagger } from "../../_lib/animations";
 
 const resourceStyles: Record<ResourceType, string> = {
-  article: "bg-ink-100 text-ink-700",
-  video: "bg-usrc-crimson/10 text-usrc-crimson",
-  workbook: "bg-ink-100 text-ink-700",
-  practice: "bg-usrc-teal/10 text-usrc-teal",
+  article: "bg-usrc-navy/10 text-usrc-navy",
+  video: "bg-usrc-navy/10 text-usrc-navy",
+  workbook: "bg-usrc-navy/10 text-usrc-navy",
+  practice: "bg-usrc-navy/10 text-usrc-navy",
   template: "bg-usrc-navy/10 text-usrc-navy",
-  resource: "bg-ink-100 text-ink-700",
-  "official docs": "bg-usrc-teal/10 text-usrc-teal",
+  resource: "bg-usrc-navy/10 text-usrc-navy",
+  "official docs": "bg-usrc-navy/10 text-usrc-navy",
 };
 
 function ResourcePill({ r }: { r: Resource }) {
@@ -27,12 +27,7 @@ function ResourcePill({ r }: { r: Resource }) {
         resourceStyles[r.type],
       )}
     >
-      <span className="truncate">{r.label}</span>
-      {r.duration ? (
-        <span className="shrink-0 opacity-70" aria-hidden="true">
-          · {r.duration}
-        </span>
-      ) : null}
+      <span className="truncate">{r.label.split(" — ")[0]}</span>
       <RiArrowRightUpLine
         aria-hidden="true"
         size={12}
@@ -75,16 +70,13 @@ function ModuleRow({
           <h3 className="text-[length:var(--text-h5)] font-semibold leading-snug tracking-tight text-fg-primary">
             {m.title}
           </h3>
-          <p className="mt-1 hidden text-body-sm leading-relaxed text-fg-secondary md:line-clamp-2">
+          <p className="mt-1 hidden max-w-xl text-body-sm leading-relaxed text-fg-secondary md:line-clamp-2">
             {m.description}
           </p>
         </div>
 
         <div className="hidden shrink-0 items-center gap-2 md:flex">
-          <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-medium text-fg-secondary">
-            {m.format}
-          </span>
-          <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-medium text-fg-secondary">
+          <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-fg-secondary">
             {m.duration}
           </span>
         </div>
@@ -93,7 +85,7 @@ function ModuleRow({
           aria-hidden="true"
           size={22}
           data-state={isOpen ? "open" : "closed"}
-          className="shrink-0 text-fg-muted transition-transform duration-300 ease-[--ease-out] data-[state=open]:rotate-180 data-[state=open]:text-usrc-crimson"
+          className="shrink-0 text-fg-muted transition-transform duration-300 ease-[--ease-out] data-[state=open]:rotate-180"
         />
       </button>
 
@@ -107,37 +99,41 @@ function ModuleRow({
         <div className="overflow-hidden min-w-0">
           <div
             {...(isOpen ? {} : { inert: true })}
-            className="grid grid-cols-1 w-full gap-8 px-4 pb-6 pt-2 md:grid-cols-3 md:gap-10 md:px-6 md:pb-8"
+            className="flex flex-col w-full gap-8 pl-[64px] pr-4 pb-6 pt-2 md:pl-[84px] md:pr-6 md:pb-8"
           >
-            <div className="min-w-0 md:col-span-2">
+            <div className="grid grid-cols-2 gap-3 w-full">
+              <div className="rounded-md bg-usrc-navy/5 px-4 py-3">
+                <p className="text-body font-bold tracking-tight text-usrc-navy">Goal</p>
+                <p className="mt-1.5 text-body-sm leading-relaxed text-fg-secondary">{m.goal}</p>
+              </div>
+              <div className="rounded-md bg-usrc-navy/5 px-4 py-3">
+                <p className="text-body font-bold tracking-tight text-usrc-navy">Outcome</p>
+                <p className="mt-1.5 text-body-sm leading-relaxed text-fg-secondary">{m.outcome}</p>
+              </div>
+            </div>
+
+            <div className="min-w-0 max-w-2xl">
               <p className="text-body-sm leading-relaxed text-fg-secondary md:hidden">
                 {m.description}
               </p>
 
               <div className="md:hidden mt-3 flex flex-wrap gap-2">
-                <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-medium text-fg-secondary">
-                  {m.format}
-                </span>
-                <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-medium text-fg-secondary">
+                <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-fg-secondary">
                   {m.duration}
                 </span>
               </div>
 
-              <p className="mt-4 rounded-md bg-surface-subtle px-4 py-3 text-body-sm leading-relaxed text-fg-primary shadow-[5px_5px_0_#5e98c3]">
-                <span className="font-semibold text-usrc-crimson">Goal. </span>
-                {m.goal}
-              </p>
-
-              <ol className="mt-6 space-y-5">
+              <ol className="mt-6 space-y-10">
                 {m.lessons.map((lesson) => (
-                  <li key={lesson.id} className="flex gap-3">
+                  <li key={lesson.id} className="group relative">
+                    <div aria-hidden="true" className="absolute -left-[30px] top-[2.75rem] w-px h-[calc(100%-2.75rem+2.5rem)] bg-border group-last:hidden md:-left-10" />
                     <span
                       aria-hidden="true"
-                      className="mt-0.5 shrink-0 font-mono text-small font-semibold text-usrc-navy"
+                      className="absolute -left-12 top-0.5 z-10 flex h-9 w-9 items-center justify-center rounded-md bg-usrc-crimson/10 font-mono text-small font-semibold text-usrc-crimson md:-left-[60px] md:h-10 md:w-10"
                     >
                       {lesson.number}
                     </span>
-                    <div className="min-w-0 flex-1">
+                    <div className="min-w-0">
                       <h4 className="text-body font-semibold tracking-tight text-fg-primary">
                         {lesson.title}
                       </h4>
@@ -149,12 +145,7 @@ function ModuleRow({
                           {lesson.resources.map((r, idx) => (
                             <ResourcePill key={`${lesson.id}-r-${idx}`} r={r} />
                           ))}
-                          {lesson.estimatedTime ? (
-                            <span className="inline-flex items-center rounded-pill bg-transparent px-2 py-1 text-xs text-fg-muted">
-                              {lesson.estimatedTime}
-                            </span>
-                          ) : null}
-                        </div>
+                                        </div>
                       ) : null}
                     </div>
                   </li>
@@ -162,35 +153,43 @@ function ModuleRow({
               </ol>
             </div>
 
-            <aside className="min-w-0 space-y-5">
+            <aside className="grid grid-cols-1 gap-5 md:grid-cols-3">
               {m.workshops?.map((w, i) => (
-                <div key={i} className="rounded-lg bg-usrc-navy/5 p-5">
-                  <h4 className="text-xs font-semibold uppercase tracking-[0.14em] text-usrc-navy">
-                    {w.title}
-                  </h4>
-                  <p className="mt-2 text-body-sm leading-relaxed text-fg-secondary">
-                    {w.body}
-                  </p>
+                <div key={i} className="rounded-lg border border-border px-5 pt-5 pb-10">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-usrc-navy/10 text-usrc-navy">
+                      <RiGroupLine size={15} aria-hidden="true" />
+                    </span>
+                    <h4 className="text-body font-bold tracking-tight text-fg-primary">
+                      {w.title.toLowerCase().includes("practice") ? "In-class practice" : "In-class workshop"}
+                    </h4>
+                  </div>
+                  <div className="relative mt-3">
+                    <p className="line-clamp-5 text-body-sm leading-relaxed text-fg-secondary">
+                      {w.body}
+                    </p>
+                    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/70 to-transparent" />
+                  </div>
                 </div>
               ))}
               {m.homework ? (
-                <div className="rounded-lg border border-border p-5">
-                  <h4 className="text-xs font-semibold uppercase tracking-[0.14em] text-usrc-crimson">
-                    Homework
-                  </h4>
-                  <p className="mt-2 text-body-sm leading-relaxed text-fg-primary">
-                    {m.homework.body}
-                  </p>
+                <div className="rounded-lg border border-border px-5 pt-5 pb-10">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-usrc-navy/10 text-usrc-navy">
+                      <RiTaskLine size={15} aria-hidden="true" />
+                    </span>
+                    <h4 className="text-body font-bold tracking-tight text-fg-primary">
+                      Homework
+                    </h4>
+                  </div>
+                  <div className="relative mt-3">
+                    <p className="line-clamp-5 text-body-sm leading-relaxed text-fg-primary">
+                      {m.homework.body}
+                    </p>
+                    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/70 to-transparent" />
+                  </div>
                 </div>
               ) : null}
-              <div className="rounded-lg border border-border p-5">
-                <h4 className="text-xs font-semibold uppercase tracking-[0.14em] text-usrc-crimson">
-                  Module outcome
-                </h4>
-                <p className="mt-2 text-body-sm leading-relaxed text-fg-primary">
-                  {m.outcome}
-                </p>
-              </div>
             </aside>
           </div>
         </div>
@@ -211,26 +210,38 @@ export function CurriculumAccordion() {
       aria-labelledby="curriculum-heading"
       className="bg-surface"
     >
-      <div className="mx-auto max-w-page px-5 pb-16 pt-0 md:px-8 md:pb-20 lg:px-12 lg:pb-24">
-        <h2 id="curriculum-heading" className="sr-only">{curriculum.heading}</h2>
+      <div className="mx-auto max-w-page px-5 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24">
+        <div className="max-w-2xl" data-reveal>
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-usrc-crimson">
+            Phase 1
+          </span>
+          <h2
+            id="curriculum-heading"
+            className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy"
+          >
+            Foundation
+          </h2>
+          <p className="mt-3 max-w-3xl text-body-sm leading-relaxed text-fg-secondary">
+            {curriculum.phases[0].tagline} Takes approximately {curriculum.phases[0].duration} to complete.
+          </p>
+        </div>
 
-        <div className="space-y-10">
+        <div className="mt-12 space-y-16">
           {curriculum.phases.map((phase) => (
             <div key={phase.id} data-reveal>
-              <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b-2 border-usrc-navy pb-3">
-                <span className="inline-flex items-center rounded-pill bg-usrc-crimson px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-fg-on-dark">
-                  Phase {phase.number}
-                </span>
-                <h3 className="text-[length:var(--text-h4)] font-semibold tracking-tight text-fg-primary">
-                  {phase.name}
-                </h3>
-                <span className="text-small text-fg-secondary">
-                  {phase.modulesRange} · {phase.duration}
-                </span>
-              </header>
-              <p className="mt-3 max-w-3xl text-body-sm leading-relaxed text-fg-secondary">
-                {phase.tagline}
-              </p>
+              {phase.number !== 1 && (
+                <div className="max-w-2xl">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-usrc-crimson">
+                    Phase {phase.number}
+                  </span>
+                  <h3 className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy">
+                    {phase.name}
+                  </h3>
+                  <p className="mt-3 max-w-3xl text-body-sm leading-relaxed text-fg-secondary">
+                    {phase.tagline} Takes approximately {phase.duration} to complete.
+                  </p>
+                </div>
+              )}
 
               <ul className="mt-5 overflow-hidden rounded-lg border border-border bg-surface">
                 {phase.modules.map((m) => (
