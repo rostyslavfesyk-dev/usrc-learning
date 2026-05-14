@@ -211,24 +211,10 @@ export function CurriculumAccordion() {
       aria-labelledby="curriculum-heading"
       className="bg-surface"
     >
-      <div className="mx-auto max-w-page px-5 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24">
-        <div className="max-w-2xl" data-reveal>
-          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-usrc-crimson">
-            The 11 modules
-          </span>
-          <h2
-            id="curriculum-heading"
-            className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy"
-          >
-            {curriculum.heading}
-          </h2>
-          <p className="mt-4 text-body leading-relaxed text-fg-secondary">
-            Three phases, eleven modules. Open a module to see the lessons, in-class
-            workshop, and the artifact participants leave with.
-          </p>
-        </div>
+      <div className="mx-auto max-w-page px-5 pb-16 pt-0 md:px-8 md:pb-20 lg:px-12 lg:pb-24">
+        <h2 id="curriculum-heading" className="sr-only">{curriculum.heading}</h2>
 
-        <div className="mt-12 space-y-10">
+        <div className="space-y-10">
           {curriculum.phases.map((phase) => (
             <div key={phase.id} data-reveal>
               <header className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b-2 border-usrc-navy pb-3">

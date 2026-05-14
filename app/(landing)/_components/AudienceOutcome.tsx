@@ -1,14 +1,20 @@
 "use client";
 
 import { useRef } from "react";
+import {
+  RiGroupLine,
+  RiTargetLine,
+  RiPresentationLine,
+  RiInformationLine,
+} from "@remixicon/react";
 import { basicDetails } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
 const blocks = [
-  { label: "Audience", body: basicDetails.audience },
-  { label: "Outcome", body: basicDetails.outcome },
-  { label: "Format", body: basicDetails.format },
-  { label: "Scope", body: basicDetails.scope },
+  { label: "Audience", body: basicDetails.audience, icon: RiGroupLine },
+  { label: "Outcome", body: basicDetails.outcome, icon: RiTargetLine },
+  { label: "Format", body: basicDetails.format, icon: RiPresentationLine },
+  { label: "Scope", body: basicDetails.scope, icon: RiInformationLine },
 ];
 
 export function AudienceOutcome() {
@@ -36,20 +42,28 @@ export function AudienceOutcome() {
         </div>
 
         <dl className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6">
-          {blocks.map((b) => (
-            <div
-              key={b.label}
-              data-reveal
-              className="rounded-lg border border-border bg-surface p-6 md:p-7"
-            >
-              <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-usrc-crimson">
-                {b.label}
-              </dt>
-              <dd className="mt-3 text-body leading-relaxed text-fg-secondary">
-                {b.body}
-              </dd>
-            </div>
-          ))}
+          {blocks.map((b) => {
+            const Icon = b.icon;
+            return (
+              <div
+                key={b.label}
+                data-reveal
+                className="rounded-lg border border-border bg-surface p-6 md:p-7"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-usrc-crimson/10 text-usrc-crimson">
+                    <Icon size={16} aria-hidden="true" />
+                  </span>
+                  <dt className="text-sm font-bold uppercase tracking-[0.16em] text-usrc-crimson">
+                    {b.label}
+                  </dt>
+                </div>
+                <dd className="mt-3 text-body-sm leading-relaxed text-fg-secondary">
+                  {b.body}
+                </dd>
+              </div>
+            );
+          })}
         </dl>
       </div>
     </section>
