@@ -32,24 +32,16 @@ export function CourseStructureOverview() {
             <li
               key={p.number}
               data-reveal
-              className="relative overflow-hidden rounded-lg border border-border bg-surface p-6 md:p-7"
+              className="rounded-lg border border-border bg-surface p-6 md:p-7"
             >
-              <span
-                aria-hidden="true"
-                className="absolute right-4 top-3 text-[5rem] font-bold leading-none text-ink-100"
-              >
-                {p.number}
-              </span>
-              <div className="relative">
+              <div>
                 <div className="inline-flex items-center gap-2 rounded-pill bg-usrc-crimson/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-usrc-crimson">
                   Phase {p.number}
                 </div>
                 <h3 className="mt-4 text-[length:var(--text-h4)] font-semibold tracking-tight text-fg-primary">
                   {p.name}
                 </h3>
-                <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-small text-fg-secondary">
-                  <span>{p.modulesRange}</span>
-                  <span aria-hidden="true" className="text-ink-300">·</span>
+                <div className="mt-2 text-small text-fg-secondary">
                   <span>{p.duration}</span>
                 </div>
                 <p className="mt-4 text-body-sm leading-relaxed text-fg-secondary">

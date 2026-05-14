@@ -4,7 +4,6 @@ import { AudienceOutcome } from "./(landing)/_components/AudienceOutcome";
 import { AboutProgram } from "./(landing)/_components/AboutProgram";
 import { SkillsOutcomes } from "./(landing)/_components/SkillsOutcomes";
 import { CourseFacts } from "./(landing)/_components/CourseFacts";
-import { CourseStructureOverview } from "./(landing)/_components/CourseStructureOverview";
 import { CurriculumAccordion } from "./(landing)/_components/CurriculumAccordion";
 import { ToolsGrid } from "./(landing)/_components/ToolsGrid";
 import { IncludedMaterials } from "./(landing)/_components/IncludedMaterials";
@@ -22,7 +21,6 @@ export default function Home() {
         <AboutProgram />
         <SkillsOutcomes />
         <CourseFacts />
-        <CourseStructureOverview />
         <CurriculumAccordion />
         <ToolsGrid />
         <IncludedMaterials />
