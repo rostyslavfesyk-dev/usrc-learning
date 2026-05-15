@@ -563,7 +563,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           number: "04",
           title: "From clinical requirements to screens",
           description:
-            "How to translate requirements gathered from doctors, nurses, or admins into a structured prompt. Minimum viable prototype for in-clinic validation. Iterating through AI chat for web and mobile.",
+            "Translate clinical requirements into structured prompts. Build a minimum viable prototype and iterate through AI chat for web and mobile.",
           format: "Practice and prompting",
           duration: "~1h 50min",
           goal: "Translate raw clinical requirements into a prototype structure. The skill is framing what you heard in a corridor conversation so it can be validated on a screen, not producing a polished visual.",
