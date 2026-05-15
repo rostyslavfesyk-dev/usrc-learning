@@ -1,8 +1,90 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { RiCheckboxCircleFill } from "@remixicon/react";
 import { hero } from "../_data/course";
-import { useStagger } from "../../_lib/animations";
+import { useStagger, prefersReducedMotion } from "../../_lib/animations";
+
+function GenerativeLines() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+    let t = 0;
+
+    function resize() {
+      if (!canvas) return;
+      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      ctx!.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    function draw() {
+      if (!canvas || !ctx) return;
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const lines = 5;
+
+      for (let i = 0; i < lines; i++) {
+        const fi = i / (lines - 1);
+
+        // Start: spread along bottom edge, shifted right
+        const sx = w * (0.45 + fi * 0.35) + Math.sin(t * 0.4 + i * 1.3) * w * 0.04;
+        const sy = h;
+
+        // Control point 1: sweeps toward upper-right
+        const cp1x = w * (0.65 + fi * 0.18) + Math.cos(t * 0.55 + i * 0.9) * w * 0.05;
+        const cp1y = h * (0.55 + Math.sin(t * 0.65 + i * 1.1) * 0.12);
+
+        // Control point 2: near upper-right
+        const cp2x = w * (0.82 + fi * 0.1) + Math.sin(t * 0.45 + i * 0.7) * w * 0.03;
+        const cp2y = h * (0.15 + Math.cos(t * 0.5 + i * 0.8) * 0.1);
+
+        // End: right edge, varied heights
+        const ex = w;
+        const ey = h * (fi * 0.7) + Math.sin(t * 0.6 + i * 1.5) * h * 0.04;
+
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
+
+        const alpha = 0.06 + fi * 0.08;
+        ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+      }
+
+      t += 0.006;
+      animId = requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 h-full w-full"
+    />
+  );
+}
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -14,49 +96,19 @@ export function Hero() {
       aria-labelledby="hero-heading"
       className="relative overflow-hidden bg-usrc-crimson text-fg-on-dark"
     >
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 426.836 123.414"
-        className="pointer-events-none absolute bottom-0 right-0 w-[80vw] md:w-[55vw] lg:w-[44vw] lg:max-w-[640px]"
-        fill="white"
-      >
-        <path d="M82.875 123.414q14.345-14.025 29.508-26.791a497.237 497.237 0 0 1 63.54-45.577 429.189 429.189 0 0 1 67.946-33.288q9.554-3.644 18.8-6.548a356.953 356.953 0 0 0-43.781 1.041 361.514 361.514 0 0 0-55.766 9.239 340.08 340.08 0 0 0-51.21 17.042 292.427 292.427 0 0 0-44.761 23.673 228.02 228.02 0 0 0-36.426 29.109 186.75 186.75 0 0 0-26 32.1H.005a189.859 189.859 0 0 1 27.906-34.941A232.014 232.014 0 0 1 64.976 58.85a296.312 296.312 0 0 1 45.374-24 344.145 344.145 0 0 1 51.814-17.245 362.142 362.142 0 0 1 112.141-9.791 221.864 221.864 0 0 1 43.6-7.485 145.429 145.429 0 0 1 35.728 1.918 112.647 112.647 0 0 1 16.826 4.5 100.681 100.681 0 0 1 15.843 7.2 101.768 101.768 0 0 1 23.22 18.133 124.59 124.59 0 0 1 16.821 22.126l.495.319v8.7q-1.335-2.532-2.747-4.968-.347-.6-.7-1.188-5.928-3.772-12.325-7.306A291.962 291.962 0 0 0 353 25.853a362.793 362.793 0 0 0-65.8-12.916q-6.253-.644-12.5-1.077-14.278 3.879-29.406 9.646a425.013 425.013 0 0 0-67.31 32.979 493 493 0 0 0-63.026 45.21q-13.466 11.319-26.339 23.719ZM318.152 4.32a205.6 205.6 0 0 0-31.345 4.546l.8.082a366.807 366.807 0 0 1 66.529 13.06 295.963 295.963 0 0 1 58.863 24.244q2.77 1.531 5.456 3.106a116.521 116.521 0 0 0-11.819-14.512 97.771 97.771 0 0 0-22.3-17.424 96.665 96.665 0 0 0-15.213-6.908 108.694 108.694 0 0 0-16.227-4.336 134.009 134.009 0 0 0-24.64-2.177q-4.969-.001-10.104.319Z" />
-      </svg>
+      <GenerativeLines />
 
-      <div className="relative mx-auto max-w-page px-5 py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
-        <div className="max-w-3xl">
-          <span
-            data-reveal
-            className="inline-block rounded-pill bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/85"
-          >
-            {hero.eyebrow}
-          </span>
-
+      <div className="relative mx-auto max-w-page px-5 pb-12 pt-12 md:px-8 md:pb-16 md:pt-16 lg:px-12 lg:pb-20 lg:pt-20">
+        <div className="max-w-5xl">
           <h1
             id="hero-heading"
             data-reveal
-            className="mt-6 text-[length:var(--text-display)] font-light leading-[1.05] tracking-tight"
+            className="text-[length:var(--text-display)] font-light leading-[1.05] tracking-tight"
           >
             {hero.headline}
           </h1>
 
-          <p
-            data-reveal
-            className="mt-6 max-w-2xl text-body-lg leading-relaxed text-white"
-          >
-            {hero.subheadline}
-          </p>
-
-          <ul data-reveal className="mt-6 space-y-2.5">
-            {hero.bullets.map((b) => (
-              <li key={b} className="flex items-start gap-2.5 text-body-lg text-white">
-                <span aria-hidden="true" className="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-white/50" />
-                {b}
-              </li>
-            ))}
-          </ul>
-
-          <ul data-reveal className="mt-10 flex flex-wrap items-center gap-2.5">
+          <ul data-reveal className="mt-6 flex flex-wrap items-center gap-2.5">
             {hero.meta.map((m, idx) => (
               <li
                 key={`${m.value}-${idx}`}
@@ -64,8 +116,24 @@ export function Hero() {
               >
                 <span className="font-semibold text-white">{m.value}</span>
                 {m.label ? (
-                  <span className="ml-1.5 text-white/75">{m.label}</span>
+                  <span className="ml-1.5 text-white">{m.label}</span>
                 ) : null}
+              </li>
+            ))}
+          </ul>
+
+          <ul data-reveal className="mt-16 grid w-fit grid-cols-1 gap-x-16 gap-y-8 md:grid-cols-2">
+            {hero.bullets.map((b) => (
+              <li key={b.title} className="flex items-start gap-3">
+                <RiCheckboxCircleFill
+                  aria-hidden="true"
+                  size={20}
+                  className="mt-0.5 shrink-0 text-white/60"
+                />
+                <div>
+                  <p className="text-body font-semibold leading-snug text-white">{b.title}</p>
+                  <p className="mt-0.5 max-w-[216px] text-pretty text-body-sm leading-relaxed text-white/70">{b.description}</p>
+                </div>
               </li>
             ))}
           </ul>

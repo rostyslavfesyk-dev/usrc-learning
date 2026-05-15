@@ -60,15 +60,14 @@ export const hero = {
   subheadline:
     "A hands-on program for U.S. Renal Care BA, BSA, and technical teams.",
   bullets: [
-    "Understand UI and UX theory — design principles, visual hierarchy, and layout",
-    "Develop empathy for users — pain points, mental models, and behavioral basics",
-    "Learn mobile and web anatomy — how screens are structured, patterns, and components",
-    "Visualise and prompt ideas — turn flows into AI prototypes and validate decisions on the fly",
-    "Launch and demo your work — run prototypes and present them to stakeholders",
+    { title: "Understand UI and UX theory", description: "Design principles, visual hierarchy, and layout" },
+    { title: "Learn mobile and web anatomy", description: "How screens are structured, patterns, and components" },
+    { title: "Visualise and prompt ideas", description: "Build AI prototypes and validate decisions fast" },
+    { title: "Launch and demo your work", description: "Run prototypes and present them to stakeholders" },
   ],
   meta: [
     { value: "11", label: "modules" },
-    { value: "~21h", label: "of learning" },
+    { value: "~17h", label: "of learning" },
     { value: "Web + Mobile", label: "" },
   ],
 };
@@ -144,7 +143,7 @@ export const courseFacts = {
     { value: "3", label: "Phases" },
     { value: "11", label: "Modules" },
     { value: "Web + Mobile", label: "Platforms" },
-    { value: "~21h", label: "Learning time" },
+    { value: "~17h", label: "Learning time" },
     { value: "7", label: "AI tools" },
   ],
 };
@@ -159,7 +158,7 @@ export const courseStructure = {
       number: 1,
       name: "Foundation",
       modulesRange: "Modules 01–03",
-      duration: "~7 hours",
+      duration: "~5 hours",
       description:
         "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
     },
@@ -167,15 +166,15 @@ export const courseStructure = {
       number: 2,
       name: "AI prototyping",
       modulesRange: "Modules 04–08",
-      duration: "~10 hours",
+      duration: "~7.5 hours",
       description:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
     },
     {
       number: 3,
-      name: "Advanced",
+      name: "Optional",
       modulesRange: "Modules 09–11",
-      duration: "~4 hours",
+      duration: "~5 hours",
       description:
         "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
     },
@@ -198,7 +197,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       tagline:
         "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
       modulesRange: "Modules 01–03",
-      duration: "~7 hours",
+      duration: "~5 hours",
       modules: [
         {
           id: "module-01",
@@ -425,22 +424,6 @@ export const curriculum: { heading: string; phases: Phase[] } = {
                 },
               ],
             },
-            {
-              id: "2-4",
-              number: "2.4",
-              title: "Responsive vs adaptive: one product across multiple screens",
-              description:
-                "Some products need one flow that adapts across screens. Others need a separate mobile flow. This affects requirements, not just design.",
-              estimatedTime: "~7 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Mobile First Is NOT Mobile Only — NN/g",
-                  url: "https://www.nngroup.com/articles/mobile-first-not-mobile-only/",
-                  duration: "7 min",
-                },
-              ],
-            },
           ],
           workshops: [
             {
@@ -561,44 +544,22 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       tagline:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
       modulesRange: "Modules 04–08",
-      duration: "~10 hours",
+      duration: "~7.5 hours",
       modules: [
         {
           id: "module-04",
           number: "04",
-          title: "Prototype logic and fidelity levels",
+          title: "From Business Analyst requirements to screens",
           description:
-            "Fidelity levels and when to use each. Difference between user journey and user flow. Minimum viable prototype for validation. Live demo on web and mobile.",
-          format: "Lecture, demo, and flow exercise",
+            "How to translate requirements into a structured prompt. Minimum viable prototype for validation. Iterating through AI chat. Different prompting approaches for web and mobile.",
+          format: "Practice and prompting",
           duration: "90 min",
-          goal: "Understand prototypes as validation tools, know which type fits which question, and treat web and mobile as different contexts.",
+          goal: "Translate raw stakeholder requirements into a prototype structure. The skill is framing an idea so it can be validated, not producing a polished visual.",
           lessons: [
             {
               id: "4-1",
               number: "4.1",
-              title: "Lo-fi vs hi-fi: why \"expensive and polished\" is not always better",
-              description:
-                "A prototype is a question, not an answer. The fidelity level depends on what you want to validate. For mobile, lo-fi can be enough: a paper sketch may already expose the main issue.",
-              estimatedTime: "~11 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "UX Prototypes: Low Fidelity vs. High Fidelity — NN/g",
-                  url: "https://www.nngroup.com/articles/ux-prototype-hi-lo-fidelity/",
-                  duration: "8 min",
-                },
-                {
-                  type: "video",
-                  label: "5 Tips for New Prototypers — NN/g",
-                  url: "https://www.nngroup.com/videos/tips-for-new-prototypers/",
-                  duration: "3 min",
-                },
-              ],
-            },
-            {
-              id: "4-2",
-              number: "4.2",
-              title: "User flow vs user journey: what the prototype must cover",
+              title: "From requirements to screen flow: what to prototype first",
               description:
                 "A journey map describes the broader path. A user flow shows the screen-by-screen route. Requirements often describe a journey, but a prototype must show a flow. This gap causes many misunderstandings.",
               estimatedTime: "~5 min",
@@ -612,53 +573,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "4-3",
-              number: "4.3",
-              title: "How to prepare a prototype for testing with a user",
-              description:
-                "Before showing a prototype, decide what you want to learn. For mobile work, show it on a real device when possible, not only on a laptop screen.",
-              estimatedTime: "~9 min",
-              resources: [
-                {
-                  type: "video",
-                  label: "UX Prototyping: 5 Factors for Selecting the Right Tool — NN/g",
-                  url: "https://www.nngroup.com/videos/prototyping-tool/",
-                  duration: "3 min",
-                },
-                {
-                  type: "article",
-                  label: "Paper Prototyping: Getting User Data Before You Code — NN/g",
-                  url: "https://www.nngroup.com/articles/paper-prototyping/",
-                  duration: "6 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "In-class live demo + flow exercise",
-              body: "The facilitator builds a user flow for a real scenario, first as a sketch, then as a structured list of screens. Each participant builds a flow for one of their projects. This becomes the base for the prototype in Module 09.",
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on lo-fi vs hi-fi prototypes, user flows vs user journeys, and prototype preparation. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this module, a participant understands the difference between lo-fi and hi-fi, knows the difference between user journey and user flow, and has a user flow ready for later practice.",
-        },
-        {
-          id: "module-05",
-          number: "05",
-          title: "From Business Analyst requirements to screens",
-          description:
-            "How to translate requirements into a structured prompt. Minimum viable prototype for validation. Iterating through AI chat. Different prompting approaches for web and mobile.",
-          format: "Practice and prompting",
-          duration: "90 min",
-          goal: "Translate raw stakeholder requirements into a prototype structure. The skill is framing an idea so it can be validated, not producing a polished visual.",
-          lessons: [
-            {
-              id: "5-1",
-              number: "5.1",
+              id: "4-2",
+              number: "4.2",
               title: "How to write prompts for AI prototyping",
               description:
                 "Prompt quality drives prototype quality. A BA who clearly states context, target audience, scenario, platform, screens, features, and constraints gets better results from any AI tool.",
@@ -679,8 +595,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "5-2",
-              number: "5.2",
+              id: "4-3",
+              number: "4.3",
               title: "Mobile prompting: specifics and differences from web",
               description:
                 "A mobile prototype requires a different prompt. Specify iOS or Android, navigation type, touch element sizes, and the primary task. Otherwise, AI often generates a web interface with smaller fonts.",
@@ -695,8 +611,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "5-3",
-              number: "5.3",
+              id: "4-4",
+              number: "4.4",
               title: "Iteration: how to refine a prototype through AI chat",
               description:
                 "AI prototyping is a dialogue. The first result is almost never final. This lesson covers how to give feedback, when to start over, and when to edit by hand.",
@@ -730,8 +646,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant can translate requirements into a structured prompt for web or mobile, iterate a prototype through chat, and produce a prototype draft from a project scenario.",
         },
         {
-          id: "module-06",
-          number: "06",
+          id: "module-05",
+          number: "05",
           title: "7 AI tools: overview, demo, first launch",
           description:
             "Google Stitch, Claude Design, Figma Make, Lovable, and v0 for UI prototyping. Claude Code and Cursor for AI development awareness. Live demo of each, with mobile specifics.",
@@ -740,8 +656,16 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Understand what each tool is best for and get first-hand practice under facilitator guidance.",
           lessons: [
             {
-              id: "6-1",
-              number: "6.1",
+              id: "5-1",
+              number: "5.1",
+              title: "AI tools overview",
+              description:
+                "A map of the tools covered in this module: what each one is for, where it fits in the prototyping process, and how to choose between them for a given task.",
+              resources: [],
+            },
+            {
+              id: "5-2",
+              number: "5.2",
               title: "Google Stitch: step-by-step guide + mobile specifics",
               description:
                 "Fastest start of the UI tools. Good for a first mobile prototype when you need a quick screen direction.",
@@ -755,8 +679,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "6-2",
-              number: "6.2",
+              id: "5-3",
+              number: "5.3",
               title: "Claude Design: generating UX concepts and reviewing prototypes",
               description:
                 "Claude Design helps discuss an idea, generate solution options, or critique a prototype. It is useful before or alongside tools such as Figma Make and Lovable.",
@@ -770,8 +694,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "6-3",
-              number: "6.3",
+              id: "5-4",
+              number: "5.4",
               title: "Figma Make: interactive prototype with screen navigation",
               description:
                 "Figma Make supports clicks, transitions, and UI behavior. It is useful when the prototype needs to feel closer to a product than a static mockup.",
@@ -785,8 +709,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "6-4",
-              number: "6.4",
+              id: "5-5",
+              number: "5.5",
               title: "Lovable: full web app for stakeholder demos",
               description:
                 "Lovable is useful when a stakeholder needs to see how a web flow might work, not only click through a mockup. It generates front-end code with a shareable link.",
@@ -806,8 +730,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "6-5",
-              number: "6.5",
+              id: "5-6",
+              number: "5.6",
               title: "v0: precise UI components by prompt",
               description:
                 "v0 generates React/Tailwind components such as tables, forms, cards, and dashboards. It works best when you need a specific UI element, not a full flow.",
@@ -838,8 +762,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant has first-hand experience with the UI tools, knows when to use each one, and understands the difference between UI prototyping and AI development.",
         },
         {
-          id: "module-07",
-          number: "07",
+          id: "module-06",
+          number: "06",
           title: "Validating AI concepts",
           description:
             "Common AI prototype mistakes, separately for web and mobile. Heuristic audit of your own prototype. Decision tree: what to rework and what to keep.",
@@ -848,8 +772,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Check AI prototype quality independently before showing it to a stakeholder. The BA is the first quality filter.",
           lessons: [
             {
-              id: "7-1",
-              number: "7.1",
+              id: "6-1",
+              number: "6.1",
               title: "Common AI prototype mistakes: web and mobile separately",
               description:
                 "AI repeats the same mistakes. On mobile: ignoring safe areas, undersized touch targets, and copied web navigation. On web: information overload and broken hierarchy.",
@@ -870,8 +794,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "7-2",
-              number: "7.2",
+              id: "6-2",
+              number: "6.2",
               title: "Applying the heuristics workbook to your own prototype",
               description:
                 "Participants return to the workbook and apply it to their own AI prototype. This is the practical skill: say what the problem is, where it appears, which principle it violates, and what should change.",
@@ -886,8 +810,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "7-3",
-              number: "7.3",
+              id: "6-3",
+              number: "6.3",
               title: "When to redo the prompt, when to edit, when to keep as is",
               description:
                 "Not every problem deserves the same response. Critical failures break the logic and require a new prompt. Smaller clarity issues may be edited directly. Some rough edges are acceptable at lo-fi level.",
@@ -913,6 +837,56 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           },
           outcome:
             "After this module, a participant can identify common AI prototype mistakes, argue them with UX principles, and complete a heuristic audit of their own prototype.",
+        },
+        {
+          id: "module-07",
+          number: "07",
+          title: "Preparing a prototype for user testing",
+          description:
+            "How to get ready before showing a prototype to a user or stakeholder. Desktop and mobile sessions differ in setup, device choice, and what feedback you get.",
+          format: "Lecture",
+          duration: "30 min",
+          goal: "Know what to prepare before a prototype testing session, for both web and mobile.",
+          lessons: [
+            {
+              id: "7-1",
+              number: "7.1",
+              title: "Web prototype testing: what to decide upfront",
+              description:
+                "Before showing a web prototype, decide what you want to learn. Define a single hypothesis, pick the right fidelity, and remove navigation that would distract the reviewer.",
+              resources: [
+                {
+                  type: "video",
+                  label: "UX Prototyping: 5 Factors for Selecting the Right Tool — NN/g",
+                  url: "https://www.nngroup.com/videos/prototyping-tool/",
+                  duration: "3 min",
+                },
+                {
+                  type: "article",
+                  label: "Paper Prototyping: Getting User Data Before You Code — NN/g",
+                  url: "https://www.nngroup.com/articles/paper-prototyping/",
+                  duration: "6 min",
+                },
+              ],
+            },
+            {
+              id: "7-2",
+              number: "7.2",
+              title: "Mobile prototype testing: device, touch, and framing specifics",
+              description:
+                "Show a mobile prototype on a real device when possible — not only on a laptop screen. Touch targets, scroll behavior, and screen size all influence what feedback you get.",
+              resources: [
+                {
+                  type: "article",
+                  label: "Mobile Usability Testing: How It Differs From Desktop — NN/g",
+                  url: "https://www.nngroup.com/articles/mobile-usability-testing/",
+                  duration: "7 min",
+                },
+              ],
+            },
+          ],
+          outcome:
+            "After this module, a participant knows how to set up a prototype testing session for both web and mobile, and choose the right device.",
         },
         {
           id: "module-08",
@@ -981,11 +955,11 @@ export const curriculum: { heading: string; phases: Phase[] } = {
     {
       id: "phase-3",
       number: 3,
-      name: "Advanced",
+      name: "Optional",
       tagline:
         "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
       modulesRange: "Modules 09–11",
-      duration: "~4 hours",
+      duration: "~5 hours",
       modules: [
         {
           id: "module-09",
@@ -998,8 +972,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Learn a proven review method. After this module, business analysts can conduct a quick heuristic analysis and argue problems using specific principles, not intuition.",
           lessons: [
             {
-              id: "9-1",
-              number: "9.1",
+              id: "8-1",
+              number: "8.1",
               title: "How to conduct a heuristic evaluation + free workbook",
               description:
                 "NN/g's article and workbook give BAs a tool they can use immediately: analyze a requirement, a screenshot, or an AI-generated prototype and record the issue with evidence.",
@@ -1020,8 +994,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "9-2",
-              number: "9.2",
+              id: "8-2",
+              number: "8.2",
               title: "Cognitive load: why \"too much\" breaks UX",
               description:
                 "Cognitive load explains why overloaded screens fail. It matters even more on mobile, where space is limited and the task still needs to be clear.",

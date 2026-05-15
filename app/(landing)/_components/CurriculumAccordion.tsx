@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { RiArrowDownSLine, RiArrowRightUpLine, RiGroupLine, RiTaskLine } from "@remixicon/react";
+import { createPortal } from "react-dom";
+import { RiArrowDownSLine, RiArrowRightUpLine, RiGroupLine, RiPencilLine, RiBookOpenLine } from "@remixicon/react";
 import { curriculum, courseStructure, type Module, type Resource, type ResourceType } from "../_data/course";
 import { cn } from "../../_lib/cn";
 import { useStagger } from "../../_lib/animations";
@@ -23,7 +24,7 @@ function ResourcePill({ r }: { r: Resource }) {
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "inline-flex overflow-hidden max-w-full items-center gap-1.5 rounded-pill px-3 py-1 text-xs font-medium transition-opacity hover:opacity-80",
+        "inline-flex overflow-hidden max-w-[280px] items-center gap-1.5 rounded-pill px-3 py-1 text-xs font-medium whitespace-nowrap transition-opacity hover:opacity-80",
         resourceStyles[r.type],
       )}
     >
@@ -34,6 +35,86 @@ function ResourcePill({ r }: { r: Resource }) {
         className="shrink-0 opacity-70"
       />
     </a>
+  );
+}
+
+type TagItem = { label: string; body: string };
+
+type LessonWithTags = {
+  lesson: (typeof curriculum.phases)[0]["modules"][0]["lessons"][0];
+  tags: TagItem[];
+};
+
+function buildItems(m: Module): LessonWithTags[] {
+  const workshops: TagItem[] = m.workshops?.map((w) => ({
+    label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Workshop",
+    body: w.body,
+  })) ?? [];
+
+  const items: LessonWithTags[] = m.lessons.map((lesson) => ({ lesson, tags: [] }));
+
+  if (items.length === 0) return items;
+
+  const step = items.length / (workshops.length + 1);
+
+  workshops.forEach((tag, ai) => {
+    const idx = Math.min(Math.round(step * (ai + 1)) - 1, items.length - 1);
+    items[idx].tags.push(tag);
+  });
+
+  if (m.homework) items[items.length - 1].tags.push({ label: "Homework", body: m.homework.body });
+
+  return items;
+}
+
+const tagIcons: Record<string, React.ElementType> = {
+  "Workshop": RiGroupLine,
+  "In-class practice": RiPencilLine,
+  "Homework": RiBookOpenLine,
+};
+
+function ActivityTag({ label, body }: TagItem) {
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const ref = useRef<HTMLSpanElement>(null);
+  const Icon = tagIcons[label];
+
+  function handleEnter() {
+    if (!ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    setPos({ x: r.left, y: r.top });
+  }
+
+  return (
+    <>
+      <span
+        ref={ref}
+        onMouseEnter={handleEnter}
+        onMouseLeave={() => setPos(null)}
+        className="inline-flex cursor-default items-center gap-1.5 whitespace-nowrap rounded-pill bg-usrc-crimson/10 px-3 py-1 text-xs font-semibold text-usrc-crimson"
+      >
+        {Icon && <Icon size={12} aria-hidden="true" />}
+        {label}
+      </span>
+      {pos && typeof document !== "undefined" &&
+        createPortal(
+          <div
+            style={{
+              position: "fixed",
+              left: pos.x,
+              top: pos.y - 8,
+              transform: "translateY(-100%)",
+              zIndex: 9999,
+            }}
+            className="w-96 rounded-lg border border-border bg-white p-4 shadow-lg pointer-events-none"
+          >
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-usrc-crimson">
+              {label}
+            </p>
+            <p className="text-body-sm leading-relaxed text-fg-secondary">{body}</p>
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }
 
@@ -123,10 +204,10 @@ function ModuleRow({
                 </span>
               </div>
 
-              <ol className="mt-6 space-y-10">
-                {m.lessons.map((lesson) => (
+              <ol className="mt-6 space-y-8">
+                {buildItems(m).map(({ lesson, tags }) => (
                   <li key={lesson.id} className="group relative">
-                    <div aria-hidden="true" className="absolute -left-[30px] top-[2.75rem] w-px h-[calc(100%-2.75rem+2.5rem)] bg-border group-last:hidden md:-left-10" />
+                    <div aria-hidden="true" className="absolute -left-[30px] top-[2.75rem] z-0 w-px h-[calc(100%-2.75rem+2rem)] bg-border group-last:hidden md:-left-10" />
                     <span
                       aria-hidden="true"
                       className="absolute -left-12 top-0.5 z-10 flex h-9 w-9 items-center justify-center rounded-md bg-usrc-crimson/10 font-mono text-small font-semibold text-usrc-crimson md:-left-[60px] md:h-10 md:w-10"
@@ -140,57 +221,22 @@ function ModuleRow({
                       <p className="mt-1 text-body-sm leading-relaxed text-fg-secondary">
                         {lesson.description}
                       </p>
-                      {lesson.resources.length > 0 ? (
+                      {(lesson.resources.length > 0 || tags.length > 0) && (
                         <div className="mt-3 flex flex-wrap gap-1.5">
-                          {lesson.resources.map((r, idx) => (
-                            <ResourcePill key={`${lesson.id}-r-${idx}`} r={r} />
+                          {lesson.resources.map((r, i) => (
+                            <ResourcePill key={`${lesson.id}-r-${i}`} r={r} />
                           ))}
-                                        </div>
-                      ) : null}
+                          {tags.map((tag, ti) => (
+                            <ActivityTag key={`${tag.label}-${ti}`} label={tag.label} body={tag.body} />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))}
               </ol>
             </div>
 
-            <aside className="grid grid-cols-1 gap-5 md:grid-cols-3">
-              {m.workshops?.map((w, i) => (
-                <div key={i} className="rounded-lg border border-border px-5 pt-5 pb-10">
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-usrc-navy/10 text-usrc-navy">
-                      <RiGroupLine size={15} aria-hidden="true" />
-                    </span>
-                    <h4 className="text-body font-bold tracking-tight text-fg-primary">
-                      {w.title.toLowerCase().includes("practice") ? "In-class practice" : "In-class workshop"}
-                    </h4>
-                  </div>
-                  <div className="relative mt-3">
-                    <p className="line-clamp-5 text-body-sm leading-relaxed text-fg-secondary">
-                      {w.body}
-                    </p>
-                    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/70 to-transparent" />
-                  </div>
-                </div>
-              ))}
-              {m.homework ? (
-                <div className="rounded-lg border border-border px-5 pt-5 pb-10">
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-usrc-navy/10 text-usrc-navy">
-                      <RiTaskLine size={15} aria-hidden="true" />
-                    </span>
-                    <h4 className="text-body font-bold tracking-tight text-fg-primary">
-                      Homework
-                    </h4>
-                  </div>
-                  <div className="relative mt-3">
-                    <p className="line-clamp-5 text-body-sm leading-relaxed text-fg-primary">
-                      {m.homework.body}
-                    </p>
-                    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/70 to-transparent" />
-                  </div>
-                </div>
-              ) : null}
-            </aside>
           </div>
         </div>
       </div>
@@ -232,10 +278,10 @@ export function CurriculumAccordion() {
               {phase.number !== 1 && (
                 <div className="max-w-2xl">
                   <span className="text-xs font-semibold uppercase tracking-[0.18em] text-usrc-crimson">
-                    Phase {phase.number}
+                    Phase {phase.number}{phase.name === "Optional" ? " (Optional)" : ""}
                   </span>
                   <h3 className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy">
-                    {phase.name}
+                    {phase.name === "Optional" ? "Good to know" : phase.name}
                   </h3>
                   <p className="mt-3 max-w-3xl text-body-sm leading-relaxed text-fg-secondary">
                     {phase.tagline} Takes approximately {phase.duration} to complete.

@@ -1,70 +1,54 @@
 "use client";
 
 import { useRef } from "react";
-import {
-  RiGroupLine,
-  RiTargetLine,
-  RiPresentationLine,
-  RiInformationLine,
-} from "@remixicon/react";
-import { basicDetails } from "../_data/course";
+import { RiGroupLine, RiBook2Line, RiCompassLine } from "@remixicon/react";
 import { useStagger } from "../../_lib/animations";
 
 const blocks = [
-  { label: "Audience", body: basicDetails.audience, icon: RiGroupLine },
-  { label: "Outcome", body: basicDetails.outcome, icon: RiTargetLine },
-  { label: "Format", body: basicDetails.format, icon: RiPresentationLine },
-  { label: "Scope", body: basicDetails.scope, icon: RiInformationLine },
+  {
+    label: "Audience",
+    body: "Business Analysts, BSAs, and product-facing team members who work with requirements and user flows.",
+    Icon: RiGroupLine,
+  },
+  {
+    label: "Format",
+    body: "Lectures, workshops, case studies, screen audits, workbook practice, AI-tool demos, and a final project.",
+    Icon: RiBook2Line,
+  },
+  {
+    label: "Scope",
+    body: "Practical UX/UI judgment and AI prototyping literacy for requirements work — not production design or engineering.",
+    Icon: RiCompassLine,
+  },
 ];
 
 export function AudienceOutcome() {
   const ref = useRef<HTMLElement>(null);
-  useStagger(ref, "[data-reveal]", { stagger: 0.07 });
+  useStagger(ref, "[data-reveal]", { stagger: 0.08 });
 
   return (
     <section
       id="about"
       ref={ref}
       aria-labelledby="about-heading"
-      className="bg-surface-subtle"
+      className="bg-white"
     >
-      <div className="relative mx-auto max-w-page px-5 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24">
-        <div className="max-w-2xl" data-reveal>
-          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-usrc-crimson">
-            About the program
-          </span>
-          <h2
-            id="about-heading"
-            className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy"
-          >
-            Built for teams between business, users, design, and engineering
-          </h2>
-        </div>
+      <div className="mx-auto max-w-page px-5 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24">
 
-        <dl className="mt-12 grid gap-5 md:grid-cols-2 md:gap-6">
-          {blocks.map((b) => {
-            const Icon = b.icon;
-            return (
-              <div
-                key={b.label}
-                data-reveal
-                className="rounded-lg border border-border bg-surface p-6 md:p-7"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-usrc-crimson/10 text-usrc-crimson">
-                    <Icon size={16} aria-hidden="true" />
-                  </span>
-                  <dt className="text-sm font-bold uppercase tracking-[0.16em] text-usrc-crimson">
-                    {b.label}
-                  </dt>
-                </div>
-                <dd className="mt-3 text-body-sm leading-relaxed text-fg-secondary">
-                  {b.body}
-                </dd>
-              </div>
-            );
-          })}
+        <dl className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-12 lg:gap-16">
+          {blocks.map(({ label, body, Icon }) => (
+            <div key={label} data-reveal className="flex flex-col items-start">
+              <Icon size={24} aria-hidden="true" className="mb-4 text-usrc-navy" />
+              <dt className="text-sm font-bold uppercase tracking-[0.12em] text-usrc-navy">
+                {label}
+              </dt>
+              <dd className="mt-3 text-pretty text-body leading-relaxed text-fg-primary">
+                {body}
+              </dd>
+            </div>
+          ))}
         </dl>
+
       </div>
     </section>
   );
