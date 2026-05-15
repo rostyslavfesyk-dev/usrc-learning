@@ -1,71 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { RiArrowDownSLine, RiArrowRightUpLine, RiGroupLine, RiPencilLine, RiBookOpenLine } from "@remixicon/react";
-import { curriculum, courseStructure, type Module, type Resource, type ResourceType } from "../_data/course";
-import { cn } from "../../_lib/cn";
+import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiPencilLine, RiBookOpenLine } from "@remixicon/react";
+import { curriculum, type Module } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
-const resourceStyles: Record<ResourceType, string> = {
-  article: "bg-usrc-navy/10 text-usrc-navy",
-  video: "bg-usrc-navy/10 text-usrc-navy",
-  workbook: "bg-usrc-navy/10 text-usrc-navy",
-  practice: "bg-usrc-navy/10 text-usrc-navy",
-  template: "bg-usrc-navy/10 text-usrc-navy",
-  resource: "bg-usrc-navy/10 text-usrc-navy",
-  "official docs": "bg-usrc-navy/10 text-usrc-navy",
-};
-
-function ResourcePill({ r }: { r: Resource }) {
-  return (
-    <a
-      href={r.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "inline-flex overflow-hidden max-w-[280px] items-center gap-1.5 rounded-pill px-3 py-1 text-xs font-medium whitespace-nowrap transition-opacity hover:opacity-80",
-        resourceStyles[r.type],
-      )}
-    >
-      <span className="truncate">{r.label.split(" — ")[0]}</span>
-      <RiArrowRightUpLine
-        aria-hidden="true"
-        size={12}
-        className="shrink-0 opacity-70"
-      />
-    </a>
-  );
-}
-
 type TagItem = { label: string; body: string };
-
-type LessonWithTags = {
-  lesson: (typeof curriculum.phases)[0]["modules"][0]["lessons"][0];
-  tags: TagItem[];
-};
-
-function buildItems(m: Module): LessonWithTags[] {
-  const workshops: TagItem[] = m.workshops?.map((w) => ({
-    label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Workshop",
-    body: w.body,
-  })) ?? [];
-
-  const items: LessonWithTags[] = m.lessons.map((lesson) => ({ lesson, tags: [] }));
-
-  if (items.length === 0) return items;
-
-  const step = items.length / (workshops.length + 1);
-
-  workshops.forEach((tag, ai) => {
-    const idx = Math.min(Math.round(step * (ai + 1)) - 1, items.length - 1);
-    items[idx].tags.push(tag);
-  });
-
-  if (m.homework) items[items.length - 1].tags.push({ label: "Homework", body: m.homework.body });
-
-  return items;
-}
 
 const tagIcons: Record<string, React.ElementType> = {
   "Workshop": RiGroupLine,
@@ -73,49 +13,37 @@ const tagIcons: Record<string, React.ElementType> = {
   "Homework": RiBookOpenLine,
 };
 
-function ActivityTag({ label, body }: TagItem) {
-  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
-  const ref = useRef<HTMLSpanElement>(null);
+function ActivityCard({ label, body }: TagItem) {
   const Icon = tagIcons[label];
-
-  function handleEnter() {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    setPos({ x: r.left, y: r.top });
-  }
-
   return (
-    <>
-      <span
-        ref={ref}
-        onMouseEnter={handleEnter}
-        onMouseLeave={() => setPos(null)}
-        className="inline-flex cursor-default items-center gap-1.5 whitespace-nowrap rounded-pill bg-usrc-crimson/10 px-3 py-1 text-xs font-semibold text-usrc-crimson"
-      >
+    <div className="rounded-md border border-border bg-surface-subtle px-4 py-3">
+      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-fg-secondary">
         {Icon && <Icon size={12} aria-hidden="true" />}
         {label}
-      </span>
-      {pos && typeof document !== "undefined" &&
-        createPortal(
-          <div
-            style={{
-              position: "fixed",
-              left: pos.x,
-              top: pos.y - 8,
-              transform: "translateY(-100%)",
-              zIndex: 9999,
-            }}
-            className="w-96 rounded-lg border border-border bg-white p-4 shadow-lg pointer-events-none"
-          >
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-usrc-crimson">
-              {label}
-            </p>
-            <p className="text-body-sm leading-relaxed text-fg-secondary">{body}</p>
-          </div>,
-          document.body,
-        )}
-    </>
+      </p>
+      <p className="mt-1.5 line-clamp-3 text-body-sm leading-relaxed text-fg-secondary">{body}</p>
+    </div>
   );
+}
+
+function buildTags(m: Module): { lessonId: string; tags: TagItem[] }[] {
+  const workshops: TagItem[] = m.workshops?.map((w) => ({
+    label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Workshop",
+    body: w.body,
+  })) ?? [];
+
+  const slots = m.lessons.map((l) => ({ lessonId: l.id, tags: [] as TagItem[] }));
+  if (slots.length === 0) return slots;
+
+  const step = slots.length / (workshops.length + 1);
+  workshops.forEach((tag, ai) => {
+    const idx = Math.min(Math.round(step * (ai + 1)) - 1, slots.length - 1);
+    slots[idx].tags.push(tag);
+  });
+
+  if (m.homework) slots[slots.length - 1].tags.push({ label: "Homework", body: m.homework.body });
+
+  return slots;
 }
 
 function ModuleRow({
@@ -129,6 +57,7 @@ function ModuleRow({
 }) {
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
+  const tagSlots = buildTags(m);
 
   return (
     <li className="border-b border-border last:border-b-0">
@@ -180,63 +109,39 @@ function ModuleRow({
         <div className="overflow-hidden min-w-0">
           <div
             {...(isOpen ? {} : { inert: true })}
-            className="flex flex-col w-full gap-8 pl-[64px] pr-4 pb-6 pt-2 md:pl-[84px] md:pr-6 md:pb-8"
+            className="pl-[64px] pr-4 pb-6 pt-2 md:pl-[84px] md:pr-6 md:pb-8"
           >
-            <div className="grid grid-cols-2 gap-3 w-full">
-              <div className="rounded-md bg-usrc-navy/5 px-4 py-3">
-                <p className="text-body font-bold tracking-tight text-usrc-navy">Goal</p>
-                <p className="mt-1.5 text-body-sm leading-relaxed text-fg-secondary">{m.goal}</p>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted">
+              What you'll learn
+            </p>
+            <ul className="space-y-4">
+              {m.lessons.map((lesson) => (
+                <li key={lesson.id} className="flex items-start gap-3">
+                  <RiCheckLine
+                    aria-hidden="true"
+                    size={16}
+                    className="mt-0.5 shrink-0 text-usrc-crimson"
+                  />
+                  <span className="text-body-sm leading-relaxed text-fg-primary">
+                    {lesson.title}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            {tagSlots.some((s) => s.tags.length > 0) && (
+              <div className="mt-10">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted">
+                  Additional Activities
+                </p>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                  {tagSlots.flatMap((s, i) =>
+                    s.tags.map((tag, ti) => (
+                      <ActivityCard key={`${i}-${tag.label}-${ti}`} label={tag.label} body={tag.body} />
+                    ))
+                  )}
+                </div>
               </div>
-              <div className="rounded-md bg-usrc-navy/5 px-4 py-3">
-                <p className="text-body font-bold tracking-tight text-usrc-navy">Outcome</p>
-                <p className="mt-1.5 text-body-sm leading-relaxed text-fg-secondary">{m.outcome}</p>
-              </div>
-            </div>
-
-            <div className="min-w-0 max-w-2xl">
-              <p className="text-body-sm leading-relaxed text-fg-secondary md:hidden">
-                {m.description}
-              </p>
-
-              <div className="md:hidden mt-3 flex flex-wrap gap-2">
-                <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-fg-secondary">
-                  {m.duration}
-                </span>
-              </div>
-
-              <ol className="mt-6 space-y-8">
-                {buildItems(m).map(({ lesson, tags }) => (
-                  <li key={lesson.id} className="group relative">
-                    <div aria-hidden="true" className="absolute -left-[30px] top-[2.75rem] z-0 w-px h-[calc(100%-2.75rem+2rem)] bg-border group-last:hidden md:-left-10" />
-                    <span
-                      aria-hidden="true"
-                      className="absolute -left-12 top-0.5 z-10 flex h-9 w-9 items-center justify-center rounded-md bg-usrc-crimson/10 font-mono text-small font-semibold text-usrc-crimson md:-left-[60px] md:h-10 md:w-10"
-                    >
-                      {lesson.number}
-                    </span>
-                    <div className="min-w-0">
-                      <h4 className="text-body font-semibold tracking-tight text-fg-primary">
-                        {lesson.title}
-                      </h4>
-                      <p className="mt-1 text-body-sm leading-relaxed text-fg-secondary">
-                        {lesson.description}
-                      </p>
-                      {(lesson.resources.length > 0 || tags.length > 0) && (
-                        <div className="mt-3 flex flex-wrap gap-1.5">
-                          {lesson.resources.map((r, i) => (
-                            <ResourcePill key={`${lesson.id}-r-${i}`} r={r} />
-                          ))}
-                          {tags.map((tag, ti) => (
-                            <ActivityTag key={`${tag.label}-${ti}`} label={tag.label} body={tag.body} />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
+            )}
           </div>
         </div>
       </div>
