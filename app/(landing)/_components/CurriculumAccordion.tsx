@@ -8,12 +8,12 @@ import { useStagger } from "../../_lib/animations";
 const stepIcons: Record<string, React.ElementType> = {
   Lecture: RiSlideshowLine,
   "Online Workshop": RiGroupLine,
-  "In-class practice": RiPencilLine,
+  "Live practice": RiPencilLine,
   Homework: RiBookOpenLine,
 };
 
 const stepEstimates: Record<string, string> = {
-  "In-class practice": "~20 min",
+  "Live practice": "~20 min",
   "Online Workshop": "~45 min",
   Homework: "~1 hour",
 };
@@ -67,7 +67,7 @@ function ModuleRow({
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
 
-  const order: Record<string, number> = { "In-class practice": 0, "Online Workshop": 1, Homework: 2 };
+  const order: Record<string, number> = { "Live practice": 0, "Online Workshop": 1, Homework: 2 };
 
   // Sectioned modules (e.g. module-01): use sections data
   const hasSections = !!m.sections;
@@ -80,7 +80,7 @@ function ModuleRow({
     ? []
     : [
         ...(m.workshops?.map((w) => ({
-          label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Online Workshop",
+          label: w.title.toLowerCase().includes("practice") ? "Live practice" : "Online Workshop",
           body: w.body,
         })) ?? []),
         ...(m.homework ? [{ label: "Homework", body: m.homework.body }] : []),

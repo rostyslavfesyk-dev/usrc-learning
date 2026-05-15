@@ -330,7 +330,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             {
               lessonIds: ["1-1", "1-4", "1-2"],
               activity: {
-                label: "In-class practice",
+                label: "Live practice",
                 body: "Mini-exercise: each participant picks an interface they use daily (Teams, Outlook, or similar) and tries to find one non-obvious function. Example: how to add someone to a calendar invite. The goal is to notice that stakeholders often describe interfaces based on the simplest path and skip everything else. After the exercise, the group discusses why users miss features and what that means for requirements.",
               },
             },
@@ -647,7 +647,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "In-class practice",
+              title: "Live practice",
               body: "Each participant transforms project requirements into a structured prompt: context, platform, user, scenario, key screens, and constraints. The facilitator gives feedback and demonstrates iteration.",
             },
           ],
@@ -697,7 +697,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               body: "The facilitator demonstrates Claude Design using a USRC patient flow scenario — for example, appointment scheduling or a lab result view. Participants see how to prompt for a concept, critique the output, and iterate. A short Claude Code demo follows to show what happens after a prototype is approved.",
             },
             {
-              title: "In-class practice: prototype and critique with Claude Design",
+              title: "Live practice: prototype and critique with Claude Design",
               body: "Participants use Claude Design to generate a concept for a USRC flow of their choice. Then they swap outputs and critique each other's results using the criteria from earlier modules — hierarchy, clarity, mobile behaviour. Discussion: where did Claude get it right, and where did it need correction?",
             },
           ],
@@ -925,7 +925,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               body: "The facilitator shows examples from real web and mobile applications side by side and asks: which UX solution here is more convenient, and why? The speaker demonstrates the difference between a decision that works and one that does not, then explains the design reasoning behind each. Participants then complete the Heuristic Evaluation Workbook for one product (first on web, then on mobile) and see how the same heuristic can surface differently across platforms.",
             },
             {
-              title: "In-class practice: from generic AI UI to a distinct design",
+              title: "Live practice: from generic AI UI to a distinct design",
               body: "The speaker generates a standard UI screen using an AI tool, then demonstrates step by step how to customize it into something more unique: adjusting layout density, applying a specific visual style, reworking the hierarchy, and removing generic patterns. Participants observe the decision-making process and discuss what made the result feel less generic.",
             },
           ],
