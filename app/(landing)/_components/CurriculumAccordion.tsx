@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, Fragment } from "react";
 import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiPencilLine, RiBookOpenLine, RiSlideshowLine } from "@remixicon/react";
-import { curriculum, type Module } from "../_data/course";
+import { curriculum, type Module, type Lesson } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
 const stepIcons: Record<string, React.ElementType> = {
@@ -12,12 +12,20 @@ const stepIcons: Record<string, React.ElementType> = {
   Homework: RiBookOpenLine,
 };
 
+const stepEstimates: Record<string, string> = {
+  "In-class practice": "~20 min",
+  "Online Workshop": "~45 min",
+  Homework: "~1 hour",
+};
+
 function TimelineStep({
   label,
+  estimate,
   hasLine,
   children,
 }: {
   label: string;
+  estimate?: string;
   hasLine: boolean;
   children: React.ReactNode;
 }) {
@@ -31,9 +39,14 @@ function TimelineStep({
         {hasLine && <div className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-px bg-border" />}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted leading-none mt-1.5">
-          {label}
-        </p>
+        <div className="flex items-center gap-2 mb-3 mt-1.5">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted leading-none">
+            {label}
+          </p>
+          {estimate && (
+            <span className="text-xs text-fg-muted opacity-60 leading-none">{estimate}</span>
+          )}
+        </div>
         {children}
       </div>
     </div>
@@ -54,15 +67,22 @@ function ModuleRow({
 
   const order: Record<string, number> = { "In-class practice": 0, "Online Workshop": 1, Homework: 2 };
 
-  const activities = [
-    ...(m.workshops?.map((w) => ({
-      label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Online Workshop",
-      body: w.body,
-    })) ?? []),
-    ...(m.homework ? [{ label: "Homework", body: m.homework.body }] : []),
-  ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
+  // Sectioned modules (e.g. module-01): use sections data
+  const hasSections = !!m.sections;
+  const lessonMap = hasSections
+    ? new Map(m.lessons.map((l) => [l.id, l]))
+    : null;
 
-  const totalSteps = 1 + activities.length;
+  // Flat modules: build activities from workshops + homework
+  const activities = hasSections
+    ? []
+    : [
+        ...(m.workshops?.map((w) => ({
+          label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Online Workshop",
+          body: w.body,
+        })) ?? []),
+        ...(m.homework ? [{ label: "Homework", body: m.homework.body }] : []),
+      ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
   return (
     <li className="border-b border-border last:border-b-0">
@@ -116,32 +136,72 @@ function ModuleRow({
             {...(isOpen ? {} : { inert: true })}
             className="pl-[64px] pr-4 pb-6 pt-4 md:pl-[84px] md:pr-6 md:pb-8"
           >
-            <TimelineStep label="Lecture" hasLine={totalSteps > 1}>
-              <ul className="space-y-2.5">
-                {m.lessons.map((lesson) => (
-                  <li key={lesson.id} className="flex items-start gap-2.5">
-                    <RiCheckLine
-                      aria-hidden="true"
-                      size={14}
-                      className="mt-0.5 shrink-0 text-usrc-crimson"
-                    />
-                    <span className="text-[13px] leading-relaxed text-fg-primary">
-                      {lesson.title}
-                    </span>
-                  </li>
+            {hasSections ? (
+              <>
+                {m.sections!.map((section, si) => {
+                  const sectionLessons = section.lessonIds
+                    .map((id) => lessonMap!.get(id))
+                    .filter((l): l is Lesson => !!l);
+                  return (
+                    <Fragment key={si}>
+                      <TimelineStep label="Lecture" estimate="~30 min" hasLine={!!section.activity}>
+                        <ul className="space-y-2.5">
+                          {sectionLessons.map((lesson) => (
+                            <li key={lesson.id} className="flex items-start gap-2.5">
+                              <RiCheckLine aria-hidden="true" size={14} className="mt-0.5 shrink-0 text-usrc-crimson" />
+                              <span className="text-[13px] leading-relaxed text-fg-primary">{lesson.title}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </TimelineStep>
+                      {section.activity && (
+                        <TimelineStep
+                          label={section.activity.label}
+                          estimate={stepEstimates[section.activity.label]}
+                          hasLine={false}
+                        >
+                          <p className="text-[13px] leading-relaxed text-fg-secondary">{section.activity.body}</p>
+                        </TimelineStep>
+                      )}
+                    </Fragment>
+                  );
+                })}
+                {m.homework && (
+                  <TimelineStep label="Homework" estimate="~1 hour" hasLine={false}>
+                    <p className="text-[13px] leading-relaxed text-fg-secondary">{m.homework.body}</p>
+                  </TimelineStep>
+                )}
+              </>
+            ) : (
+              <>
+                <TimelineStep label="Lecture" estimate="~30 min" hasLine={activities.length > 0}>
+                  <ul className="space-y-2.5">
+                    {m.lessons.map((lesson) => (
+                      <li key={lesson.id} className="flex items-start gap-2.5">
+                        <RiCheckLine
+                          aria-hidden="true"
+                          size={14}
+                          className="mt-0.5 shrink-0 text-usrc-crimson"
+                        />
+                        <span className="text-[13px] leading-relaxed text-fg-primary">
+                          {lesson.title}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </TimelineStep>
+                {activities.map((a, i) => (
+                  <TimelineStep
+                    key={`${a.label}-${i}`}
+                    label={a.label}
+                    estimate={stepEstimates[a.label]}
+                    hasLine={false}
+                  >
+                    <p className="text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
+                  </TimelineStep>
                 ))}
-              </ul>
-            </TimelineStep>
-
-            {activities.map((a, i) => (
-              <TimelineStep
-                key={`${a.label}-${i}`}
-                label={a.label}
-                hasLine={false}
-              >
-                <p className="text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
-              </TimelineStep>
-            ))}
+              </>
+            )}
           </div>
         </div>
       </div>

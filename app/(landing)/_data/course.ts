@@ -27,6 +27,11 @@ export type Lesson = {
   estimatedTime?: string;
 };
 
+export type Section = {
+  lessonIds: string[];
+  activity?: { label: string; body: string };
+};
+
 export type Module = {
   id: string;
   number: string;
@@ -36,6 +41,7 @@ export type Module = {
   duration: string;
   goal: string;
   lessons: Lesson[];
+  sections?: Section[];
   workshops?: { title: string; body: string }[];
   homework?: { body: string };
   outcome: string;
@@ -67,7 +73,7 @@ export const hero = {
   ],
   meta: [
     { value: "10", label: "modules" },
-    { value: "~17h", label: "of learning" },
+    { value: "~21h", label: "of learning" },
     { value: "Web + Mobile + Clinic", label: "" },
   ],
 };
@@ -158,7 +164,7 @@ export const courseStructure = {
       number: 1,
       name: "Foundation",
       modulesRange: "Modules 01–03",
-      duration: "~5 hours",
+      duration: "~7 hours",
       description:
         "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
     },
@@ -166,7 +172,7 @@ export const courseStructure = {
       number: 2,
       name: "AI prototyping",
       modulesRange: "Modules 04–07",
-      duration: "~7.5 hours",
+      duration: "~7 hours",
       description:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
     },
@@ -174,7 +180,7 @@ export const courseStructure = {
       number: 3,
       name: "Optional",
       modulesRange: "Modules 08–10",
-      duration: "~5 hours",
+      duration: "~7 hours",
       description:
         "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
     },
@@ -197,7 +203,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       tagline:
         "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
       modulesRange: "Modules 01–03",
-      duration: "~5 hours",
+      duration: "~7 hours",
       modules: [
         {
           id: "module-01",
@@ -206,7 +212,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "UX as behavioral logic. Mental models, jobs-to-be-done, user journey, and the gap between BA expectations and what clinical staff — nurses, doctors, patients — actually need from a screen.",
           format: "Lecture and workshop",
-          duration: "90 min",
+          duration: "~2h 35min",
           goal: "Understand that UX is not style or taste. It is how a nurse, doctor, or patient understands a task, what they expect from the product, and where the interface helps or gets in the way.",
           lessons: [
             {
@@ -320,14 +326,20 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
           ],
-          workshops: [
+          sections: [
             {
-              title: "In-class workshop",
-              body: "The group builds a user journey map from a project scenario. Each participant documents the user's steps, expectations, pain points, and open questions for their own product or a prepared healthcare workflow. Group discussion follows. ~30 min within the session.",
+              lessonIds: ["1-1", "1-4", "1-2"],
+              activity: {
+                label: "In-class practice",
+                body: "Mini-exercise: each participant picks an interface they use daily (Teams, Outlook, or similar) and tries to find one non-obvious function. Example: how to add someone to a calendar invite. The goal is to notice that stakeholders often describe interfaces based on the simplest path and skip everything else. After the exercise, the group discusses why users miss features and what that means for requirements.",
+              },
             },
             {
-              title: "In-class practice: discovering hidden complexity",
-              body: "Mini-exercise: each participant picks an interface they use daily (Teams, Outlook, or similar) and tries to find one non-obvious function. Example: how to add someone to a calendar invite. The goal is to notice that stakeholders often describe interfaces based on the simplest path and skip everything else. After the exercise, the group discusses why users miss features and what that means for requirements.",
+              lessonIds: ["1-3", "1-5"],
+              activity: {
+                label: "Online Workshop",
+                body: "The group builds a user journey map from a project scenario. Each participant documents the user's steps, expectations, pain points, and open questions for their own product or a prepared healthcare workflow. Group discussion follows.",
+              },
             },
           ],
           homework: {
@@ -343,7 +355,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "Screen zones, UI patterns, navigation, touch targets, thumb zone, safe areas, gestures, iOS vs Android, responsive vs adaptive behavior.",
           format: "Lecture and case studies",
-          duration: "120 min",
+          duration: "~2h 15min",
           goal: "Learn to read any screen by zones, recognize common UI patterns, and understand how web and mobile differ in both requirements and prototyping practice.",
           lessons: [
             {
@@ -444,7 +456,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "Hierarchy, typography, color, grid, spacing, Gestalt principles, and how to distinguish quality from weak design through real web and mobile examples.",
           format: "Lecture and screen audit",
-          duration: "90 min",
+          duration: "~2h 15min",
           goal: "Build concrete vocabulary for evaluating UI quality. After this module, business analysts can talk about design using observable facts, not taste.",
           lessons: [
             {
@@ -544,7 +556,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       tagline:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
       modulesRange: "Modules 04–07",
-      duration: "~7.5 hours",
+      duration: "~7 hours",
       modules: [
         {
           id: "module-04",
@@ -553,7 +565,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "How to translate requirements gathered from doctors, nurses, or admins into a structured prompt. Minimum viable prototype for in-clinic validation. Iterating through AI chat for web and mobile.",
           format: "Practice and prompting",
-          duration: "90 min",
+          duration: "~1h 50min",
           goal: "Translate raw clinical requirements into a prototype structure. The skill is framing what you heard in a corridor conversation so it can be validated on a screen, not producing a polished visual.",
           lessons: [
             {
@@ -652,7 +664,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "Claude Design for UX concepts and prototype critique. Claude Code for AI development awareness. Live demo with a real USRC flow.",
           format: "AI tools and live demo",
-          duration: "60 min",
+          duration: "~2h 35min",
           goal: "Get first-hand experience with Claude Design and understand how Claude Code fits into a developer's workflow.",
           lessons: [
             {
@@ -702,7 +714,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "Common AI prototype mistakes, separately for web and mobile. Heuristic audit of your own prototype. Decision tree: what to rework and what to keep.",
           format: "Practice and audit",
-          duration: "90 min",
+          duration: "~2h 15min",
           goal: "Check AI prototype quality independently before showing it to a stakeholder. The BA is the first quality filter.",
           lessons: [
             {
@@ -834,7 +846,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       tagline:
         "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
       modulesRange: "Modules 08–10",
-      duration: "~5 hours",
+      duration: "~7 hours",
       modules: [
         {
           id: "module-08",
@@ -843,7 +855,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "The industry standard, plus Laws of UX. The group fills out the Heuristic Evaluation Workbook using real web and mobile examples.",
           format: "Lecture and workbook practice",
-          duration: "120 min",
+          duration: "~2h 10min",
           goal: "Learn a proven review method. After this module, business analysts can conduct a quick heuristic analysis and argue problems using specific principles, not intuition.",
           lessons: [
             {
@@ -930,7 +942,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "State of UX 2026. AI as a new UI paradigm. Where AI-generated design looks right but breaks UX. Comparative audit of two products on web and mobile.",
           format: "Lecture and comparative audit",
-          duration: "90 min",
+          duration: "~2h 15min",
           goal: "Distinguish what looks modern from what works correctly. AI tools can generate trendy screens quickly. The BA still has to check the logic.",
           lessons: [
             {
@@ -1024,7 +1036,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           description:
             "What a design system is and why business analysts need it. Components, tokens, styles, Figma libraries, and public systems such as Material 3, Apple HIG, and Atlassian.",
           format: "Lecture and Figma file walkthrough",
-          duration: "90 min",
+          duration: "~2h 15min",
           goal: "Understand how a design system affects requirements and prototyping. Business analysts should be able to read a system as a shared vocabulary for working with design and development.",
           lessons: [
             {
