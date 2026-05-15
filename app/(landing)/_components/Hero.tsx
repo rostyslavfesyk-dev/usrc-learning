@@ -42,10 +42,19 @@ export function Hero() {
 
           <p
             data-reveal
-            className="mt-6 max-w-2xl text-body-lg leading-relaxed text-fg-on-dark-muted"
+            className="mt-6 max-w-2xl text-body-lg leading-relaxed text-white"
           >
             {hero.subheadline}
           </p>
+
+          <ul data-reveal className="mt-6 space-y-2.5">
+            {hero.bullets.map((b) => (
+              <li key={b} className="flex items-start gap-2.5 text-body-lg text-white">
+                <span aria-hidden="true" className="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-white/50" />
+                {b}
+              </li>
+            ))}
+          </ul>
 
           <ul data-reveal className="mt-10 flex flex-wrap items-center gap-2.5">
             {hero.meta.map((m, idx) => (

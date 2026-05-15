@@ -58,7 +58,14 @@ export const hero = {
   eyebrow: "Rapid prototyping program",
   headline: "Rapid prototyping for healthcare product teams",
   subheadline:
-    "A practical course for U.S. Renal Care Business Analysts, Business Systems Analysts, and technical teams who need to turn product discussions into prototype drafts, test ideas with stakeholders, and judge the quality of AI-generated UI concepts.",
+    "A hands-on program for U.S. Renal Care BA, BSA, and technical teams.",
+  bullets: [
+    "Understand UI and UX theory — design principles, visual hierarchy, and layout",
+    "Develop empathy for users — pain points, mental models, and behavioral basics",
+    "Learn mobile and web anatomy — how screens are structured, patterns, and components",
+    "Visualise and prompt ideas — turn flows into AI prototypes and validate decisions on the fly",
+    "Launch and demo your work — run prototypes and present them to stakeholders",
+  ],
   meta: [
     { value: "11", label: "modules" },
     { value: "~21h", label: "of learning" },
@@ -95,17 +102,36 @@ export const aboutProgram = {
    ============================================================ */
 export const outcomes = {
   heading: "By the end, participants can",
-  items: [
-    "Translate stakeholder input into user journeys, user flows, and prototype requirements.",
-    "Read web and mobile screens by zones, patterns, states, and interaction logic.",
-    "Explain UI problems with terms such as hierarchy, contrast, spacing, typography, cognitive load, component, token, and pattern.",
-    "Apply Nielsen's heuristics and Laws of UX to real screens and AI-generated prototypes.",
-    "Choose the right prototype fidelity for the question being tested.",
-    "Write structured prompts for web and mobile prototypes.",
-    "Compare AI prototyping tools by task fit.",
-    "Run a heuristic audit before showing a prototype to stakeholders (patients, partners, clinical specialists, staff, and others).",
-    "Present a prototype as a validation tool.",
-    "Document what changed in requirements after a validation session.",
+  groups: [
+    {
+      label: "UX Foundations",
+      items: [
+        { text: "Translate stakeholder input into user journeys, flows, and prototype requirements." },
+        { text: "Read web and mobile screens by zones, patterns, states, and interaction logic." },
+      ],
+    },
+    {
+      label: "Design Literacy",
+      items: [
+        { text: "Explain UI problems using hierarchy, contrast, spacing, cognitive load, and component vocabulary." },
+        { text: "Think like a designer and evaluate screens against industry standards." },
+      ],
+    },
+    {
+      label: "AI Prototyping",
+      items: [
+        { text: "Write structured prompts for web and mobile prototypes." },
+        { text: "Go from idea to prototype in minutes using AI tools.", highlight: true },
+      ],
+    },
+    {
+      label: "Validation & Delivery",
+      items: [
+        { text: "Run a heuristic audit before showing a prototype." },
+        { text: "Present a prototype to stakeholders and doctors.", highlight: true },
+        { text: "Document requirement changes after a validation session." },
+      ],
+    },
   ],
 };
 
@@ -117,9 +143,9 @@ export const courseFacts = {
   stats: [
     { value: "3", label: "Phases" },
     { value: "11", label: "Modules" },
+    { value: "Web + Mobile", label: "Platforms" },
     { value: "~21h", label: "Learning time" },
     { value: "7", label: "AI tools" },
-    { value: "Web + Mobile", label: "Platforms" },
   ],
 };
 
@@ -132,26 +158,26 @@ export const courseStructure = {
     {
       number: 1,
       name: "Foundation",
-      modulesRange: "Modules 01–04",
+      modulesRange: "Modules 01–03",
       duration: "~7 hours",
       description:
         "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
     },
     {
       number: 2,
-      name: "Critical thinking",
-      modulesRange: "Modules 05–06",
-      duration: "~4 hours",
-      description:
-        "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
-    },
-    {
-      number: 3,
       name: "AI prototyping",
-      modulesRange: "Modules 07–11",
+      modulesRange: "Modules 04–08",
       duration: "~10 hours",
       description:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
+    },
+    {
+      number: 3,
+      name: "Advanced",
+      modulesRange: "Modules 09–11",
+      duration: "~4 hours",
+      description:
+        "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
     },
   ],
 };
@@ -163,7 +189,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
   heading: "What's covered",
   phases: [
     /* ============================================================
-       PHASE 1 — FOUNDATION (Modules 01–04)
+       PHASE 1 — FOUNDATION (Modules 01–03)
        ============================================================ */
     {
       id: "phase-1",
@@ -171,7 +197,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       name: "Foundation",
       tagline:
         "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
-      modulesRange: "Modules 01–04",
+      modulesRange: "Modules 01–03",
       duration: "~7 hours",
       modules: [
         {
@@ -523,338 +549,23 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           outcome:
             "After this module, a participant knows the 5 visual design principles, can describe an interface problem with specific terms, and has better language for talking to designers.",
         },
-        {
-          id: "module-04",
-          number: "04",
-          title: "Design system: components, tokens, how to read one",
-          description:
-            "What a design system is and why business analysts need it. Components, tokens, styles, Figma libraries, and public systems such as Material 3, Apple HIG, and Atlassian.",
-          format: "Lecture and Figma file walkthrough",
-          duration: "90 min",
-          goal: "Understand how a design system affects requirements and prototyping. Business analysts should be able to read a system as a shared vocabulary for working with design and development.",
-          lessons: [
-            {
-              id: "4-1",
-              number: "4.1",
-              title: "What is a design system and why does it matter to business analysts",
-              description:
-                "A design system is the shared language between designers and developers, not just a component library. Business analysts who understand that language write more precise requirements and avoid unnecessary custom UI.",
-              estimatedTime: "~15 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Design Systems 101 — NN/g",
-                  url: "https://www.nngroup.com/articles/design-systems-101/",
-                  duration: "8 min",
-                },
-                {
-                  type: "article",
-                  label: "Design Systems vs. Style Guides — NN/g",
-                  url: "https://www.nngroup.com/articles/design-systems-vs-style-guides/",
-                  duration: "7 min",
-                },
-              ],
-            },
-            {
-              id: "4-2",
-              number: "4.2",
-              title: "Components, tokens, patterns: core terminology",
-              description:
-                "A button is a component. #0058E9 can be a color token. A login form is a pattern. These terms let a BA write a precise requirement: \"use the standard button component,\" not \"make it look like the rest of the app.\"",
-              estimatedTime: "~8 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Front-End Style Guides: Definition, Requirements — NN/g",
-                  url: "https://www.nngroup.com/articles/front-end-style-guides/",
-                  duration: "8 min",
-                },
-              ],
-            },
-            {
-              id: "4-3",
-              number: "4.3",
-              title: "Industry design systems: Material 3, Apple HIG, Atlassian",
-              description:
-                "These systems set common expectations for many products. BAs who know them can understand why a designer proposes a pattern and can compare an AI-generated prototype against an established standard.",
-              estimatedTime: "~40 min",
-              resources: [
-                {
-                  type: "resource",
-                  label: "Material Design 3 — Google (web + mobile)",
-                  url: "https://m3.material.io/",
-                  duration: "overview 15 min",
-                },
-                {
-                  type: "resource",
-                  label: "Human Interface Guidelines — Apple (mobile)",
-                  url: "https://developer.apple.com/design/human-interface-guidelines/",
-                  duration: "overview 15 min",
-                },
-                {
-                  type: "resource",
-                  label: "Atlassian Design System (web SaaS)",
-                  url: "https://atlassian.design/",
-                  duration: "overview 10 min",
-                },
-              ],
-            },
-            {
-              id: "4-4",
-              number: "4.4",
-              title: "How a design system affects the project: a business perspective",
-              description:
-                "A design system reduces the cost of scaling a product. Shared components and tokens lower the time designers and developers spend on repeated decisions, maintain brand consistency across a product family, and reduce long-term design debt. Business analysts who understand this argument can have more informed conversations about scope and custom-UI requests with USRC stakeholders.",
-              estimatedTime: "~20 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "IBM Carbon — Consistency in the Cloud",
-                  url: "https://v10.carbondesignsystem.com/case-studies/consistency-in-the-cloud/",
-                  duration: "15–20 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "In-class Figma walkthrough",
-              body: "The facilitator opens a public Figma library, such as Material Design 3 Figma Kit or Atlassian, and walks through components, tokens, and their use on screens. Participants repeat the navigation in a real file.",
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on design systems, components, tokens, and industry systems (Material 3, Apple HIG, Atlassian). Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this module, a participant understands what a design system, component, token, and pattern are; can open a Figma library; and can find the right component for a requirement.",
-        },
       ],
     },
     /* ============================================================
-       PHASE 2 — CRITICAL THINKING (Modules 05–06)
+       PHASE 2 — AI PROTOTYPING (Modules 04–08)
        ============================================================ */
     {
       id: "phase-2",
       number: 2,
-      name: "Critical thinking",
-      tagline:
-        "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
-      modulesRange: "Modules 05–06",
-      duration: "~4 hours",
-      modules: [
-        {
-          id: "module-05",
-          number: "05",
-          title: "Nielsen's 10 heuristics and cognitive load",
-          description:
-            "The industry standard, plus Laws of UX. The group fills out the Heuristic Evaluation Workbook using real web and mobile examples.",
-          format: "Lecture and workbook practice",
-          duration: "120 min",
-          goal: "Learn a proven review method. After this module, business analysts can conduct a quick heuristic analysis and argue problems using specific principles, not intuition.",
-          lessons: [
-            {
-              id: "5-1",
-              number: "5.1",
-              title: "Nielsen's 10 heuristics: the canonical text",
-              description:
-                "This is the primary source. Formulated in 1994, still useful today. That is what a fundamental principle looks like.",
-              estimatedTime: "~6 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "10 Usability Heuristics for User Interface Design — NN/g, Jakob Nielsen",
-                  url: "https://www.nngroup.com/articles/ten-usability-heuristics/",
-                  duration: "6 min",
-                },
-              ],
-            },
-            {
-              id: "5-2",
-              number: "5.2",
-              title: "How to conduct a heuristic evaluation + free workbook",
-              description:
-                "NN/g's article and workbook give BAs a tool they can use immediately: analyze a requirement, a screenshot, or an AI-generated prototype and record the issue with evidence.",
-              estimatedTime: "~11 min + tool",
-              resources: [
-                {
-                  type: "article",
-                  label: "How to Conduct a Heuristic Evaluation — NN/g",
-                  url: "https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/",
-                  duration: "11 min",
-                },
-                {
-                  type: "workbook",
-                  label: "Heuristic Evaluation Workbook (PDF) — NN/g",
-                  url: "https://media.nngroup.com/media/articles/attachments/Heuristic_Evaluation_Workbook_-_Nielsen_Norman_Group.pdf",
-                  duration: "PDF",
-                },
-              ],
-            },
-            {
-              id: "5-3",
-              number: "5.3",
-              title: "Cognitive load: why \"too much\" breaks UX",
-              description:
-                "Cognitive load explains why overloaded screens fail. It matters even more on mobile, where space is limited and the task still needs to be clear.",
-              estimatedTime: "~11 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Minimize Cognitive Load to Maximize Usability — NN/g",
-                  url: "https://www.nngroup.com/articles/minimize-cognitive-load/",
-                  duration: "8 min",
-                },
-                {
-                  type: "video",
-                  label: "What Is Cognitive Load? — NN/g",
-                  url: "https://www.nngroup.com/videos/cognitive-load/",
-                  duration: "3 min",
-                },
-              ],
-            },
-            {
-              id: "5-4",
-              number: "5.4",
-              title: "Laws of UX: psychological laws in design",
-              description:
-                "Laws of UX collects principles such as Jakob's Law, Fitts' Law, and Hick's Law. Fitts' Law is especially useful when reviewing mobile touch targets.",
-              estimatedTime: "~20–30 min",
-              resources: [
-                {
-                  type: "resource",
-                  label: "Laws of UX — lawsofux.com (21 laws, free)",
-                  url: "https://lawsofux.com/",
-                  duration: "20–30 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "In-class workbook practice",
-              body: "The facilitator shows examples from real web and mobile applications side by side and asks: which UX solution here is more convenient, and why? The speaker demonstrates the difference between a decision that works and one that does not, then explains the design reasoning behind each. Participants then complete the Heuristic Evaluation Workbook for one product (first on web, then on mobile) and see how the same heuristic can surface differently across platforms.",
-            },
-            {
-              title: "In-class practice: from generic AI UI to a distinct design",
-              body: "The speaker generates a standard UI screen using an AI tool, then demonstrates step by step how to customize it into something more unique: adjusting layout density, applying a specific visual style, reworking the hierarchy, and removing generic patterns. Participants observe the decision-making process and discuss what made the result feel less generic.",
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on Nielsen's 10 heuristics, the Laws of UX, and cognitive load. Try applying the heuristic evaluation workbook to one interface of your choice. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this module, a participant knows the 10 heuristics, can apply them to a screen, understands cognitive load, and has completed a first heuristic audit.",
-        },
-        {
-          id: "module-06",
-          number: "06",
-          title: "Modern trends vs timeless principles",
-          description:
-            "State of UX 2026. AI as a new UI paradigm. Where AI-generated design looks right but breaks UX. Comparative audit of two products on web and mobile.",
-          format: "Lecture and comparative audit",
-          duration: "90 min",
-          goal: "Distinguish what looks modern from what works correctly. AI tools can generate trendy screens quickly. The BA still has to check the logic.",
-          lessons: [
-            {
-              id: "6-1",
-              number: "6.1",
-              title: "State of UX 2026: where the industry is heading",
-              description:
-                "NN/g's annual review gives context for where UX is moving and why quality review matters more in the AI-generation era.",
-              estimatedTime: "~12 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "State of UX 2026: Design Deeper to Differentiate — NN/g",
-                  url: "https://www.nngroup.com/articles/state-of-ux-2026/",
-                  duration: "12 min",
-                },
-              ],
-            },
-            {
-              id: "6-2",
-              number: "6.2",
-              title: "AI as a new UI paradigm: what it means for interfaces",
-              description:
-                "Jakob Nielsen's article explains how AI changes human-computer interaction. This helps BAs evaluate both AI-powered features and AI-generated prototypes.",
-              estimatedTime: "~10 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "AI: First New UI Paradigm in 60 Years — NN/g, Jakob Nielsen",
-                  url: "https://www.nngroup.com/articles/ai-paradigm/",
-                  duration: "10 min",
-                },
-              ],
-            },
-            {
-              id: "6-3",
-              number: "6.3",
-              title: "Where AI design looks right but breaks UX",
-              description:
-                "AI tools often produce screens that look plausible but fail the task. This module covers common failure patterns and the \"handmade design\" trust signal.",
-              estimatedTime: "~16 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "The UX Reckoning: Prepare for 2025 and Beyond — NN/g",
-                  url: "https://www.nngroup.com/articles/ux-reset-2025/",
-                  duration: "10 min",
-                },
-                {
-                  type: "article",
-                  label: "Handmade Designs: The New Trust Signal — NN/g (2025)",
-                  url: "https://www.nngroup.com/articles/handmade-designs/",
-                  duration: "6 min",
-                },
-              ],
-            },
-            {
-              id: "6-4",
-              number: "6.4",
-              title: "Analyzing quality designs: seeing why something works",
-              description:
-                "The module returns to NN/g visual design material, now with a different question: why does this screen follow the principle, and what would break if we changed it?",
-              estimatedTime: "~8 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Visual Design in UX: Study Guide — NN/g (Testing section)",
-                  url: "https://www.nngroup.com/articles/visual-design-in-ux-study-guide/",
-                  duration: "8 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "In-class comparative audit",
-              body: "The facilitator compares two similar product flows, such as two patient portals or two scheduling dashboards. The group checks trends, heuristics, cognitive load, and mobile behavior. The point is to decide which is better and explain why.",
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on State of UX 2026, the AI UI paradigm, and common AI design failures. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this phase, a participant can evaluate interfaces using heuristics, argue problems clearly, and recognize where AI-generated design commonly fails.",
-        },
-      ],
-    },
-    /* ============================================================
-       PHASE 3 — AI PROTOTYPING (Modules 07–11)
-       ============================================================ */
-    {
-      id: "phase-3",
-      number: 3,
       name: "AI prototyping",
       tagline:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
-      modulesRange: "Modules 07–11",
+      modulesRange: "Modules 04–08",
       duration: "~10 hours",
       modules: [
         {
-          id: "module-07",
-          number: "07",
+          id: "module-04",
+          number: "04",
           title: "Prototype logic and fidelity levels",
           description:
             "Fidelity levels and when to use each. Difference between user journey and user flow. Minimum viable prototype for validation. Live demo on web and mobile.",
@@ -863,8 +574,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Understand prototypes as validation tools, know which type fits which question, and treat web and mobile as different contexts.",
           lessons: [
             {
-              id: "7-1",
-              number: "7.1",
+              id: "4-1",
+              number: "4.1",
               title: "Lo-fi vs hi-fi: why \"expensive and polished\" is not always better",
               description:
                 "A prototype is a question, not an answer. The fidelity level depends on what you want to validate. For mobile, lo-fi can be enough: a paper sketch may already expose the main issue.",
@@ -885,8 +596,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "7-2",
-              number: "7.2",
+              id: "4-2",
+              number: "4.2",
               title: "User flow vs user journey: what the prototype must cover",
               description:
                 "A journey map describes the broader path. A user flow shows the screen-by-screen route. Requirements often describe a journey, but a prototype must show a flow. This gap causes many misunderstandings.",
@@ -901,8 +612,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "7-3",
-              number: "7.3",
+              id: "4-3",
+              number: "4.3",
               title: "How to prepare a prototype for testing with a user",
               description:
                 "Before showing a prototype, decide what you want to learn. For mobile work, show it on a real device when possible, not only on a laptop screen.",
@@ -936,8 +647,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant understands the difference between lo-fi and hi-fi, knows the difference between user journey and user flow, and has a user flow ready for later practice.",
         },
         {
-          id: "module-08",
-          number: "08",
+          id: "module-05",
+          number: "05",
           title: "From Business Analyst requirements to screens",
           description:
             "How to translate requirements into a structured prompt. Minimum viable prototype for validation. Iterating through AI chat. Different prompting approaches for web and mobile.",
@@ -946,8 +657,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Translate raw stakeholder requirements into a prototype structure. The skill is framing an idea so it can be validated, not producing a polished visual.",
           lessons: [
             {
-              id: "8-1",
-              number: "8.1",
+              id: "5-1",
+              number: "5.1",
               title: "How to write prompts for AI prototyping",
               description:
                 "Prompt quality drives prototype quality. A BA who clearly states context, target audience, scenario, platform, screens, features, and constraints gets better results from any AI tool.",
@@ -968,8 +679,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "8-2",
-              number: "8.2",
+              id: "5-2",
+              number: "5.2",
               title: "Mobile prompting: specifics and differences from web",
               description:
                 "A mobile prototype requires a different prompt. Specify iOS or Android, navigation type, touch element sizes, and the primary task. Otherwise, AI often generates a web interface with smaller fonts.",
@@ -984,8 +695,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "8-3",
-              number: "8.3",
+              id: "5-3",
+              number: "5.3",
               title: "Iteration: how to refine a prototype through AI chat",
               description:
                 "AI prototyping is a dialogue. The first result is almost never final. This lesson covers how to give feedback, when to start over, and when to edit by hand.",
@@ -1019,8 +730,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant can translate requirements into a structured prompt for web or mobile, iterate a prototype through chat, and produce a prototype draft from a project scenario.",
         },
         {
-          id: "module-09",
-          number: "09",
+          id: "module-06",
+          number: "06",
           title: "7 AI tools: overview, demo, first launch",
           description:
             "Google Stitch, Claude Design, Figma Make, Lovable, and v0 for UI prototyping. Claude Code and Cursor for AI development awareness. Live demo of each, with mobile specifics.",
@@ -1029,8 +740,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Understand what each tool is best for and get first-hand practice under facilitator guidance.",
           lessons: [
             {
-              id: "9-1",
-              number: "9.1",
+              id: "6-1",
+              number: "6.1",
               title: "Google Stitch: step-by-step guide + mobile specifics",
               description:
                 "Fastest start of the UI tools. Good for a first mobile prototype when you need a quick screen direction.",
@@ -1044,8 +755,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "9-2",
-              number: "9.2",
+              id: "6-2",
+              number: "6.2",
               title: "Claude Design: generating UX concepts and reviewing prototypes",
               description:
                 "Claude Design helps discuss an idea, generate solution options, or critique a prototype. It is useful before or alongside tools such as Figma Make and Lovable.",
@@ -1059,8 +770,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "9-3",
-              number: "9.3",
+              id: "6-3",
+              number: "6.3",
               title: "Figma Make: interactive prototype with screen navigation",
               description:
                 "Figma Make supports clicks, transitions, and UI behavior. It is useful when the prototype needs to feel closer to a product than a static mockup.",
@@ -1074,8 +785,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "9-4",
-              number: "9.4",
+              id: "6-4",
+              number: "6.4",
               title: "Lovable: full web app for stakeholder demos",
               description:
                 "Lovable is useful when a stakeholder needs to see how a web flow might work, not only click through a mockup. It generates front-end code with a shareable link.",
@@ -1095,8 +806,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "9-5",
-              number: "9.5",
+              id: "6-5",
+              number: "6.5",
               title: "v0: precise UI components by prompt",
               description:
                 "v0 generates React/Tailwind components such as tables, forms, cards, and dashboards. It works best when you need a specific UI element, not a full flow.",
@@ -1127,8 +838,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant has first-hand experience with the UI tools, knows when to use each one, and understands the difference between UI prototyping and AI development.",
         },
         {
-          id: "module-10",
-          number: "10",
+          id: "module-07",
+          number: "07",
           title: "Validating AI concepts",
           description:
             "Common AI prototype mistakes, separately for web and mobile. Heuristic audit of your own prototype. Decision tree: what to rework and what to keep.",
@@ -1137,8 +848,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Check AI prototype quality independently before showing it to a stakeholder. The BA is the first quality filter.",
           lessons: [
             {
-              id: "10-1",
-              number: "10.1",
+              id: "7-1",
+              number: "7.1",
               title: "Common AI prototype mistakes: web and mobile separately",
               description:
                 "AI repeats the same mistakes. On mobile: ignoring safe areas, undersized touch targets, and copied web navigation. On web: information overload and broken hierarchy.",
@@ -1159,8 +870,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "10-2",
-              number: "10.2",
+              id: "7-2",
+              number: "7.2",
               title: "Applying the heuristics workbook to your own prototype",
               description:
                 "Participants return to the workbook and apply it to their own AI prototype. This is the practical skill: say what the problem is, where it appears, which principle it violates, and what should change.",
@@ -1175,8 +886,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "10-3",
-              number: "10.3",
+              id: "7-3",
+              number: "7.3",
               title: "When to redo the prompt, when to edit, when to keep as is",
               description:
                 "Not every problem deserves the same response. Critical failures break the logic and require a new prompt. Smaller clarity issues may be edited directly. Some rough edges are acceptable at lo-fi level.",
@@ -1204,8 +915,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant can identify common AI prototype mistakes, argue them with UX principles, and complete a heuristic audit of their own prototype.",
         },
         {
-          id: "module-11",
-          number: "11",
+          id: "module-08",
+          number: "08",
           title: "Prototype as requirements defense: final project",
           description:
             "Full cycle: requirements, journey map, AI prototype, heuristic audit, stakeholder presentation scenario, and group defense.",
@@ -1214,8 +925,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           goal: "Complete the full business analyst cycle from requirements to prototype and defend it in front of the group.",
           lessons: [
             {
-              id: "11-1",
-              number: "11.1",
+              id: "8-1",
+              number: "8.1",
               title: "How to present a prototype to a stakeholder: what to say, what not to",
               description:
                 "A prototype is a tool for asking questions. The right framing is \"help us verify that we understood this correctly.\" For mobile work, show it on a real device when possible.",
@@ -1230,8 +941,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "11-2",
-              number: "11.2",
+              id: "8-2",
+              number: "8.2",
               title: "Documenting decisions after a stakeholder session",
               description:
                 "After a prototype review, the stakeholder gives feedback. The BA needs to capture what changes in requirements, what needs another validation pass, and what belongs in the next iteration.",
@@ -1264,6 +975,263 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         },
       ],
     },
+    /* ============================================================
+       PHASE 3 — ADVANCED: CRITICAL THINKING (Modules 09–11)
+       ============================================================ */
+    {
+      id: "phase-3",
+      number: 3,
+      name: "Advanced",
+      tagline:
+        "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
+      modulesRange: "Modules 09–11",
+      duration: "~4 hours",
+      modules: [
+        {
+          id: "module-09",
+          number: "09",
+          title: "Nielsen's 10 heuristics and cognitive load",
+          description:
+            "The industry standard, plus Laws of UX. The group fills out the Heuristic Evaluation Workbook using real web and mobile examples.",
+          format: "Lecture and workbook practice",
+          duration: "120 min",
+          goal: "Learn a proven review method. After this module, business analysts can conduct a quick heuristic analysis and argue problems using specific principles, not intuition.",
+          lessons: [
+            {
+              id: "9-1",
+              number: "9.1",
+              title: "How to conduct a heuristic evaluation + free workbook",
+              description:
+                "NN/g's article and workbook give BAs a tool they can use immediately: analyze a requirement, a screenshot, or an AI-generated prototype and record the issue with evidence.",
+              estimatedTime: "~11 min + tool",
+              resources: [
+                {
+                  type: "article",
+                  label: "How to Conduct a Heuristic Evaluation — NN/g",
+                  url: "https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/",
+                  duration: "11 min",
+                },
+                {
+                  type: "workbook",
+                  label: "Heuristic Evaluation Workbook (PDF) — NN/g",
+                  url: "https://media.nngroup.com/media/articles/attachments/Heuristic_Evaluation_Workbook_-_Nielsen_Norman_Group.pdf",
+                  duration: "PDF",
+                },
+              ],
+            },
+            {
+              id: "9-2",
+              number: "9.2",
+              title: "Cognitive load: why \"too much\" breaks UX",
+              description:
+                "Cognitive load explains why overloaded screens fail. It matters even more on mobile, where space is limited and the task still needs to be clear.",
+              estimatedTime: "~11 min",
+              resources: [
+                {
+                  type: "article",
+                  label: "Minimize Cognitive Load to Maximize Usability — NN/g",
+                  url: "https://www.nngroup.com/articles/minimize-cognitive-load/",
+                  duration: "8 min",
+                },
+                {
+                  type: "video",
+                  label: "What Is Cognitive Load? — NN/g",
+                  url: "https://www.nngroup.com/videos/cognitive-load/",
+                  duration: "3 min",
+                },
+              ],
+            },
+            {
+              id: "9-3",
+              number: "9.3",
+              title: "Laws of UX: psychological laws in design",
+              description:
+                "Laws of UX collects principles such as Jakob's Law, Fitts' Law, and Hick's Law. Fitts' Law is especially useful when reviewing mobile touch targets.",
+              estimatedTime: "~20–30 min",
+              resources: [
+                {
+                  type: "resource",
+                  label: "Laws of UX — lawsofux.com (21 laws, free)",
+                  url: "https://lawsofux.com/",
+                  duration: "20–30 min",
+                },
+              ],
+            },
+          ],
+          workshops: [
+            {
+              title: "In-class workbook practice",
+              body: "The facilitator shows examples from real web and mobile applications side by side and asks: which UX solution here is more convenient, and why? The speaker demonstrates the difference between a decision that works and one that does not, then explains the design reasoning behind each. Participants then complete the Heuristic Evaluation Workbook for one product (first on web, then on mobile) and see how the same heuristic can surface differently across platforms.",
+            },
+            {
+              title: "In-class practice: from generic AI UI to a distinct design",
+              body: "The speaker generates a standard UI screen using an AI tool, then demonstrates step by step how to customize it into something more unique: adjusting layout density, applying a specific visual style, reworking the hierarchy, and removing generic patterns. Participants observe the decision-making process and discuss what made the result feel less generic.",
+            },
+          ],
+          homework: {
+            body: "Review the lesson resources on Nielsen's 10 heuristics, the Laws of UX, and cognitive load. Try applying the heuristic evaluation workbook to one interface of your choice. Independent practice exercises will be added before finalizing the learning program.",
+          },
+          outcome:
+            "After this module, a participant knows the 10 heuristics, can apply them to a screen, understands cognitive load, and has completed a first heuristic audit.",
+        },
+        {
+          id: "module-10",
+          number: "10",
+          title: "Modern trends vs timeless principles",
+          description:
+            "State of UX 2026. AI as a new UI paradigm. Where AI-generated design looks right but breaks UX. Comparative audit of two products on web and mobile.",
+          format: "Lecture and comparative audit",
+          duration: "90 min",
+          goal: "Distinguish what looks modern from what works correctly. AI tools can generate trendy screens quickly. The BA still has to check the logic.",
+          lessons: [
+            {
+              id: "10-1",
+              number: "10.1",
+              title: "State of UX 2026: where the industry is heading",
+              description:
+                "NN/g's annual review gives context for where UX is moving and why quality review matters more in the AI-generation era.",
+              estimatedTime: "~12 min",
+              resources: [
+                {
+                  type: "article",
+                  label: "State of UX 2026: Design Deeper to Differentiate — NN/g",
+                  url: "https://www.nngroup.com/articles/state-of-ux-2026/",
+                  duration: "12 min",
+                },
+              ],
+            },
+            {
+              id: "10-2",
+              number: "10.2",
+              title: "AI as a new UI paradigm: what it means for interfaces",
+              description:
+                "Jakob Nielsen's article explains how AI changes human-computer interaction. This helps BAs evaluate both AI-powered features and AI-generated prototypes.",
+              estimatedTime: "~10 min",
+              resources: [
+                {
+                  type: "article",
+                  label: "AI: First New UI Paradigm in 60 Years — NN/g, Jakob Nielsen",
+                  url: "https://www.nngroup.com/articles/ai-paradigm/",
+                  duration: "10 min",
+                },
+              ],
+            },
+            {
+              id: "10-3",
+              number: "10.3",
+              title: "Where AI design looks right but breaks UX",
+              description:
+                "AI tools often produce screens that look plausible but fail the task. This module covers common failure patterns and the \"handmade design\" trust signal.",
+              estimatedTime: "~16 min",
+              resources: [
+                {
+                  type: "article",
+                  label: "The UX Reckoning: Prepare for 2025 and Beyond — NN/g",
+                  url: "https://www.nngroup.com/articles/ux-reset-2025/",
+                  duration: "10 min",
+                },
+                {
+                  type: "article",
+                  label: "Handmade Designs: The New Trust Signal — NN/g (2025)",
+                  url: "https://www.nngroup.com/articles/handmade-designs/",
+                  duration: "6 min",
+                },
+              ],
+            },
+            {
+              id: "10-4",
+              number: "10.4",
+              title: "Analyzing quality designs: seeing why something works",
+              description:
+                "The module returns to NN/g visual design material, now with a different question: why does this screen follow the principle, and what would break if we changed it?",
+              estimatedTime: "~8 min",
+              resources: [
+                {
+                  type: "article",
+                  label: "Visual Design in UX: Study Guide — NN/g (Testing section)",
+                  url: "https://www.nngroup.com/articles/visual-design-in-ux-study-guide/",
+                  duration: "8 min",
+                },
+              ],
+            },
+          ],
+          workshops: [
+            {
+              title: "In-class comparative audit",
+              body: "The facilitator compares two similar product flows, such as two patient portals or two scheduling dashboards. The group checks trends, heuristics, cognitive load, and mobile behavior. The point is to decide which is better and explain why.",
+            },
+          ],
+          homework: {
+            body: "Review the lesson resources on State of UX 2026, the AI UI paradigm, and common AI design failures. Independent practice exercises will be added before finalizing the learning program.",
+          },
+          outcome:
+            "After this phase, a participant can evaluate interfaces using heuristics, argue problems clearly, and recognize where AI-generated design commonly fails.",
+        },
+
+        {
+          id: "module-11",
+          number: "11",
+          title: "Design system: components, tokens, how to read one",
+          description:
+            "What a design system is and why business analysts need it. Components, tokens, styles, Figma libraries, and public systems such as Material 3, Apple HIG, and Atlassian.",
+          format: "Lecture and Figma file walkthrough",
+          duration: "90 min",
+          goal: "Understand how a design system affects requirements and prototyping. Business analysts should be able to read a system as a shared vocabulary for working with design and development.",
+          lessons: [
+            {
+              id: "11-1",
+              number: "11.1",
+              title: "What is a design system and why does it matter to business analysts",
+              description:
+                "A design system is the shared language between designers and developers, not just a component library. Business analysts who understand that language write more precise requirements and avoid unnecessary custom UI.",
+              estimatedTime: "~15 min",
+              resources: [
+                {
+                  type: "article",
+                  label: "Design Systems 101 — NN/g",
+                  url: "https://www.nngroup.com/articles/design-systems-101/",
+                  duration: "8 min",
+                },
+                {
+                  type: "article",
+                  label: "Design Systems vs. Style Guides — NN/g",
+                  url: "https://www.nngroup.com/articles/design-systems-vs-style-guides/",
+                  duration: "7 min",
+                },
+              ],
+            },
+            {
+              id: "11-2",
+              number: "11.2",
+              title: "Components, tokens, patterns: core terminology",
+              description:
+                "A button is a component. #0058E9 can be a color token. A login form is a pattern. These terms let a BA write a precise requirement: \"use the standard button component,\" not \"make it look like the rest of the app.\"",
+              estimatedTime: "~8 min",
+              resources: [
+                {
+                  type: "article",
+                  label: "Front-End Style Guides: Definition, Requirements — NN/g",
+                  url: "https://www.nngroup.com/articles/front-end-style-guides/",
+                  duration: "8 min",
+                },
+              ],
+            },
+          ],
+          workshops: [
+            {
+              title: "In-class Figma walkthrough",
+              body: "The facilitator opens a public Figma library, such as Material Design 3 Figma Kit or Atlassian, and walks through components, tokens, and their use on screens. Participants repeat the navigation in a real file.",
+            },
+          ],
+          homework: {
+            body: "Review the lesson resources on design systems, components, tokens, and industry systems (Material 3, Apple HIG, Atlassian). Independent practice exercises will be added before finalizing the learning program.",
+          },
+          outcome:
+            "After this module, a participant understands what a design system, component, token, and pattern are; can open a Figma library; and can find the right component for a requirement.",
+        },
+      ],
+    },
+    
   ],
 };
 
@@ -1279,6 +1247,7 @@ export type Tool = {
   category: ToolCategory;
   group: "UI" | "AI Dev";
   tagline: string;
+  logo: string;
 };
 
 export const tools: { heading: string; items: Tool[] } = {
@@ -1291,6 +1260,7 @@ export const tools: { heading: string; items: Tool[] } = {
       category: "UI / Mobile",
       group: "UI",
       tagline: "Fastest start. Text to mobile screen in about 90 seconds. Gemini models.",
+      logo: "/tools/google-stitch.jpg",
     },
     {
       id: "claude-design",
@@ -1299,6 +1269,7 @@ export const tools: { heading: string; items: Tool[] } = {
       category: "UI / Concepts",
       group: "UI",
       tagline: "UX consultant and UI concept generator. Useful alongside other tools.",
+      logo: "/tools/claude.png",
     },
     {
       id: "figma-make",
@@ -1307,6 +1278,7 @@ export const tools: { heading: string; items: Tool[] } = {
       category: "UI / Interactive",
       group: "UI",
       tagline: "Interactive prototype with navigation. Web and mobile. Close to a real product experience.",
+      logo: "/tools/figma-make.png",
     },
     {
       id: "lovable",
@@ -1315,6 +1287,7 @@ export const tools: { heading: string; items: Tool[] } = {
       category: "UI / Live demo",
       group: "UI",
       tagline: "Live web app for demos. Generates front-end code.",
+      logo: "/tools/lovable.png",
     },
     {
       id: "v0",
@@ -1323,6 +1296,7 @@ export const tools: { heading: string; items: Tool[] } = {
       category: "UI / Components",
       group: "UI",
       tagline: "React/Tailwind components. Strong for specific interface elements.",
+      logo: "/tools/v0.png",
     },
     {
       id: "claude-code",
@@ -1331,6 +1305,7 @@ export const tools: { heading: string; items: Tool[] } = {
       category: "AI Dev / CLI",
       group: "AI Dev",
       tagline: "AI development agent via terminal. Included so BAs understand how developers may use it.",
+      logo: "/tools/claude.png",
     },
     {
       id: "cursor",
@@ -1339,6 +1314,7 @@ export const tools: { heading: string; items: Tool[] } = {
       category: "AI Dev / IDE",
       group: "AI Dev",
       tagline: "AI-powered code editor with chat. Included so BAs understand when technical teams may use it.",
+      logo: "/tools/cursor.png",
     },
   ],
 };

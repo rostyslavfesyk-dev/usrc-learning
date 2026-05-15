@@ -226,7 +226,7 @@ export function CurriculumAccordion() {
           </p>
         </div>
 
-        <div className="mt-12 space-y-16">
+        <div className="mt-6 space-y-16">
           {curriculum.phases.map((phase) => (
             <div key={phase.id} data-reveal>
               {phase.number !== 1 && (

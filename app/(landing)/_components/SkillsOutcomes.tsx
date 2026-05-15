@@ -1,39 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import {
-  RiMapLine,
-  RiLayout3Line,
-  RiPencilRulerLine,
-  RiSearchEyeLine,
-  RiSlideshowLine,
-  RiPenNibLine,
-  RiRobot2Line,
-  RiCheckboxCircleLine,
-  RiPresentationLine,
-  RiFileTextLine,
-} from "@remixicon/react";
 import { outcomes } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
-type IconComponent = typeof RiMapLine;
-
-const icons: IconComponent[] = [
-  RiMapLine,
-  RiLayout3Line,
-  RiPencilRulerLine,
-  RiSearchEyeLine,
-  RiSlideshowLine,
-  RiPenNibLine,
-  RiRobot2Line,
-  RiCheckboxCircleLine,
-  RiPresentationLine,
-  RiFileTextLine,
-];
-
 export function SkillsOutcomes() {
   const ref = useRef<HTMLElement>(null);
-  useStagger(ref, "[data-reveal]", { stagger: 0.04 });
+  useStagger(ref, "[data-reveal]", { stagger: 0.07 });
 
   return (
     <section
@@ -54,22 +27,39 @@ export function SkillsOutcomes() {
           </h2>
         </div>
 
-        <ul className="mt-12 grid gap-x-10 gap-y-5 md:grid-cols-2">
-          {outcomes.items.map((text, idx) => {
-            const Icon = icons[idx];
-            return (
-              <li key={idx} data-reveal className="flex items-start gap-3.5">
-                <span
-                  aria-hidden="true"
-                  className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-usrc-crimson/10 text-usrc-crimson"
-                >
-                  <Icon size={18} />
-                </span>
-                <p className="text-body leading-relaxed text-fg-primary">{text}</p>
-              </li>
-            );
-          })}
-        </ul>
+        <dl className="mt-12">
+          {outcomes.groups.map((group) => (
+            <div
+              key={group.label}
+              data-reveal
+              className="grid grid-cols-1 gap-4 border-t border-border py-8 md:grid-cols-[200px_1fr] md:gap-12"
+            >
+              <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-usrc-crimson md:pt-0.5">
+                {group.label}
+              </dt>
+              <dd>
+                <ul className="space-y-3">
+                  {group.items.map((item) => (
+                    <li key={item.text} className="flex items-start gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-usrc-navy/40"
+                      />
+                      {item.highlight ? (
+                        <span className="inline rounded bg-usrc-navy/10 px-1.5 py-0.5 text-body leading-relaxed text-usrc-navy">
+                          {item.text}
+                        </span>
+                      ) : (
+                        <span className="text-body leading-relaxed text-fg-primary">{item.text}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))}
+          <div className="border-t border-border" />
+        </dl>
       </div>
     </section>
   );

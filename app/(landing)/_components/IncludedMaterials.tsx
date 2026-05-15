@@ -28,19 +28,17 @@ export function IncludedMaterials() {
           </h2>
         </div>
 
-        <ul className="mt-10 flex flex-wrap gap-2.5">
+        <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4">
           {includedMaterials.items.map((item) => (
             <li
               key={item}
               data-reveal
-              className="inline-flex items-center gap-2 rounded-pill bg-surface-muted px-4 py-2 text-body-sm font-medium text-fg-primary"
+              className="flex flex-col rounded-lg border border-border bg-surface-subtle p-5"
             >
-              <RiFileTextLine
-                aria-hidden="true"
-                size={16}
-                className="text-usrc-crimson"
-              />
-              {item}
+              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-usrc-crimson/10 text-usrc-crimson">
+                <RiFileTextLine aria-hidden="true" size={20} />
+              </span>
+              <p className="mt-4 text-body-sm font-medium leading-snug text-fg-primary">{item}</p>
             </li>
           ))}
         </ul>
