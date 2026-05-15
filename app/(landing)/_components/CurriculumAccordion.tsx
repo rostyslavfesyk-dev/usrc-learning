@@ -22,16 +22,18 @@ function TimelineStep({
   label,
   estimate,
   hasLine,
+  loose = false,
   children,
 }: {
   label: string;
   estimate?: string;
   hasLine: boolean;
+  loose?: boolean;
   children: React.ReactNode;
 }) {
   const Icon = stepIcons[label] ?? RiSlideshowLine;
   return (
-    <div className="relative flex gap-4 pb-6 last:pb-0">
+    <div className={`relative flex gap-4 last:pb-0 ${loose ? "pb-10" : "pb-6"}`}>
       <div className="flex flex-col items-center">
         <span className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-fg-secondary">
           <Icon size={13} aria-hidden="true" />
@@ -142,6 +144,9 @@ function ModuleRow({
                   const sectionLessons = section.lessonIds
                     .map((id) => lessonMap!.get(id))
                     .filter((l): l is Lesson => !!l);
+                  const isLastSection = si === m.sections!.length - 1;
+                  // activity is a "break" step when something follows it (next section or homework)
+                  const activityIsBreak = !isLastSection || !!m.homework;
                   return (
                     <Fragment key={si}>
                       <TimelineStep label="Lecture" estimate="~30 min" hasLine={!!section.activity}>
@@ -159,6 +164,7 @@ function ModuleRow({
                           label={section.activity.label}
                           estimate={stepEstimates[section.activity.label]}
                           hasLine={false}
+                          loose={activityIsBreak}
                         >
                           <p className="text-[13px] leading-relaxed text-fg-secondary">{section.activity.body}</p>
                         </TimelineStep>
@@ -196,6 +202,7 @@ function ModuleRow({
                     label={a.label}
                     estimate={stepEstimates[a.label]}
                     hasLine={false}
+                    loose={i < activities.length - 1}
                   >
                     <p className="text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
                   </TimelineStep>
