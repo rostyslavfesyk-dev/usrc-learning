@@ -60,15 +60,15 @@ export const hero = {
   subheadline:
     "A hands-on program for U.S. Renal Care BA, BSA, and technical teams.",
   bullets: [
-    { title: "Understand UI and UX theory", description: "Design principles, visual hierarchy, and layout" },
-    { title: "Learn mobile and web anatomy", description: "How screens are structured, patterns, and components" },
-    { title: "Visualise and prompt ideas", description: "Build AI prototypes and validate decisions fast" },
-    { title: "Launch and demo your work", description: "Run prototypes and present them to stakeholders" },
+    { title: "Understand UX in a clinical context", description: "How patients, nurses, and doctors think about screens differently" },
+    { title: "Learn web and mobile anatomy", description: "How healthcare screens are structured, patterns, and flows" },
+    { title: "Sketch and prompt fast", description: "Turn clinical requirements into AI prototypes in minutes" },
+    { title: "Test and validate with clinicians", description: "Run quick sessions with doctors and capture what needs to change" },
   ],
   meta: [
     { value: "11", label: "modules" },
     { value: "~17h", label: "of learning" },
-    { value: "Web + Mobile", label: "" },
+    { value: "Web + Mobile + Clinic", label: "" },
   ],
 };
 
@@ -204,10 +204,10 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           number: "01",
           title: "How users think",
           description:
-            "UX as behavioral logic. Mental models, jobs-to-be-done, user journey, and the gap between business analyst expectations and end-user needs.",
+            "UX as behavioral logic. Mental models, jobs-to-be-done, user journey, and the gap between BA expectations and what clinical staff — nurses, doctors, patients — actually need from a screen.",
           format: "Lecture and workshop",
           duration: "90 min",
-          goal: "Understand that UX is not style or taste. UX is how people understand a task, what they expect from the product, and where the interface helps or gets in the way.",
+          goal: "Understand that UX is not style or taste. It is how a nurse, doctor, or patient understands a task, what they expect from the product, and where the interface helps or gets in the way.",
           lessons: [
             {
               id: "1-1",
@@ -549,12 +549,12 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         {
           id: "module-04",
           number: "04",
-          title: "From Business Analyst requirements to screens",
+          title: "From clinical requirements to screens",
           description:
-            "How to translate requirements into a structured prompt. Minimum viable prototype for validation. Iterating through AI chat. Different prompting approaches for web and mobile.",
+            "How to translate requirements gathered from doctors, nurses, or admins into a structured prompt. Minimum viable prototype for in-clinic validation. Iterating through AI chat for web and mobile.",
           format: "Practice and prompting",
           duration: "90 min",
-          goal: "Translate raw stakeholder requirements into a prototype structure. The skill is framing an idea so it can be validated, not producing a polished visual.",
+          goal: "Translate raw clinical requirements into a prototype structure. The skill is framing what you heard in a corridor conversation so it can be validated on a screen, not producing a polished visual.",
           lessons: [
             {
               id: "4-1",
@@ -648,42 +648,19 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         {
           id: "module-05",
           number: "05",
-          title: "7 AI tools: overview, demo, first launch",
+          title: "Claude: AI design and development tools",
           description:
-            "Google Stitch, Claude Design, Figma Make, Lovable, and v0 for UI prototyping. Claude Code and Cursor for AI development awareness. Live demo of each, with mobile specifics.",
+            "Claude Design for UX concepts and prototype critique. Claude Code for AI development awareness. Live demo with a real USRC flow.",
           format: "AI tools and live demo",
-          duration: "120 min",
-          goal: "Understand what each tool is best for and get first-hand practice under facilitator guidance.",
+          duration: "60 min",
+          goal: "Get first-hand experience with Claude Design and understand how Claude Code fits into a developer's workflow.",
           lessons: [
             {
               id: "5-1",
               number: "5.1",
-              title: "AI tools overview",
-              description:
-                "A map of the tools covered in this module: what each one is for, where it fits in the prototyping process, and how to choose between them for a given task.",
-              resources: [],
-            },
-            {
-              id: "5-2",
-              number: "5.2",
-              title: "Google Stitch: step-by-step guide + mobile specifics",
-              description:
-                "Fastest start of the UI tools. Good for a first mobile prototype when you need a quick screen direction.",
-              resources: [
-                {
-                  type: "article",
-                  label: "Design Mobile App UI with Google Stitch — Codecademy",
-                  url: "https://www.codecademy.com/article/google-stitch-tutorial-ai-powered-ui-design-tool",
-                  duration: "15 min",
-                },
-              ],
-            },
-            {
-              id: "5-3",
-              number: "5.3",
               title: "Claude Design: generating UX concepts and reviewing prototypes",
               description:
-                "Claude Design helps discuss an idea, generate solution options, or critique a prototype. It is useful before or alongside tools such as Figma Make and Lovable.",
+                "Claude Design helps discuss an idea, generate solution options, or critique a prototype. It is useful before or alongside other prototyping tools.",
               resources: [
                 {
                   type: "practice",
@@ -694,72 +671,29 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "5-4",
-              number: "5.4",
-              title: "Figma Make: interactive prototype with screen navigation",
+              id: "5-2",
+              number: "5.2",
+              title: "Claude Code: what developers do after the prototype is validated",
               description:
-                "Figma Make supports clicks, transitions, and UI behavior. It is useful when the prototype needs to feel closer to a product than a static mockup.",
-              resources: [
-                {
-                  type: "article",
-                  label: "Figma Make Tutorial — Codecademy",
-                  url: "https://www.codecademy.com/article/figma-make-tutorial",
-                  duration: "15 min",
-                },
-              ],
-            },
-            {
-              id: "5-5",
-              number: "5.5",
-              title: "Lovable: full web app for stakeholder demos",
-              description:
-                "Lovable is useful when a stakeholder needs to see how a web flow might work, not only click through a mockup. It generates front-end code with a shareable link.",
-              resources: [
-                {
-                  type: "article",
-                  label: "Getting Started with Lovable: No-Hype Tips — UX Collective",
-                  url: "https://uxdesign.cc/getting-started-with-lovable-the-no-hype-beginner-tips-to-building-with-ai-36460d46249d",
-                  duration: "10 min",
-                },
-                {
-                  type: "official docs",
-                  label: "From Idea to Working App — Lovable Docs",
-                  url: "https://docs.lovable.dev/tips-tricks/from-idea-to-app",
-                  duration: "7 min",
-                },
-              ],
-            },
-            {
-              id: "5-6",
-              number: "5.6",
-              title: "v0: precise UI components by prompt",
-              description:
-                "v0 generates React/Tailwind components such as tables, forms, cards, and dashboards. It works best when you need a specific UI element, not a full flow.",
-              resources: [
-                {
-                  type: "article",
-                  label: "v0 by Vercel: A Guide With Demo Project — DataCamp",
-                  url: "https://www.datacamp.com/tutorial/vercel-v0",
-                  duration: "12 min",
-                },
-              ],
+                "Claude Code is an AI development agent used via terminal. Included so BAs understand how developers may take a validated prototype and move it toward implementation.",
+              resources: [],
             },
           ],
           workshops: [
             {
               title: "In-class live demo",
-              body: "The facilitator demonstrates each UI tool using one scenario, such as a mobile app for scheduling a service or a patient portal flow. Participants compare speed, UI quality, mobile behavior, and editability. Then the group sees a short Claude Code and Cursor demo: what a developer does with these tools after the prototype is validated.",
+              body: "The facilitator demonstrates Claude Design using a USRC patient flow scenario — for example, appointment scheduling or a lab result view. Participants see how to prompt for a concept, critique the output, and iterate. A short Claude Code demo follows to show what happens after a prototype is approved.",
             },
             {
-              title: "In-class practice: USRC patient app flow across tools",
-              body: "The facilitator picks one flow from the USRC patient mobile app (such as appointment scheduling or a lab result view) and demonstrates how to prototype it using two or three of the tools covered today. Participants compare the speed, UI quality, and mobile behavior of each tool on the same real scenario. Discussion: which tool would you choose for this kind of project, and why?",
+              title: "In-class practice: prototype and critique with Claude Design",
+              body: "Participants use Claude Design to generate a concept for a USRC flow of their choice. Then they swap outputs and critique each other's results using the criteria from earlier modules — hierarchy, clarity, mobile behaviour. Discussion: where did Claude get it right, and where did it need correction?",
             },
           ],
           homework: {
-            body: "Explore the AI tools covered in class using the guides linked in the lessons. Try generating at least one prototype using a tool of your choice. Independent practice exercises will be added before finalizing the learning program.",
+            body: "Use Claude Design to prototype one flow from your current or recent project. Write two to three sentences on what the tool got right and what you had to correct or reject.",
           },
           outcome:
-            "After this module, a participant has first-hand experience with the UI tools, knows when to use each one, and understands the difference between UI prototyping and AI development.",
+            "After this module, a participant can use Claude Design to generate and critique UI concepts, and can explain to a stakeholder or developer what Claude Code is used for.",
         },
         {
           id: "module-06",
@@ -853,7 +787,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               number: "7.1",
               title: "Web prototype testing: what to decide upfront",
               description:
-                "Before showing a web prototype, decide what you want to learn. Define a single hypothesis, pick the right fidelity, and remove navigation that would distract the reviewer.",
+                "Before showing a web prototype to a clinician or stakeholder, decide what you want to learn. Define a single hypothesis, pick the right fidelity, and remove navigation that would distract the reviewer.",
               resources: [
                 {
                   type: "video",
@@ -874,7 +808,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               number: "7.2",
               title: "Mobile prototype testing: device, touch, and framing specifics",
               description:
-                "Show a mobile prototype on a real device when possible — not only on a laptop screen. Touch targets, scroll behavior, and screen size all influence what feedback you get.",
+                "Clinical staff often use phones and tablets at the point of care. Show a mobile prototype on a real device — touch targets, scroll behavior, and screen size all influence what feedback you get from a nurse or doctor.",
               resources: [
                 {
                   type: "article",

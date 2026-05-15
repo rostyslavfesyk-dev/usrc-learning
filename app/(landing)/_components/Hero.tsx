@@ -132,7 +132,7 @@ export function Hero() {
                 />
                 <div>
                   <p className="text-body font-semibold leading-snug text-white">{b.title}</p>
-                  <p className="mt-0.5 max-w-[216px] text-pretty text-body-sm leading-relaxed text-white/70">{b.description}</p>
+                  <p className="mt-0.5 max-w-[240px] text-pretty text-body-sm leading-relaxed text-white/70">{b.description}</p>
                 </div>
               </li>
             ))}

@@ -7,7 +7,7 @@ import { useStagger } from "../../_lib/animations";
 const blocks = [
   {
     label: "Audience",
-    body: "Business Analysts, BSAs, and product-facing team members who work with requirements and user flows.",
+    body: "Business Analysts, BSAs, and product-facing team members who gather requirements from clinical staff and work on healthcare software.",
     Icon: RiGroupLine,
   },
   {
@@ -17,7 +17,7 @@ const blocks = [
   },
   {
     label: "Scope",
-    body: "Practical UX/UI judgment and AI prototyping literacy for requirements work — not production design or engineering.",
+    body: "Practical UX/UI judgment and AI prototyping for clinical requirements work — sketch, test, and validate with doctors and nurses fast.",
     Icon: RiCompassLine,
   },
 ];
