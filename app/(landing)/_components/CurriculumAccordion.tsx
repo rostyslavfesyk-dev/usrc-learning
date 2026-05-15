@@ -1,49 +1,43 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiPencilLine, RiBookOpenLine } from "@remixicon/react";
+import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiPencilLine, RiBookOpenLine, RiSlideshowLine } from "@remixicon/react";
 import { curriculum, type Module } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
-type TagItem = { label: string; body: string };
-
-const tagIcons: Record<string, React.ElementType> = {
-  "Workshop": RiGroupLine,
+const stepIcons: Record<string, React.ElementType> = {
+  Lecture: RiSlideshowLine,
+  "Online Workshop": RiGroupLine,
   "In-class practice": RiPencilLine,
-  "Homework": RiBookOpenLine,
+  Homework: RiBookOpenLine,
 };
 
-function ActivityCard({ label, body }: TagItem) {
-  const Icon = tagIcons[label];
+function TimelineStep({
+  label,
+  hasLine,
+  children,
+}: {
+  label: string;
+  hasLine: boolean;
+  children: React.ReactNode;
+}) {
+  const Icon = stepIcons[label] ?? RiSlideshowLine;
   return (
-    <div className="rounded-md border border-border bg-surface-subtle px-4 py-3">
-      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-fg-secondary">
-        {Icon && <Icon size={12} aria-hidden="true" />}
-        {label}
-      </p>
-      <p className="mt-1.5 line-clamp-3 text-body-sm leading-relaxed text-fg-secondary">{body}</p>
+    <div className="relative flex gap-4 pb-6 last:pb-0">
+      <div className="flex flex-col items-center">
+        <span className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-fg-secondary">
+          <Icon size={13} aria-hidden="true" />
+        </span>
+        {hasLine && <div className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-px bg-border" />}
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted leading-none mt-1.5">
+          {label}
+        </p>
+        {children}
+      </div>
     </div>
   );
-}
-
-function buildTags(m: Module): { lessonId: string; tags: TagItem[] }[] {
-  const workshops: TagItem[] = m.workshops?.map((w) => ({
-    label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Workshop",
-    body: w.body,
-  })) ?? [];
-
-  const slots = m.lessons.map((l) => ({ lessonId: l.id, tags: [] as TagItem[] }));
-  if (slots.length === 0) return slots;
-
-  const step = slots.length / (workshops.length + 1);
-  workshops.forEach((tag, ai) => {
-    const idx = Math.min(Math.round(step * (ai + 1)) - 1, slots.length - 1);
-    slots[idx].tags.push(tag);
-  });
-
-  if (m.homework) slots[slots.length - 1].tags.push({ label: "Homework", body: m.homework.body });
-
-  return slots;
 }
 
 function ModuleRow({
@@ -57,7 +51,18 @@ function ModuleRow({
 }) {
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
-  const tagSlots = buildTags(m);
+
+  const order: Record<string, number> = { "In-class practice": 0, "Online Workshop": 1, Homework: 2 };
+
+  const activities = [
+    ...(m.workshops?.map((w) => ({
+      label: w.title.toLowerCase().includes("practice") ? "In-class practice" : "Online Workshop",
+      body: w.body,
+    })) ?? []),
+    ...(m.homework ? [{ label: "Homework", body: m.homework.body }] : []),
+  ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
+
+  const totalSteps = 1 + activities.length;
 
   return (
     <li className="border-b border-border last:border-b-0">
@@ -80,7 +85,7 @@ function ModuleRow({
           <h3 className="text-[length:var(--text-h5)] font-semibold leading-snug tracking-tight text-fg-primary">
             {m.title}
           </h3>
-          <p className="mt-1 hidden max-w-xl text-body-sm leading-relaxed text-fg-secondary md:line-clamp-2">
+          <p className="mt-1 hidden max-w-xl text-[13px] leading-relaxed text-fg-secondary md:line-clamp-2">
             {m.description}
           </p>
         </div>
@@ -109,39 +114,34 @@ function ModuleRow({
         <div className="overflow-hidden min-w-0">
           <div
             {...(isOpen ? {} : { inert: true })}
-            className="pl-[64px] pr-4 pb-6 pt-2 md:pl-[84px] md:pr-6 md:pb-8"
+            className="pl-[64px] pr-4 pb-6 pt-4 md:pl-[84px] md:pr-6 md:pb-8"
           >
-            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted">
-              What you'll learn
-            </p>
-            <ul className="space-y-4">
-              {m.lessons.map((lesson) => (
-                <li key={lesson.id} className="flex items-start gap-3">
-                  <RiCheckLine
-                    aria-hidden="true"
-                    size={16}
-                    className="mt-0.5 shrink-0 text-usrc-crimson"
-                  />
-                  <span className="text-body-sm leading-relaxed text-fg-primary">
-                    {lesson.title}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            {tagSlots.some((s) => s.tags.length > 0) && (
-              <div className="mt-10">
-                <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted">
-                  Additional Activities
-                </p>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                  {tagSlots.flatMap((s, i) =>
-                    s.tags.map((tag, ti) => (
-                      <ActivityCard key={`${i}-${tag.label}-${ti}`} label={tag.label} body={tag.body} />
-                    ))
-                  )}
-                </div>
-              </div>
-            )}
+            <TimelineStep label="Lecture" hasLine={totalSteps > 1}>
+              <ul className="space-y-2.5">
+                {m.lessons.map((lesson) => (
+                  <li key={lesson.id} className="flex items-start gap-2.5">
+                    <RiCheckLine
+                      aria-hidden="true"
+                      size={14}
+                      className="mt-0.5 shrink-0 text-usrc-crimson"
+                    />
+                    <span className="text-[13px] leading-relaxed text-fg-primary">
+                      {lesson.title}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </TimelineStep>
+
+            {activities.map((a, i) => (
+              <TimelineStep
+                key={`${a.label}-${i}`}
+                label={a.label}
+                hasLine={false}
+              >
+                <p className="text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
+              </TimelineStep>
+            ))}
           </div>
         </div>
       </div>
@@ -172,7 +172,7 @@ export function CurriculumAccordion() {
           >
             Foundation
           </h2>
-          <p className="mt-3 max-w-3xl text-body-sm leading-relaxed text-fg-secondary">
+          <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-fg-secondary">
             {curriculum.phases[0].tagline} Takes approximately {curriculum.phases[0].duration} to complete.
           </p>
         </div>
@@ -188,7 +188,7 @@ export function CurriculumAccordion() {
                   <h3 className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy">
                     {phase.name === "Optional" ? "Good to know" : phase.name}
                   </h3>
-                  <p className="mt-3 max-w-3xl text-body-sm leading-relaxed text-fg-secondary">
+                  <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-fg-secondary">
                     {phase.tagline} Takes approximately {phase.duration} to complete.
                   </p>
                 </div>

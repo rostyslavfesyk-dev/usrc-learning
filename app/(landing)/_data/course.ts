@@ -66,7 +66,7 @@ export const hero = {
     { title: "Test and validate with clinicians", description: "Run quick sessions with doctors and capture what needs to change" },
   ],
   meta: [
-    { value: "11", label: "modules" },
+    { value: "10", label: "modules" },
     { value: "~17h", label: "of learning" },
     { value: "Web + Mobile + Clinic", label: "" },
   ],
@@ -141,7 +141,7 @@ export const courseFacts = {
   heading: "Course facts",
   stats: [
     { value: "3", label: "Phases" },
-    { value: "11", label: "Modules" },
+    { value: "10", label: "Modules" },
     { value: "Web + Mobile", label: "Platforms" },
     { value: "~17h", label: "Learning time" },
     { value: "7", label: "AI tools" },
@@ -165,7 +165,7 @@ export const courseStructure = {
     {
       number: 2,
       name: "AI prototyping",
-      modulesRange: "Modules 04–08",
+      modulesRange: "Modules 04–07",
       duration: "~7.5 hours",
       description:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
@@ -173,7 +173,7 @@ export const courseStructure = {
     {
       number: 3,
       name: "Optional",
-      modulesRange: "Modules 09–11",
+      modulesRange: "Modules 08–10",
       duration: "~5 hours",
       description:
         "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
@@ -543,7 +543,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       name: "AI prototyping",
       tagline:
         "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
-      modulesRange: "Modules 04–08",
+      modulesRange: "Modules 04–07",
       duration: "~7.5 hours",
       modules: [
         {
@@ -822,65 +822,6 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           outcome:
             "After this module, a participant knows how to set up a prototype testing session for both web and mobile, and choose the right device.",
         },
-        {
-          id: "module-08",
-          number: "08",
-          title: "Prototype as requirements defense: final project",
-          description:
-            "Full cycle: requirements, journey map, AI prototype, heuristic audit, stakeholder presentation scenario, and group defense.",
-          format: "Final project and defense",
-          duration: "120 min",
-          goal: "Complete the full business analyst cycle from requirements to prototype and defend it in front of the group.",
-          lessons: [
-            {
-              id: "8-1",
-              number: "8.1",
-              title: "How to present a prototype to a stakeholder: what to say, what not to",
-              description:
-                "A prototype is a tool for asking questions. The right framing is \"help us verify that we understood this correctly.\" For mobile work, show it on a real device when possible.",
-              estimatedTime: "~7 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Usability Testing 101 — NN/g",
-                  url: "https://www.nngroup.com/articles/usability-testing-101/",
-                  duration: "7 min",
-                },
-              ],
-            },
-            {
-              id: "8-2",
-              number: "8.2",
-              title: "Documenting decisions after a stakeholder session",
-              description:
-                "After a prototype review, the stakeholder gives feedback. The BA needs to capture what changes in requirements, what needs another validation pass, and what belongs in the next iteration.",
-              estimatedTime: "~7 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "7 Ways to Analyze a Customer Journey Map — NN/g",
-                  url: "https://www.nngroup.com/articles/analyze-customer-journey-map/",
-                  duration: "7 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "Final project: group defense",
-              body: "The full business analyst cycle: take a one-paragraph stakeholder request, build a user journey map, choose an AI tool and generate a 3–5 screen prototype for web or mobile, run a heuristic audit using the NN/g workbook, prepare a presentation scenario with 3 questions to validate with a stakeholder, and defend the work for 5 minutes. Evaluation criteria: clear user flow, prototype matches requirements, audit identifies real problems, presentation questions test assumptions.",
-            },
-            {
-              title: "In-class workshop: patient account dashboard from the USRC mobile app",
-              body: "The facilitator presents a patient account or dashboard flow from the USRC patient mobile app, one that has no equivalent on the web version. Participants take the mobile flow and assemble a prototype version of it using the AI tools and prompting methods from earlier modules. The goal is to translate a real, familiar product flow into a prototype that could start a web implementation conversation.",
-            },
-          ],
-          homework: {
-            body: "No pre-reading required. Review the full NN/g heuristic evaluation workbook before your final defense presentation. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this course, a participant has practiced the full cycle: requirements, journey, prototype, heuristic audit, and stakeholder validation. The result is not just a file. It is a repeatable way to turn vague input into a prototype that can be discussed.",
-        },
       ],
     },
     /* ============================================================
@@ -892,12 +833,12 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       name: "Optional",
       tagline:
         "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
-      modulesRange: "Modules 09–11",
+      modulesRange: "Modules 08–10",
       duration: "~5 hours",
       modules: [
         {
-          id: "module-09",
-          number: "09",
+          id: "module-08",
+          number: "08",
           title: "Nielsen's 10 heuristics and cognitive load",
           description:
             "The industry standard, plus Laws of UX. The group fills out the Heuristic Evaluation Workbook using real web and mobile examples.",
@@ -950,8 +891,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               ],
             },
             {
-              id: "9-3",
-              number: "9.3",
+              id: "8-3",
+              number: "8.3",
               title: "Laws of UX: psychological laws in design",
               description:
                 "Laws of UX collects principles such as Jakob's Law, Fitts' Law, and Hick's Law. Fitts' Law is especially useful when reviewing mobile touch targets.",
@@ -983,8 +924,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant knows the 10 heuristics, can apply them to a screen, understands cognitive load, and has completed a first heuristic audit.",
         },
         {
-          id: "module-10",
-          number: "10",
+          id: "module-09",
+          number: "09",
           title: "Modern trends vs timeless principles",
           description:
             "State of UX 2026. AI as a new UI paradigm. Where AI-generated design looks right but breaks UX. Comparative audit of two products on web and mobile.",
@@ -1077,8 +1018,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         },
 
         {
-          id: "module-11",
-          number: "11",
+          id: "module-10",
+          number: "10",
           title: "Design system: components, tokens, how to read one",
           description:
             "What a design system is and why business analysts need it. Components, tokens, styles, Figma libraries, and public systems such as Material 3, Apple HIG, and Atlassian.",
