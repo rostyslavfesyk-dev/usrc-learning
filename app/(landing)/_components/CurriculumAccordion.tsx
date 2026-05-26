@@ -84,7 +84,7 @@ function ModuleRow({
           body: w.body,
           items: w.items,
         })) ?? []),
-        ...(m.reading ? [{ label: "Reading", body: m.reading.body }] : []),
+        ...(m.reading ? [{ label: "Reading", body: m.reading.body, items: undefined }] : []),
         ...(m.homework ? [{ label: "Homework", body: m.homework.body, items: m.homework.items }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
