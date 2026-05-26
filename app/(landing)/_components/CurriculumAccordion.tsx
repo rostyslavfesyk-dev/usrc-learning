@@ -1,21 +1,19 @@
 "use client";
 
 import { useRef, useState, Fragment } from "react";
-import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiPencilLine, RiBookOpenLine, RiSlideshowLine, RiLightbulbLine, RiFileList3Line, RiArticleLine } from "@remixicon/react";
+import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiBookOpenLine, RiSlideshowLine, RiLightbulbLine, RiFileList3Line, RiArticleLine } from "@remixicon/react";
 import { curriculum, type Module, type Lesson } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
 const stepIcons: Record<string, React.ElementType> = {
   Lecture: RiSlideshowLine,
-  "Online Workshop": RiGroupLine,
-  "Live practice": RiPencilLine,
+  Workshop: RiGroupLine,
   Reading: RiArticleLine,
   Homework: RiBookOpenLine,
 };
 
 const stepEstimates: Record<string, string> = {
-  "Live practice": "~20 min",
-  "Online Workshop": "~45 min",
+  Workshop: "~45 min",
   Reading: "~15 min",
   Homework: "~1 hour",
 };
@@ -69,7 +67,7 @@ function ModuleRow({
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
 
-  const order: Record<string, number> = { "Live practice": 0, "Online Workshop": 1, Reading: 2, Homework: 3 };
+  const order: Record<string, number> = { Workshop: 0, Reading: 1, Homework: 2 };
 
   // Sectioned modules (e.g. module-01): use sections data
   const hasSections = !!m.sections;
@@ -82,11 +80,12 @@ function ModuleRow({
     ? []
     : [
         ...(m.workshops?.map((w) => ({
-          label: w.title.toLowerCase().includes("practice") ? "Live practice" : "Online Workshop",
+          label: w.title,
           body: w.body,
+          items: w.items,
         })) ?? []),
         ...(m.reading ? [{ label: "Reading", body: m.reading.body }] : []),
-        ...(m.homework ? [{ label: "Homework", body: m.homework.body }] : []),
+        ...(m.homework ? [{ label: "Homework", body: m.homework.body, items: m.homework.items }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
   return (
@@ -178,6 +177,13 @@ function ModuleRow({
                 {m.homework && (
                   <TimelineStep label="Homework" estimate="~1 hour" hasLine={false}>
                     <p className="max-w-prose text-[13px] leading-relaxed text-fg-secondary">{m.homework.body}</p>
+                    {m.homework.items && (
+                      <ul className="mt-2 list-disc pl-4 space-y-1">
+                        {m.homework.items.map((item) => (
+                          <li key={item} className="text-[13px] leading-relaxed text-fg-secondary">{item}</li>
+                        ))}
+                      </ul>
+                    )}
                   </TimelineStep>
                 )}
               </>
@@ -217,6 +223,13 @@ function ModuleRow({
                       loose={!connected && i < activities.length - 1}
                     >
                       <p className="max-w-prose text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
+                      {a.items && (
+                        <ul className="mt-2 list-disc pl-4 space-y-1">
+                          {a.items.map((item) => (
+                            <li key={item} className="text-[13px] leading-relaxed text-fg-secondary">{item}</li>
+                          ))}
+                        </ul>
+                      )}
                     </TimelineStep>
                   );
                 })}

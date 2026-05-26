@@ -48,9 +48,9 @@ export type Module = {
   lectureTopics: string[];
   lessons: Lesson[];
   sections?: Section[];
-  workshops?: { title: string; body: string }[];
+  workshops?: { title: string; body: string; items?: string[] }[];
   reading?: { body: string };
-  homework?: { body: string };
+  homework?: { body: string; items?: string[] };
   outcome: string;
   output?: ModuleOutput;
   didYouKnow?: string[];
@@ -212,7 +212,6 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           purpose: "Help participants understand why vague requirements happen: stakeholders describe solutions, users describe symptoms, and teams interpret through different mental models.",
           lectureTopics: [
             "Users do not think in features; they think in tasks, goals, workarounds, risks, and interruptions.",
-            "Mental models vs. system models vs. business models.",
             "Jobs-to-be-done as a practical requirements lens.",
             "Why \"what do you need?\" often produces weak requirements.",
             "Difference between stakeholder input, user evidence, and requirements.",
@@ -228,13 +227,6 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             {
               id: "1-2",
               number: "1.2",
-              title: "Mental models vs. system models vs. business models",
-              description: "Three different models compete during requirements gathering. Recognizing which one is speaking helps avoid misunderstandings.",
-              resources: [],
-            },
-            {
-              id: "1-3",
-              number: "1.3",
               title: "Jobs-to-be-done as a practical requirements lens",
               description: "JTBD reframes requirements from features to outcomes. A practical tool for elicitation.",
               resources: [],
@@ -256,7 +248,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Live practice",
+              title: "Workshop",
               body: "TBD",
             },
           ],
@@ -277,6 +269,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               "Workaround",
               "Decision needed",
               "Evidence source",
+              "Reusable prompt: TBD",
             ],
           },
           outcome:
@@ -287,49 +280,73 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           number: "02",
           title: "Interface anatomy: what screens are made of",
           description:
-            "Enough interface literacy to discuss screens clearly: pages, flows, navigation, forms, tables, filters, statuses, alerts, empty states.",
+            "Learn the common building blocks of web and mobile interfaces, basic design dos and don'ts, and how interface choices reveal hidden requirements.",
           format: "Lecture and homework",
           duration: "TBD",
-          purpose: "Give everyone enough interface literacy to discuss screens clearly.",
+          purpose: "Learn the common building blocks of web and mobile interfaces, basic design dos and don'ts, and how interface choices reveal hidden requirements around data, permissions, actions, states, and workflows.",
           lectureTopics: [
-            "Pages, flows, navigation, forms, tables, filters, statuses, alerts, empty states.",
+            "Web vs. mobile: what changes and why.",
+            "Basic screen anatomy. Screen element and requirement question.",
+            "Navigation patterns.",
+            "Forms, tables, cards, and dashboards.",
+            "Design dos and don'ts.",
+            "Mobile-specific dos and don'ts.",
             "What makes forms cognitively hard.",
-            "Why labels, grouping, defaults, and validation affect requirement quality.",
-            "Difference between content, interaction, business rule, and visual design.",
             "\"Looks simple\" does not mean \"is simple.\"",
           ],
           lessons: [
             {
               id: "2-1",
               number: "2.1",
-              title: "Pages, flows, navigation, forms, tables, filters, statuses, alerts, empty states",
-              description: "The building blocks of any interface. Recognizing them helps business analysts translate requirements into screen structures.",
+              title: "Web vs. mobile: what changes and why",
+              description: "Platform differences affect layout, navigation, and interaction — and each difference can surface a hidden requirement.",
               resources: [],
             },
             {
               id: "2-2",
               number: "2.2",
-              title: "What makes forms cognitively hard",
-              description: "Forms are where most business rules live. Understanding cognitive load in forms improves requirement quality.",
+              title: "Basic screen anatomy. Screen element and requirement question",
+              description: "Every screen element implies a requirement question. Learning to see the connection is the foundation of interface literacy.",
               resources: [],
             },
             {
               id: "2-3",
               number: "2.3",
-              title: "Labels, grouping, defaults, and validation",
-              description: "These are not design details — they are requirement decisions that affect usability.",
+              title: "Navigation patterns",
+              description: "Tabs, sidebars, breadcrumbs, bottom bars — each pattern carries assumptions about user flow and information architecture.",
               resources: [],
             },
             {
               id: "2-4",
               number: "2.4",
-              title: "Content vs. interaction vs. business rule vs. visual design",
-              description: "Four different layers in every screen. Confusing them leads to incomplete requirements.",
+              title: "Forms, tables, cards, and dashboards",
+              description: "Four core screen patterns that account for most business applications. Each hides different requirement decisions.",
               resources: [],
             },
             {
               id: "2-5",
               number: "2.5",
+              title: "Design dos and don'ts",
+              description: "Practical guidelines for interface decisions that affect clarity, usability, and requirement quality.",
+              resources: [],
+            },
+            {
+              id: "2-6",
+              number: "2.6",
+              title: "Mobile-specific dos and don'ts",
+              description: "Touch targets, thumb zones, offline states, and other mobile constraints that generate requirements desktop doesn't.",
+              resources: [],
+            },
+            {
+              id: "2-7",
+              number: "2.7",
+              title: "What makes forms cognitively hard",
+              description: "Forms are where most business rules live. Understanding cognitive load in forms improves requirement quality.",
+              resources: [],
+            },
+            {
+              id: "2-8",
+              number: "2.8",
               title: "\"Looks simple\" does not mean \"is simple\"",
               description: "Complexity hides in interfaces. Learning to see it is a key requirements skill.",
               resources: [],
@@ -343,25 +360,25 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "A required field is a policy decision, not just a UI choice.",
           ],
           reading: {
-            body: "NN/g's guidance on reducing cognitive load in forms: structure, transparency, clarity, and support reduce user effort and improve usability.",
+            body: "Few Guesses, More Success: 4 Principles to Reduce Cognitive Load in Forms. Minimize Cognitive Load to Maximize Usability.",
           },
           homework: {
-            body: "Pick one familiar screen and annotate: user goal, required data, optional data, business rules, error states, unknowns, and questions for validation.",
-          },
-          output: {
-            name: "Screen Anatomy Checklist",
-            fields: [
-              "User goal",
-              "Required data",
-              "Optional data",
-              "Business rules",
-              "Error states",
-              "Unknowns",
-              "Questions for validation",
+            body: "Choose one screen from an existing tool, prototype, or familiar product and analyze it using the screen anatomy checklist. Identify:",
+            items: [
+              "3 key screen elements",
+              "3 hidden requirements",
+              "3 design dos or don'ts observed",
+              "2 differences if this were web vs. mobile",
+              "2 missing states or edge cases",
+              "1 question to validate with a user or stakeholder",
             ],
           },
+          output: {
+            name: "Screen Anatomy Checklist for Requirement conversations",
+            fields: ["Reusable prompt: Design Literacy & Cognitive Load Check"],
+          },
           outcome:
-            "After this module, a participant can read a screen by its structural components, identify where business rules and requirements hide, and use the Screen Anatomy Checklist for requirement conversations.",
+            "After this module, a participant can read a screen by its structural components, identify where business rules and requirements hide, and use the Screen Anatomy Checklist for requirement conversations. Reusable prompt: Design Literacy & Cognitive Load Check.",
         },
         {
           id: "module-03",
@@ -418,15 +435,35 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Live practice",
-              body: "Take vague requests and improve them. Example: \"Clinicians need a dashboard.\" Turn into structured questions: Which clinicians? During which task? What decision must they make? What information is missing today? What happens if the decision is wrong? How often is this needed? What source of truth should be used? What would make this successful?",
+              title: "Workshop",
+              body: "Take vague requests and improve them. Example: \"Clinicians need a dashboard.\" Turn into:",
+              items: [
+                "Which clinicians?",
+                "During which task?",
+                "What decision must they make?",
+                "What information is missing today?",
+                "What happens if the decision is wrong?",
+                "How often is this needed?",
+                "What source of truth should be used?",
+                "What would make this successful?",
+              ],
             },
           ],
           reading: {
             body: "NN/g's stakeholder-interview guidance: stakeholder conversations should uncover success metrics, concerns, constraints, and alignment issues early.",
           },
           homework: {
-            body: "Rewrite three vague requirements using a structured format: context, user, task, pain, needed decision, requirement hypothesis, validation question, evidence needed.",
+            body: "Rewrite three vague requirements using a structured format:",
+            items: [
+              "Context",
+              "User",
+              "Task",
+              "Pain",
+              "Needed decision",
+              "Requirement hypothesis",
+              "Validation question",
+              "Evidence needed",
+            ],
           },
           output: {
             name: "Requirement Hypothesis Template",
@@ -491,8 +528,14 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Live practice",
-              body: "Build a simple workflow map for a non-clinical process, such as: requesting access to a tool, scheduling a meeting with multiple departments, submitting an internal support ticket, or approving a document. Then optionally compare with a healthcare example.",
+              title: "Workshop",
+              body: "Build a simple workflow map for a non-clinical process, such as:",
+              items: [
+                "Requesting access to a tool",
+                "Scheduling a meeting with multiple departments",
+                "Submitting an internal support ticket",
+                "Approving a document",
+              ],
             },
           ],
           reading: {
@@ -503,16 +546,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           },
           output: {
             name: "Workflow-to-Requirements Map",
-            fields: [
-              "Process steps",
-              "Handoffs",
-              "Exceptions",
-              "Waiting points",
-              "Duplicate entry",
-              "Approvals",
-              "Compliance rules",
-              "Requirement gaps",
-            ],
+            fields: ["TBD"],
           },
           outcome:
             "After this module, a participant can choose the right mapping method, build workflow maps, and identify hidden requirements in handoffs, exceptions, and approvals.",
@@ -586,27 +620,32 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Live practice",
-              body: "Participants start with a vague request, for example: \"We need a better way to manage support requests.\" Then they define the user, goal, workflow, and known information; write a Figma Make prompt; generate a low-fidelity IA prototype; mark what seems confirmed, invented, missing, or unclear; and create validation questions for users or stakeholders.",
+              title: "Workshop",
+              body: "Create a simple IA prototype for a non-clinical process. Participants start with a vague request, for example: \"We need a better way to manage support requests.\" Then they:",
+              items: [
+                "Define the user, goal, workflow, and known information",
+                "Write a Figma Make prompt",
+                "Generate a low-fidelity IA prototype",
+                "Mark what seems confirmed, invented, missing, or unclear",
+                "Create validation questions for users or stakeholders",
+              ],
             },
           ],
           reading: {
             body: "TBD",
           },
           homework: {
-            body: "Create one Figma Make IA prototype for a current or realistic process and identify: 3 assumptions the prototype made, 3 missing or unclear requirements, 3 validation questions, and 1 workflow or IA change based on expected feedback. Include the original vague request, the Figma Make prompt, and a link or screenshots of the prototype.",
+            body: "Create one Figma Make IA prototype for a current or realistic process and identify:",
+            items: [
+              "3 assumptions the prototype made",
+              "3 missing or unclear requirements",
+              "3 validation questions",
+              "1 workflow or IA change based on expected feedback",
+            ],
           },
           output: {
             name: "Figma Make IA Prototype Pack",
-            fields: [
-              "Original vague request",
-              "Figma Make prompt",
-              "Prototype link or screenshots",
-              "Assumptions identified",
-              "Missing or unclear requirements",
-              "Validation questions",
-              "Workflow/IA changes",
-            ],
+            fields: ["TBD"],
           },
           outcome:
             "After this module, a participant can use Figma Make to create IA prototypes as validation artifacts, identify assumptions and gaps in generated output, and formulate validation questions for stakeholders.",
@@ -666,25 +705,33 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Live practice",
-              body: "Start with a vague request and create: a requirement hypothesis, a workflow sketch, an AI prototype prompt, a prototype, and a validation script.",
+              title: "Workshop",
+              body: "Start with a vague request and create:",
+              items: [
+                "A requirement hypothesis",
+                "A workflow sketch",
+                "An AI prototype prompt",
+                "A prototype",
+                "A validation script",
+              ],
             },
           ],
           reading: {
             body: "TBD",
           },
           homework: {
-            body: "Bring one real or realistic vague request and produce an AI prototype package: prompt, prototype, assumptions, validation questions, and captured feedback structure.",
-          },
-          output: {
-            name: "AI Prototype Elicitation Pack",
-            fields: [
+            body: "Bring one real or realistic vague request and produce an AI prototype package:",
+            items: [
               "Prompt",
               "Prototype",
               "Assumptions",
               "Validation questions",
               "Captured feedback structure",
             ],
+          },
+          output: {
+            name: "AI Prototype Elicitation Pack",
+            fields: ["TBD"],
           },
           outcome:
             "After this module, a participant can use AI tools to create prototypes as elicitation instruments, annotate assumptions, and document what changed during validation.",
@@ -744,8 +791,14 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Live practice",
-              body: "Validation session with assigned roles: moderator, participant, note-taker, and observer. Each team runs a mini-validation of a prototype from earlier modules.",
+              title: "Workshop",
+              body: "Validation session with assigned roles:",
+              items: [
+                "Moderator",
+                "Participant",
+                "Note-taker",
+                "Observer",
+              ],
             },
           ],
           reading: {
@@ -764,6 +817,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               "Observation notes",
               "Requirement changes",
               "Open decisions",
+              "Reusable prompt: TBD",
             ],
           },
           outcome:
@@ -772,54 +826,84 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         {
           id: "module-07",
           number: "07",
-          title: "Requirements handoff that works",
+          title: "Collaborative requirements handoff for design and delivery",
           description:
-            "Define what \"good enough to hand off\" means. What design needs from BSAs, what delivery needs from design, what developers need from requirements.",
+            "Define what a useful, design-ready handoff looks like. Align around a shared best-practice format for transferring knowledge, decisions, evidence, and open questions.",
           format: "Lecture and workshop",
           duration: "TBD",
-          purpose: "Define what \"good enough to hand off\" means.",
+          purpose: "Define what a useful, design-ready handoff looks like. Align around a shared best-practice format for transferring knowledge, decisions, evidence, and open questions in a way that supports faster and more accurate design iteration.",
           lectureTopics: [
-            "What design needs from BSAs.",
-            "What delivery needs from design.",
-            "What developers need from requirements.",
-            "How to document decisions and unresolved questions.",
-            "How to avoid \"prototype as the only source of truth.\"",
+            "What knowledge needs to be included for design and delivery teams to move forward confidently.",
+            "What design teams need to understand before creating or iterating detailed designs.",
+            "What delivery and development teams need to understand before estimating, planning, or building.",
+            "How to document decisions, assumptions, unresolved questions, and decision owners.",
+            "How to avoid using the prototype as the only source of truth.",
+            "How to connect user feedback, validation notes, and stakeholder decisions back to requirements.",
+            "How to distinguish between confirmed requirements, working assumptions, and items needing further validation.",
             "How to create traceability from feedback to requirement.",
           ],
           lessons: [
             {
               id: "7-1",
               number: "7.1",
-              title: "What each team needs from the handoff",
-              description: "Design, delivery, and development each need different things from requirements. Understanding these needs prevents rework.",
+              title: "What knowledge needs to be included for design and delivery teams to move forward confidently",
+              description: "",
               resources: [],
             },
             {
               id: "7-2",
               number: "7.2",
-              title: "Documenting decisions and unresolved questions",
-              description: "Not all questions will be answered. Documenting what was decided and what remains open is as important as the requirements themselves.",
+              title: "What design teams need to understand before creating or iterating detailed designs",
+              description: "",
               resources: [],
             },
             {
               id: "7-3",
               number: "7.3",
-              title: "Prototype is not the only source of truth",
-              description: "A prototype shows one possible solution. The requirement lives in the problem statement, the workflow, and the validation evidence.",
+              title: "What delivery and development teams need to understand before estimating, planning, or building",
+              description: "",
               resources: [],
             },
             {
               id: "7-4",
               number: "7.4",
-              title: "Traceability from feedback to requirement",
-              description: "Every requirement change should trace back to evidence. How to maintain that chain.",
+              title: "How to document decisions, assumptions, unresolved questions, and decision owners",
+              description: "",
+              resources: [],
+            },
+            {
+              id: "7-5",
+              number: "7.5",
+              title: "How to avoid using the prototype as the only source of truth",
+              description: "",
+              resources: [],
+            },
+            {
+              id: "7-6",
+              number: "7.6",
+              title: "How to connect user feedback, validation notes, and stakeholder decisions back to requirements",
+              description: "",
+              resources: [],
+            },
+            {
+              id: "7-7",
+              number: "7.7",
+              title: "How to distinguish between confirmed requirements, working assumptions, and items needing further validation",
+              description: "",
+              resources: [],
+            },
+            {
+              id: "7-8",
+              number: "7.8",
+              title: "How to create traceability from feedback to requirement",
+              description: "",
               resources: [],
             },
           ],
           workshops: [
             {
-              title: "Live practice",
-              body: "Package a validated prototype into a handoff bundle: problem statement, user roles, workflow map, requirement hypotheses, validated requirements, open questions, prototype link, prototype change log, evidence notes, decisions made, and risks and dependencies.",
+              title: "Workshop",
+              body: "Package a validated prototype into a handoff bundle.",
             },
           ],
           reading: {
@@ -830,19 +914,7 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           },
           output: {
             name: "Validated Requirements Handoff Template",
-            fields: [
-              "Problem statement",
-              "User roles",
-              "Workflow map",
-              "Requirement hypotheses",
-              "Validated requirements",
-              "Open questions",
-              "Prototype link",
-              "Prototype change log",
-              "Evidence notes",
-              "Decisions made",
-              "Risks and dependencies",
-            ],
+            fields: ["Reusable prompt: TBD"],
           },
           outcome:
             "After this module, a participant can package validated requirements into a handoff that design and delivery teams can use, with traceability from feedback to requirement.",
