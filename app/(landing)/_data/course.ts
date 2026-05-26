@@ -1,6 +1,6 @@
 // Content for the USRC × Trinetix learning program landing page.
-// Lifted verbatim from /USRC-Landing-Course-v2.md — the source of truth.
-// Do not paraphrase. If copy changes, update the markdown first, then mirror here.
+// Course: "From Vague Requests to Validated Requirements"
+// Do not paraphrase. If copy changes, update the source document first, then mirror here.
 
 export type ResourceType =
   | "article"
@@ -32,6 +32,11 @@ export type Section = {
   activity?: { label: string; body: string };
 };
 
+export type ModuleOutput = {
+  name: string;
+  fields: string[];
+};
+
 export type Module = {
   id: string;
   number: string;
@@ -39,17 +44,21 @@ export type Module = {
   description: string;
   format: string;
   duration: string;
-  goal: string;
+  purpose: string;
+  lectureTopics: string[];
   lessons: Lesson[];
   sections?: Section[];
   workshops?: { title: string; body: string }[];
+  reading?: { body: string };
   homework?: { body: string };
   outcome: string;
+  output?: ModuleOutput;
+  didYouKnow?: string[];
 };
 
 export type Phase = {
   id: string;
-  number: 1 | 2 | 3;
+  number: 1 | 2;
   name: string;
   tagline: string;
   modulesRange: string;
@@ -61,21 +70,10 @@ export type Phase = {
    HERO
    ============================================================ */
 export const hero = {
-  eyebrow: "Rapid prototyping program",
-  headline: "Rapid prototyping for healthcare product teams",
-  subheadline:
-    "A hands-on program for U.S. Renal Care BA, BSA, and technical teams.",
-  bullets: [
-    { title: "Understand UX in a clinical context", description: "How patients, nurses, and doctors think about screens differently" },
-    { title: "Learn web and mobile anatomy", description: "How healthcare screens are structured, patterns, and flows" },
-    { title: "Sketch and prompt fast", description: "Turn clinical requirements into AI prototypes in minutes" },
-    { title: "Test and validate with clinicians", description: "Run quick sessions with doctors and capture what needs to change" },
-  ],
-  meta: [
-    { value: "10", label: "modules" },
-    { value: "~21h", label: "of learning" },
-    { value: "Web + Mobile + Clinic", label: "" },
-  ],
+  headline: "From Vague Requests to Validated Requirements",
+  audienceTags: ["BAs", "BSAs", "PMs", "Delivery leads", "IT partners", "Business stakeholders", "Vendor teams"],
+  coreOutcome:
+    "Participants learn how to turn high-level business requests into clearer, validated, buildable requirements using collaborative discovery, lightweight prototyping, and live validation.",
 };
 
 /* ============================================================
@@ -83,13 +81,21 @@ export const hero = {
    ============================================================ */
 export const basicDetails = {
   audience:
-    "Business Analysts, Business Systems Analysts, product-facing technical team members, and leads who work with requirements, user flows, product ideas, and early prototype reviews.",
-  outcome:
-    "After the course, participants can read screens, structure user flows, write stronger AI prototyping prompts, critique generated UI, and use prototypes as a requirements validation tool.",
-  format:
-    "Lectures, workshops, case studies, screen audits, workbook practice, AI-tool demos, and a final project.",
-  scope:
-    "This is not a production design or software engineering course. It teaches practical UX/UI judgment and AI prototyping literacy for requirements work. Designers and developers still own production design and implementation.",
+    "BAs, BSAs, PMs, delivery leads, IT partners, business stakeholders, vendor product/design/delivery teams.",
+  coreOutcome:
+    "Participants learn how to turn high-level business requests into clearer, validated, buildable requirements using collaborative discovery, lightweight prototyping, and live validation.",
+  format: [
+    { label: "Lecture", description: "Concepts & principles" },
+    { label: "Workshop", description: "Hands-on with shared app" },
+    { label: "Reading", description: "NN/g video & article" },
+    { label: "Homework", description: "One reusable artifact" },
+    { label: "Validation habit", description: "Check before next session" },
+    { label: "TBD", description: "Course duration" },
+  ],
+  inScope:
+    "Improving requirements velocity and accuracy through better elicitation, workflow mapping, IA prototyping, continuous validation, and clearer handoff between client and vendor teams.",
+  outOfScope:
+    "Deep UX training, final UI design, advanced Figma skills, technical architecture, development planning, and treating AI/Figma Make prototypes as final solutions.",
 };
 
 /* ============================================================
@@ -97,44 +103,44 @@ export const basicDetails = {
    ============================================================ */
 export const aboutProgram = {
   paragraphs: [
-    "Product ideas may lose shape between the first stakeholder conversation, the written requirement, the prototype, and the engineering handoff. A prototype can look polished and still answer the wrong question.",
-    "This course gives business and technical teams a working method: understand the user, map the task, describe the screen, generate a prototype draft, critique it with principles, and use it to validate assumptions. The focus is whether the flow makes sense. It stays grounded in general UX and product practice: users, personas, mental models, journey maps, user flows, interface patterns, mobile behavior, design systems, heuristic review, and AI-assisted prototyping.",
+    "Better requirements faster: fewer interpretation gaps, fewer late surprises, fewer rework cycles, and more confidence before design and development begin.",
+    "This course gives business and technical teams a working method: understand how users think, map workflows before screens, structure requirement hypotheses, prototype to validate assumptions, and hand off requirements that design and delivery can actually use.",
   ],
 };
 
 /* ============================================================
-   SKILLS / OUTCOMES (§4) — 10 items
+   SKILLS / OUTCOMES (§4)
    ============================================================ */
 export const outcomes = {
   heading: "By the end, participants can",
   groups: [
     {
-      label: "UX Foundations",
+      label: "User Understanding",
       items: [
-        { text: "Translate stakeholder input into user journeys, flows, and prototype requirements." },
-        { text: "Read web and mobile screens by zones, patterns, states, and interaction logic." },
+        { text: "Explain why users think in tasks and workarounds, not in features." },
+        { text: "Use a User Thinking Canvas to capture roles, goals, triggers, and evidence sources." },
       ],
     },
     {
-      label: "Design Literacy",
+      label: "Interface Literacy",
       items: [
-        { text: "Explain UI problems using hierarchy, contrast, spacing, cognitive load, and component vocabulary." },
-        { text: "Think like a designer and evaluate screens against industry standards." },
+        { text: "Read a screen by its structural components: forms, tables, filters, statuses, and states." },
+        { text: "Identify where business rules, cognitive load, and missing requirements hide in UI.", highlight: true },
       ],
     },
     {
-      label: "AI Prototyping",
+      label: "Requirements Craft",
       items: [
-        { text: "Write structured prompts for web and mobile prototypes." },
-        { text: "Go from idea to prototype in minutes using AI tools.", highlight: true },
+        { text: "Transform vague requests into structured requirement hypotheses with context, user, task, and validation questions." },
+        { text: "Map workflows to find hidden requirements in handoffs, exceptions, and approvals." },
       ],
     },
     {
-      label: "Validation & Delivery",
+      label: "Prototyping & Validation",
       items: [
-        { text: "Run a heuristic audit before showing a prototype." },
-        { text: "Present a prototype to stakeholders and doctors.", highlight: true },
-        { text: "Document requirement changes after a validation session." },
+        { text: "Use Figma Make or AI tools to create IA prototypes as validation artifacts, not design deliverables.", highlight: true },
+        { text: "Run lightweight validation sessions and capture evidence, not opinions." },
+        { text: "Package validated requirements into a handoff that design and delivery teams can use." },
       ],
     },
   ],
@@ -146,11 +152,10 @@ export const outcomes = {
 export const courseFacts = {
   heading: "Course facts",
   stats: [
-    { value: "3", label: "Phases" },
-    { value: "10", label: "Modules" },
-    { value: "Web + Mobile", label: "Platforms" },
-    { value: "~17h", label: "Learning time" },
-    { value: "7", label: "AI tools" },
+    { value: "2", label: "Phases" },
+    { value: "7", label: "Modules" },
+    { value: "8", label: "Artifacts" },
+    { value: "Requirements", label: "Focus" },
   ],
 };
 
@@ -163,1036 +168,705 @@ export const courseStructure = {
     {
       number: 1,
       name: "Foundation",
-      modulesRange: "Modules 01–03",
-      duration: "~7 hours",
+      modulesRange: "Modules 01–04",
+      duration: "TBD",
       description:
-        "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
+        "Universal track for everyone: business, IT, operations, product, delivery, and vendor teams. General design judgment for requirements work.",
     },
     {
       number: 2,
-      name: "AI prototyping",
-      modulesRange: "Modules 04–07",
-      duration: "~7 hours",
+      name: "Prototyping & Validation",
+      modulesRange: "Modules 05A–07",
+      duration: "TBD",
       description:
-        "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
-    },
-    {
-      number: 3,
-      name: "Optional",
-      modulesRange: "Modules 08–10",
-      duration: "~7 hours",
-      description:
-        "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
+        "Hands-on prototyping with Figma Make (broad audience) and AI tools (advanced BSAs), continuous validation, and requirements handoff.",
     },
   ],
 };
 
 /* ============================================================
-   CURRICULUM — 3 phases × 11 modules
+   CURRICULUM — 2 phases × 7 modules
    ============================================================ */
 export const curriculum: { heading: string; phases: Phase[] } = {
   heading: "What's covered",
   phases: [
     /* ============================================================
-       PHASE 1 — FOUNDATION (Modules 01–03)
+       PHASE 1 — FOUNDATION (Modules 01–04)
        ============================================================ */
     {
       id: "phase-1",
       number: 1,
       name: "Foundation",
       tagline:
-        "User psychology, interface anatomy, mobile behavior, visual design language, and design systems.",
-      modulesRange: "Modules 01–03",
-      duration: "~7 hours",
+        "Universal track for everyone: business, IT, operations, product, delivery, and vendor teams. General design judgment for requirements work.",
+      modulesRange: "Modules 01–04",
+      duration: "TBD",
       modules: [
         {
           id: "module-01",
           number: "01",
           title: "How users think",
           description:
-            "UX as behavioral logic. Mental models, jobs-to-be-done, user journey, and the gap between BA expectations and what clinical staff — nurses, doctors, patients — actually need from a screen.",
+            "Why vague requirements happen: stakeholders describe solutions, users describe symptoms, and teams interpret through different mental models.",
           format: "Lecture and workshop",
-          duration: "~2h 35min",
-          goal: "Understand that UX is not style or taste. It is how a nurse, doctor, or patient understands a task, what they expect from the product, and where the interface helps or gets in the way.",
+          duration: "TBD",
+          purpose: "Help participants understand why vague requirements happen: stakeholders describe solutions, users describe symptoms, and teams interpret through different mental models.",
+          lectureTopics: [
+            "Users do not think in features; they think in tasks, goals, workarounds, risks, and interruptions.",
+            "Mental models vs. system models vs. business models.",
+            "Jobs-to-be-done as a practical requirements lens.",
+            "Why \"what do you need?\" often produces weak requirements.",
+            "Difference between stakeholder input, user evidence, and requirements.",
+          ],
           lessons: [
             {
               id: "1-1",
               number: "1.1",
-              title: "What is UX and how does it differ from UI",
-              description:
-                "Core definitions that build the right vocabulary. Without this, business analysts confuse \"beautiful\" with \"usable.\" Those are different questions.",
-              estimatedTime: "~14 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "The Definition of User Experience — NN/g",
-                  url: "https://www.nngroup.com/articles/definition-user-experience/",
-                  duration: "5 min",
-                },
-                {
-                  type: "article",
-                  label: "Usability 101: Introduction to Usability — NN/g",
-                  url: "https://www.nngroup.com/articles/usability-101-introduction-to-usability/",
-                  duration: "5 min",
-                },
-                {
-                  type: "video",
-                  label: "Usability 101 — NN/g",
-                  url: "https://www.nngroup.com/videos/usability-101/",
-                  duration: "4 min",
-                },
-              ],
-            },
-            {
-              id: "1-4",
-              number: "1.2",
-              title: "Human-Centered Design: the approach behind the work",
-              description:
-                "Design Thinking and Human-Centered Design (HCD) give structure to requirements gathering and idea validation. A BA does not need to become a designer to use the approach.",
-              estimatedTime: "~10 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Design Thinking 101 — NN/g",
-                  url: "https://www.nngroup.com/articles/design-thinking/",
-                  duration: "6 min",
-                },
-                {
-                  type: "video",
-                  label: "What is Human-Centered Design? — IDEO",
-                  url: "https://www.youtube.com/watch?v=_r0VX-aU_T8",
-                  duration: "4 min",
-                },
-              ],
+              title: "Users think in tasks, goals, workarounds, risks, and interruptions",
+              description: "Users do not think in features. Understanding this gap is the first step to better requirements.",
+              resources: [],
             },
             {
               id: "1-2",
-              number: "1.3",
-              title: "Mental models: why users \"don't understand\" the interface",
-              description:
-                "People interact with products through expectations, not through the team's internal logic. A BA who understands mental models asks better questions during requirements gathering and catches mismatches earlier.",
-              estimatedTime: "~10 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Mental Models and User Experience Design — NN/g",
-                  url: "https://www.nngroup.com/articles/mental-models/",
-                  duration: "7 min",
-                },
-                {
-                  type: "video",
-                  label: "What is a Mental Model? — NN/g",
-                  url: "https://www.nngroup.com/videos/mental-models/",
-                  duration: "3 min",
-                },
-              ],
+              number: "1.2",
+              title: "Mental models vs. system models vs. business models",
+              description: "Three different models compete during requirements gathering. Recognizing which one is speaking helps avoid misunderstandings.",
+              resources: [],
             },
             {
               id: "1-3",
+              number: "1.3",
+              title: "Jobs-to-be-done as a practical requirements lens",
+              description: "JTBD reframes requirements from features to outcomes. A practical tool for elicitation.",
+              resources: [],
+            },
+            {
+              id: "1-4",
               number: "1.4",
-              title: "User journey map: the path from task to outcome",
-              description:
-                "A journey map is useful before any prototype exists. It documents the user's steps, expectations, pain points, and gaps in the requirement.",
-              estimatedTime: "~11 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Journey Mapping 101 — NN/g",
-                  url: "https://www.nngroup.com/articles/journey-mapping-101/",
-                  duration: "6 min",
-                },
-                {
-                  type: "video",
-                  label: "Customer Journey Mapping 101 — NN/g",
-                  url: "https://www.nngroup.com/videos/journey-mapping-101/",
-                  duration: "5 min",
-                },
-              ],
+              title: "Why \"what do you need?\" often produces weak requirements",
+              description: "The most common elicitation question is also the weakest. Better questions lead to better requirements.",
+              resources: [],
             },
             {
               id: "1-5",
               number: "1.5",
-              title: "Designers as user advocates — and why every product role shares that responsibility",
-              description:
-                "User advocacy is not a designer's job alone. Business analysts write requirements that shape the product, and when any role optimizes only for the stakeholder's request, the user pays the cost. Asking \"who is the user and what do they actually need?\" is a requirement-gathering skill, not a design preference.",
-              estimatedTime: "~15 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "NIST — Human Centered Design (HCD)",
-                  url: "https://www.nist.gov/itl/iad/visualization-and-usability-group/human-factors-human-centered-design",
-                  duration: "10–15 min",
-                },
-              ],
-            },
-          ],
-          sections: [
-            {
-              lessonIds: ["1-1", "1-4", "1-2"],
-              activity: {
-                label: "Live practice",
-                body: "Mini-exercise: each participant picks an interface they use daily (Teams, Outlook, or similar) and tries to find one non-obvious function. Example: how to add someone to a calendar invite. The goal is to notice that stakeholders often describe interfaces based on the simplest path and skip everything else. After the exercise, the group discusses why users miss features and what that means for requirements.",
-              },
-            },
-            {
-              lessonIds: ["1-3", "1-5"],
-              activity: {
-                label: "Online Workshop",
-                body: "The group builds a user journey map from a project scenario. Each participant documents the user's steps, expectations, pain points, and open questions for their own product or a prepared healthcare workflow. Group discussion follows.",
-              },
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on UX vs UI, human-centered design, mental models, and user journey mapping. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this module, a participant understands the difference between UX and UI, knows what a mental model is, can build a basic user journey map for a project, and understands that user advocacy is a shared responsibility across product, design, business analysis, and engineering.",
-        },
-        {
-          id: "module-02",
-          number: "02",
-          title: "Interface anatomy: web and mobile",
-          description:
-            "Screen zones, UI patterns, navigation, touch targets, thumb zone, safe areas, gestures, iOS vs Android, responsive vs adaptive behavior.",
-          format: "Lecture and case studies",
-          duration: "~2h 15min",
-          goal: "Learn to read any screen by zones, recognize common UI patterns, and understand how web and mobile differ in both requirements and prototyping practice.",
-          lessons: [
-            {
-              id: "2-1",
-              number: "2.1",
-              title: "Screen anatomy: zones, elements, patterns",
-              description:
-                "Every interface is built from typical zones and components. Recognizing them helps business analysts translate requirements into screen structures faster.",
-              estimatedTime: "~14 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Design-Pattern Guidelines: Study Guide — NN/g",
-                  url: "https://www.nngroup.com/articles/design-pattern-guidelines-study-guide/",
-                  duration: "6 min",
-                },
-                {
-                  type: "article",
-                  label: "Web UX: Study Guide — NN/g",
-                  url: "https://www.nngroup.com/articles/web-ux-study-guide/",
-                  duration: "8 min",
-                },
-              ],
-            },
-            {
-              id: "2-2",
-              number: "2.2",
-              title: "Mobile UX: why mobile is not a shrunken website",
-              description:
-                "Mobile has its own interaction logic. Thumb zone, touch targets, safe areas, gesture navigation, and interruptions change the design approach.",
-              estimatedTime: "~23 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Mobile UX: Study Guide — NN/g",
-                  url: "https://www.nngroup.com/articles/mobile-ux-study-guide/",
-                  duration: "10 min",
-                },
-                {
-                  type: "article",
-                  label: "Touch Targets on Touchscreens — NN/g",
-                  url: "https://www.nngroup.com/articles/touch-target-size/",
-                  duration: "6 min",
-                },
-                {
-                  type: "article",
-                  label: "The State of Mobile User Experience — NN/g",
-                  url: "https://www.nngroup.com/articles/state-mobile-ux/",
-                  duration: "7 min",
-                },
-              ],
-            },
-            {
-              id: "2-3",
-              number: "2.3",
-              title: "Mobile navigation patterns and iOS vs Android",
-              description:
-                "Tab bar, bottom navigation, hamburger menu, and navigation hub each have their own logic. iOS and Android also follow different conventions. Business analysts need to distinguish these patterns when gathering requirements.",
-              estimatedTime: "~24 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Basic Patterns for Mobile Navigation — NN/g",
-                  url: "https://www.nngroup.com/articles/mobile-navigation-patterns/",
-                  duration: "8 min",
-                },
-                {
-                  type: "article",
-                  label: "Designing for iOS — Apple HIG",
-                  url: "https://developer.apple.com/design/human-interface-guidelines/designing-for-ios",
-                  duration: "8 min",
-                },
-                {
-                  type: "article",
-                  label: "Material 3 Foundations — Google Material Design",
-                  url: "https://m3.material.io/foundations",
-                  duration: "8 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "In-class case study",
-              body: "The facilitator opens Google Maps in a browser and Google Maps as a standalone mobile app side by side. The group compares how the same service is implemented across platforms: screen zones, navigation patterns, touch targets, gestures, safe areas, and iOS vs Android differences. Each participant then repeats the comparison with a product they work with, identifying what changes between the web and mobile version and why.",
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on screen anatomy, mobile UX, navigation patterns, and responsive vs adaptive design. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this module, a participant can break down web and mobile screens into functional zones, recognize key mobile patterns, and explain responsive vs adaptive design.",
-        },
-        {
-          id: "module-03",
-          number: "03",
-          title: "Visual design language",
-          description:
-            "Hierarchy, typography, color, grid, spacing, Gestalt principles, and how to distinguish quality from weak design through real web and mobile examples.",
-          format: "Lecture and screen audit",
-          duration: "~2h 15min",
-          goal: "Build concrete vocabulary for evaluating UI quality. After this module, business analysts can talk about design using observable facts, not taste.",
-          lessons: [
-            {
-              id: "3-1",
-              number: "3.1",
-              title: "5 principles of visual design in UX",
-              description:
-                "Scale, hierarchy, balance, contrast, and Gestalt explain why some interfaces are easy to read and others are not. These principles also give BAs a vocabulary for reviewing AI-generated prototypes.",
-              estimatedTime: "~15 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "5 Principles of Visual Design in UX — NN/g",
-                  url: "https://www.nngroup.com/articles/principles-visual-design/",
-                  duration: "8 min",
-                },
-                {
-                  type: "video",
-                  label: "Visual Hierarchy — NN/g",
-                  url: "https://www.nngroup.com/videos/visual-hierarchy/",
-                  duration: "3 min",
-                },
-                {
-                  type: "video",
-                  label: "The Gestalt Principles for UI Design — NN/g",
-                  url: "https://www.nngroup.com/videos/the-gestalt-principles-intro/",
-                  duration: "4 min",
-                },
-              ],
-            },
-            {
-              id: "3-2",
-              number: "3.2",
-              title: "Visual hierarchy: why the eye goes where it should",
-              description:
-                "Hierarchy works through size, color, spacing, position, and contrast. It is one of the fastest ways to judge whether a screen supports the task or fights it.",
-              estimatedTime: "~7 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Visual Hierarchy in UX: Definition — NN/g",
-                  url: "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/",
-                  duration: "7 min",
-                },
-              ],
-            },
-            {
-              id: "3-3",
-              number: "3.3",
-              title: "Typography, color, grid: a practical breakdown through real products",
-              description:
-                "Type systems, the 8px grid, color for status and hierarchy, density, and safe zones all affect whether a prototype is readable. The module uses product screens such as a patient portal, provider dashboard, and scheduling flow.",
-              estimatedTime: "~26 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Why Does a Design Look Good? — NN/g",
-                  url: "https://www.nngroup.com/articles/why-does-design-look-good/",
-                  duration: "8 min",
-                },
-                {
-                  type: "article",
-                  label: "The Anatomy of a Good Design — NN/g",
-                  url: "https://www.nngroup.com/articles/why-does-a-design-look-good-part2/",
-                  duration: "8 min",
-                },
-                {
-                  type: "article",
-                  label: "Visual Design in UX: Study Guide — NN/g",
-                  url: "https://www.nngroup.com/articles/visual-design-in-ux-study-guide/",
-                  duration: "10 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "In-class audit",
-              body: "Each participant receives a web or mobile screenshot. They run a mini-audit: hierarchy, typography, color, spacing, and patterns. The facilitator reviews findings and corrects terminology.",
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on visual design principles, visual hierarchy, typography, color, and grid. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this module, a participant knows the 5 visual design principles, can describe an interface problem with specific terms, and has better language for talking to designers.",
-        },
-      ],
-    },
-    /* ============================================================
-       PHASE 2 — AI PROTOTYPING (Modules 04–08)
-       ============================================================ */
-    {
-      id: "phase-2",
-      number: 2,
-      name: "AI prototyping",
-      tagline:
-        "From prototype logic to requirements defense, using 7 AI tools and separate approaches for web and mobile.",
-      modulesRange: "Modules 04–07",
-      duration: "~7 hours",
-      modules: [
-        {
-          id: "module-04",
-          number: "04",
-          title: "From clinical requirements to screens",
-          description:
-            "Translate clinical requirements into structured prompts. Build a minimum viable prototype and iterate through AI chat for web and mobile.",
-          format: "Practice and prompting",
-          duration: "~1h 50min",
-          goal: "Translate raw clinical requirements into a prototype structure. The skill is framing what you heard in a corridor conversation so it can be validated on a screen, not producing a polished visual.",
-          lessons: [
-            {
-              id: "4-1",
-              number: "4.1",
-              title: "From requirements to screen flow: what to prototype first",
-              description:
-                "A journey map describes the broader path. A user flow shows the screen-by-screen route. Requirements often describe a journey, but a prototype must show a flow. This gap causes many misunderstandings.",
-              estimatedTime: "~5 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "User Journeys vs. User Flows — NN/g",
-                  url: "https://www.nngroup.com/articles/user-journeys-vs-user-flows/",
-                  duration: "5 min",
-                },
-              ],
-            },
-            {
-              id: "4-2",
-              number: "4.2",
-              title: "How to write prompts for AI prototyping",
-              description:
-                "Prompt quality drives prototype quality. A BA who clearly states context, target audience, scenario, platform, screens, features, and constraints gets better results from any AI tool.",
-              estimatedTime: "~15 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "How to Write Effective Prompts for AI UI Tools — Stormy AI",
-                  url: "https://stormy.ai/blog/how-to-use-v0-dev-ai-web-development-guide",
-                  duration: "10 min",
-                },
-                {
-                  type: "template",
-                  label: "Prompt structure: goal → user → screens → features — Lovable Docs",
-                  url: "https://docs.lovable.dev/tips-tricks/from-idea-to-app",
-                  duration: "5 min",
-                },
-              ],
-            },
-            {
-              id: "4-3",
-              number: "4.3",
-              title: "Mobile prompting: specifics and differences from web",
-              description:
-                "A mobile prototype requires a different prompt. Specify iOS or Android, navigation type, touch element sizes, and the primary task. Otherwise, AI often generates a web interface with smaller fonts.",
-              estimatedTime: "~20 min",
-              resources: [
-                {
-                  type: "practice",
-                  label: "Google Stitch — try the same prompt for web and mobile, compare results",
-                  url: "https://stitch.withgoogle.com/",
-                  duration: "20 min",
-                },
-              ],
-            },
-            {
-              id: "4-4",
-              number: "4.4",
-              title: "Iteration: how to refine a prototype through AI chat",
-              description:
-                "AI prototyping is a dialogue. The first result is almost never final. This lesson covers how to give feedback, when to start over, and when to edit by hand.",
-              estimatedTime: "~15 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "No-Hype Tips: How to Iterate in Lovable — UX Collective",
-                  url: "https://uxdesign.cc/getting-started-with-lovable-the-no-hype-beginner-tips-to-building-with-ai-36460d46249d",
-                  duration: "7 min",
-                },
-                {
-                  type: "article",
-                  label: "Case Study: Iterative Design and Prototype Testing — NN/g",
-                  url: "https://www.nngroup.com/articles/case-study-iterative-design-prototyping/",
-                  duration: "8 min",
-                },
-              ],
-            },
-          ],
-          workshops: [
-            {
-              title: "Live practice",
-              body: "Each participant transforms project requirements into a structured prompt: context, platform, user, scenario, key screens, and constraints. The facilitator gives feedback and demonstrates iteration.",
-            },
-          ],
-          homework: {
-            body: "Review the lesson resources on prompt writing, mobile prompting, and iteration. Try writing a structured prompt for a product scenario you work with. Independent practice exercises will be added before finalizing the learning program.",
-          },
-          outcome:
-            "After this module, a participant can translate requirements into a structured prompt for web or mobile, iterate a prototype through chat, and produce a prototype draft from a project scenario.",
-        },
-        {
-          id: "module-05",
-          number: "05",
-          title: "Claude: AI design and development tools",
-          description:
-            "Claude Design for UX concepts and prototype critique. Claude Code for AI development awareness. Live demo with a real USRC flow.",
-          format: "AI tools and live demo",
-          duration: "~2h 35min",
-          goal: "Get first-hand experience with Claude Design and understand how Claude Code fits into a developer's workflow.",
-          lessons: [
-            {
-              id: "5-1",
-              number: "5.1",
-              title: "Claude Design: generating UX concepts and reviewing prototypes",
-              description:
-                "Claude Design helps discuss an idea, generate solution options, or critique a prototype. It is useful before or alongside other prototyping tools.",
-              resources: [
-                {
-                  type: "practice",
-                  label: "claude.ai/design — try a prompt for a mobile app user flow",
-                  url: "https://claude.ai/design",
-                  duration: "20 min",
-                },
-              ],
-            },
-            {
-              id: "5-2",
-              number: "5.2",
-              title: "Claude Code: what developers do after the prototype is validated",
-              description:
-                "Claude Code is an AI development agent used via terminal. Included so BAs understand how developers may take a validated prototype and move it toward implementation.",
+              title: "Stakeholder input vs. user evidence vs. requirements",
+              description: "These three are different things. Confusing them is a common source of weak requirements.",
               resources: [],
             },
           ],
           workshops: [
             {
-              title: "In-class live demo",
-              body: "The facilitator demonstrates Claude Design using a USRC patient flow scenario — for example, appointment scheduling or a lab result view. Participants see how to prompt for a concept, critique the output, and iterate. A short Claude Code demo follows to show what happens after a prototype is approved.",
-            },
-            {
-              title: "Live practice: prototype and critique with Claude Design",
-              body: "Participants use Claude Design to generate a concept for a USRC flow of their choice. Then they swap outputs and critique each other's results using the criteria from earlier modules — hierarchy, clarity, mobile behaviour. Discussion: where did Claude get it right, and where did it need correction?",
+              title: "Live practice",
+              body: "TBD",
             },
           ],
+          reading: {
+            body: "TBD",
+          },
           homework: {
-            body: "Use Claude Design to prototype one flow from your current or recent project. Write two to three sentences on what the tool got right and what you had to correct or reject.",
+            body: "TBD",
+          },
+          output: {
+            name: "User Thinking Canvas",
+            fields: [
+              "User role",
+              "Goal",
+              "Trigger",
+              "Current behavior",
+              "Pain point",
+              "Workaround",
+              "Decision needed",
+              "Evidence source",
+            ],
           },
           outcome:
-            "After this module, a participant can use Claude Design to generate and critique UI concepts, and can explain to a stakeholder or developer what Claude Code is used for.",
+            "After this module, a participant understands why users and stakeholders describe needs differently, can use the JTBD lens for elicitation, and has a User Thinking Canvas for structuring user understanding.",
         },
         {
-          id: "module-06",
-          number: "06",
-          title: "Validating AI concepts",
+          id: "module-02",
+          number: "02",
+          title: "Interface anatomy: what screens are made of",
           description:
-            "Common AI prototype mistakes, separately for web and mobile. Heuristic audit of your own prototype. Decision tree: what to rework and what to keep.",
-          format: "Practice and audit",
-          duration: "~2h 15min",
-          goal: "Check AI prototype quality independently before showing it to a stakeholder. The BA is the first quality filter.",
+            "Enough interface literacy to discuss screens clearly: pages, flows, navigation, forms, tables, filters, statuses, alerts, empty states.",
+          format: "Lecture and homework",
+          duration: "TBD",
+          purpose: "Give everyone enough interface literacy to discuss screens clearly.",
+          lectureTopics: [
+            "Pages, flows, navigation, forms, tables, filters, statuses, alerts, empty states.",
+            "What makes forms cognitively hard.",
+            "Why labels, grouping, defaults, and validation affect requirement quality.",
+            "Difference between content, interaction, business rule, and visual design.",
+            "\"Looks simple\" does not mean \"is simple.\"",
+          ],
           lessons: [
             {
-              id: "6-1",
-              number: "6.1",
-              title: "Common AI prototype mistakes: web and mobile separately",
-              description:
-                "AI repeats the same mistakes. On mobile: ignoring safe areas, undersized touch targets, and copied web navigation. On web: information overload and broken hierarchy.",
-              estimatedTime: "~13 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "The UX Reckoning 2025: where AI tools are still weak — NN/g",
-                  url: "https://www.nngroup.com/articles/ux-reset-2025/",
-                  duration: "8 min",
-                },
-                {
-                  type: "article",
-                  label: "Minimize Cognitive Load — NN/g (where AI overloads screens)",
-                  url: "https://www.nngroup.com/articles/minimize-cognitive-load/",
-                  duration: "5 min",
-                },
-              ],
+              id: "2-1",
+              number: "2.1",
+              title: "Pages, flows, navigation, forms, tables, filters, statuses, alerts, empty states",
+              description: "The building blocks of any interface. Recognizing them helps business analysts translate requirements into screen structures.",
+              resources: [],
             },
             {
-              id: "6-2",
-              number: "6.2",
-              title: "Applying the heuristics workbook to your own prototype",
-              description:
-                "Participants return to the workbook and apply it to their own AI prototype. This is the practical skill: say what the problem is, where it appears, which principle it violates, and what should change.",
-              estimatedTime: "~40 min practice",
-              resources: [
-                {
-                  type: "workbook",
-                  label: "Heuristic Evaluation Workbook (PDF) — NN/g: apply to your own prototype",
-                  url: "https://media.nngroup.com/media/articles/attachments/Heuristic_Evaluation_Workbook_-_Nielsen_Norman_Group.pdf",
-                  duration: "40 min",
-                },
-              ],
+              id: "2-2",
+              number: "2.2",
+              title: "What makes forms cognitively hard",
+              description: "Forms are where most business rules live. Understanding cognitive load in forms improves requirement quality.",
+              resources: [],
             },
             {
-              id: "6-3",
-              number: "6.3",
-              title: "When to redo the prompt, when to edit, when to keep as is",
-              description:
-                "Not every problem deserves the same response. Critical failures break the logic and require a new prompt. Smaller clarity issues may be edited directly. Some rough edges are acceptable at lo-fi level.",
-              estimatedTime: "~4 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "UX Prototypes — NN/g (section on \"good enough\" prototypes)",
-                  url: "https://www.nngroup.com/articles/ux-prototype-hi-lo-fidelity/",
-                  duration: "4 min",
-                },
-              ],
+              id: "2-3",
+              number: "2.3",
+              title: "Labels, grouping, defaults, and validation",
+              description: "These are not design details — they are requirement decisions that affect usability.",
+              resources: [],
+            },
+            {
+              id: "2-4",
+              number: "2.4",
+              title: "Content vs. interaction vs. business rule vs. visual design",
+              description: "Four different layers in every screen. Confusing them leads to incomplete requirements.",
+              resources: [],
+            },
+            {
+              id: "2-5",
+              number: "2.5",
+              title: "\"Looks simple\" does not mean \"is simple\"",
+              description: "Complexity hides in interfaces. Learning to see it is a key requirements skill.",
+              resources: [],
+            },
+          ],
+          didYouKnow: [
+            "A dropdown can hide a business rule.",
+            "An empty state can reveal a missing requirement.",
+            "Table columns usually represent prioritization decisions.",
+            "Error messages often expose workflow exceptions.",
+            "A required field is a policy decision, not just a UI choice.",
+          ],
+          reading: {
+            body: "NN/g's guidance on reducing cognitive load in forms: structure, transparency, clarity, and support reduce user effort and improve usability.",
+          },
+          homework: {
+            body: "Pick one familiar screen and annotate: user goal, required data, optional data, business rules, error states, unknowns, and questions for validation.",
+          },
+          output: {
+            name: "Screen Anatomy Checklist",
+            fields: [
+              "User goal",
+              "Required data",
+              "Optional data",
+              "Business rules",
+              "Error states",
+              "Unknowns",
+              "Questions for validation",
+            ],
+          },
+          outcome:
+            "After this module, a participant can read a screen by its structural components, identify where business rules and requirements hide, and use the Screen Anatomy Checklist for requirement conversations.",
+        },
+        {
+          id: "module-03",
+          number: "03",
+          title: "From requests to requirements",
+          description:
+            "Transform vague asks into structured requirement hypotheses. Request vs. requirement vs. assumption vs. constraint.",
+          format: "Lecture and workshop",
+          duration: "TBD",
+          purpose: "Teach participants to transform vague asks into structured requirement hypotheses.",
+          lectureTopics: [
+            "Request vs. requirement vs. assumption vs. constraint.",
+            "How to ask better follow-up questions.",
+            "How to detect solutioning too early (problem space vs. solution space).",
+            "How to separate \"must,\" \"should,\" \"nice to have,\" and \"unknown.\"",
+            "Requirements as testable statements.",
+          ],
+          lessons: [
+            {
+              id: "3-1",
+              number: "3.1",
+              title: "Request vs. requirement vs. assumption vs. constraint",
+              description: "Four different things that often get mixed up in conversation. Separating them is the first step to structured requirements.",
+              resources: [],
+            },
+            {
+              id: "3-2",
+              number: "3.2",
+              title: "How to ask better follow-up questions",
+              description: "The quality of requirements depends on the quality of questions. Specific techniques for deeper elicitation.",
+              resources: [],
+            },
+            {
+              id: "3-3",
+              number: "3.3",
+              title: "Detecting solutioning too early",
+              description: "Problem space vs. solution space. Teams that jump to screens before understanding the problem produce weak requirements.",
+              resources: [],
+            },
+            {
+              id: "3-4",
+              number: "3.4",
+              title: "Must, should, nice to have, and unknown",
+              description: "Priority is a requirement attribute. Learning to separate these early prevents scope confusion.",
+              resources: [],
+            },
+            {
+              id: "3-5",
+              number: "3.5",
+              title: "Requirements as testable statements",
+              description: "If a requirement cannot be tested, it cannot be validated. Writing testable requirements is a core skill.",
+              resources: [],
             },
           ],
           workshops: [
             {
-              title: "In-class audit",
-              body: "Each participant opens the prototype from Module 08 and runs the heuristic checklist across web and mobile aspects. They find at least three specific problems and argue them with principles. The facilitator reviews common group mistakes.",
+              title: "Live practice",
+              body: "Take vague requests and improve them. Example: \"Clinicians need a dashboard.\" Turn into structured questions: Which clinicians? During which task? What decision must they make? What information is missing today? What happens if the decision is wrong? How often is this needed? What source of truth should be used? What would make this successful?",
             },
           ],
+          reading: {
+            body: "NN/g's stakeholder-interview guidance: stakeholder conversations should uncover success metrics, concerns, constraints, and alignment issues early.",
+          },
           homework: {
-            body: "Review the lesson resources on common AI prototype mistakes and the heuristic evaluation process. Apply the heuristics workbook to your prototype from Module 08 if not completed in class. Independent practice exercises will be added before finalizing the learning program.",
+            body: "Rewrite three vague requirements using a structured format: context, user, task, pain, needed decision, requirement hypothesis, validation question, evidence needed.",
+          },
+          output: {
+            name: "Requirement Hypothesis Template",
+            fields: [
+              "Context",
+              "User",
+              "Task",
+              "Pain",
+              "Needed decision",
+              "Requirement hypothesis",
+              "Validation question",
+              "Evidence needed",
+            ],
           },
           outcome:
-            "After this module, a participant can identify common AI prototype mistakes, argue them with UX principles, and complete a heuristic audit of their own prototype.",
+            "After this module, a participant can distinguish requests from requirements, ask better follow-up questions, detect premature solutioning, and write structured requirement hypotheses.",
         },
         {
-          id: "module-07",
-          number: "07",
-          title: "Preparing a prototype for user testing",
+          id: "module-04",
+          number: "04",
+          title: "Mapping workflows before screens",
           description:
-            "How to get ready before showing a prototype to a user or stakeholder. Desktop and mobile sessions differ in setup, device choice, and what feedback you get.",
-          format: "Lecture",
-          duration: "30 min",
-          goal: "Know what to prepare before a prototype testing session, for both web and mobile.",
+            "Prevent teams from jumping straight into screens before understanding process. Process map vs. journey map vs. task flow.",
+          format: "Lecture and workshop",
+          duration: "TBD",
+          purpose: "Prevent teams from jumping straight into screens before understanding process. Mapping methods create shared understanding and shared artifacts for decision-making.",
+          lectureTopics: [
+            "Process map vs. journey map vs. task flow.",
+            "Where requirements hide: handoffs, exceptions, waiting, duplicate entry, approvals, and compliance rules.",
+            "How to map \"as-is\" and \"to-be\" without overcomplicating.",
+            "How to identify requirement gaps from a workflow.",
+          ],
           lessons: [
             {
-              id: "7-1",
-              number: "7.1",
-              title: "Web prototype testing: what to decide upfront",
-              description:
-                "Before showing a web prototype to a clinician or stakeholder, decide what you want to learn. Define a single hypothesis, pick the right fidelity, and remove navigation that would distract the reviewer.",
-              resources: [
-                {
-                  type: "video",
-                  label: "UX Prototyping: 5 Factors for Selecting the Right Tool — NN/g",
-                  url: "https://www.nngroup.com/videos/prototyping-tool/",
-                  duration: "3 min",
-                },
-                {
-                  type: "article",
-                  label: "Paper Prototyping: Getting User Data Before You Code — NN/g",
-                  url: "https://www.nngroup.com/articles/paper-prototyping/",
-                  duration: "6 min",
-                },
-              ],
+              id: "4-1",
+              number: "4.1",
+              title: "Process map vs. journey map vs. task flow",
+              description: "Three mapping methods for three different purposes. Choosing the right one depends on the question you need answered.",
+              resources: [],
             },
             {
-              id: "7-2",
-              number: "7.2",
-              title: "Mobile prototype testing: device, touch, and framing specifics",
-              description:
-                "Clinical staff often use phones and tablets at the point of care. Show a mobile prototype on a real device — touch targets, scroll behavior, and screen size all influence what feedback you get from a nurse or doctor.",
-              resources: [
-                {
-                  type: "article",
-                  label: "Mobile Usability Testing: How It Differs From Desktop — NN/g",
-                  url: "https://www.nngroup.com/articles/mobile-usability-testing/",
-                  duration: "7 min",
-                },
-              ],
+              id: "4-2",
+              number: "4.2",
+              title: "Where requirements hide in workflows",
+              description: "Handoffs, exceptions, waiting, duplicate entry, approvals, and compliance rules all hide requirements that screens must eventually handle.",
+              resources: [],
+            },
+            {
+              id: "4-3",
+              number: "4.3",
+              title: "Mapping \"as-is\" and \"to-be\" without overcomplicating",
+              description: "Workflow mapping should clarify, not create analysis paralysis. Practical guidelines for useful maps.",
+              resources: [],
+            },
+            {
+              id: "4-4",
+              number: "4.4",
+              title: "Identifying requirement gaps from a workflow",
+              description: "A workflow map is not the goal — the requirements it reveals are. How to read a map for gaps.",
+              resources: [],
             },
           ],
+          workshops: [
+            {
+              title: "Live practice",
+              body: "Build a simple workflow map for a non-clinical process, such as: requesting access to a tool, scheduling a meeting with multiple departments, submitting an internal support ticket, or approving a document. Then optionally compare with a healthcare example.",
+            },
+          ],
+          reading: {
+            body: "TBD",
+          },
+          homework: {
+            body: "TBD",
+          },
+          output: {
+            name: "Workflow-to-Requirements Map",
+            fields: [
+              "Process steps",
+              "Handoffs",
+              "Exceptions",
+              "Waiting points",
+              "Duplicate entry",
+              "Approvals",
+              "Compliance rules",
+              "Requirement gaps",
+            ],
+          },
           outcome:
-            "After this module, a participant knows how to set up a prototype testing session for both web and mobile, and choose the right device.",
+            "After this module, a participant can choose the right mapping method, build workflow maps, and identify hidden requirements in handoffs, exceptions, and approvals.",
         },
       ],
     },
     /* ============================================================
-       PHASE 3 — ADVANCED: CRITICAL THINKING (Modules 09–11)
+       PHASE 2 — PROTOTYPING & VALIDATION (Modules 05A–07)
        ============================================================ */
     {
-      id: "phase-3",
-      number: 3,
-      name: "Optional",
+      id: "phase-2",
+      number: 2,
+      name: "Prototyping & Validation",
       tagline:
-        "Nielsen's heuristics, cognitive load, current trends, and common AI design failures.",
-      modulesRange: "Modules 08–10",
-      duration: "~7 hours",
+        "Hands-on prototyping with Figma Make (broad audience) and AI tools (advanced BSAs), continuous validation, and requirements handoff.",
+      modulesRange: "Modules 05A–07",
+      duration: "TBD",
       modules: [
         {
-          id: "module-08",
-          number: "08",
-          title: "Nielsen's 10 heuristics and cognitive load",
+          id: "module-05a",
+          number: "05A",
+          title: "Figma as a shared thinking tool",
           description:
-            "The industry standard, plus Laws of UX. The group fills out the Heuristic Evaluation Workbook using real web and mobile examples.",
-          format: "Lecture and workbook practice",
-          duration: "~2h 10min",
-          goal: "Learn a proven review method. After this module, business analysts can conduct a quick heuristic analysis and argue problems using specific principles, not intuition.",
+            "Use Figma Make to quickly externalize structure, flows, roles, screens, and decision points so teams can validate requirements earlier. Focus on information architecture, not visual polish.",
+          format: "Lecture, demo, and workshop",
+          duration: "TBD",
+          purpose: "Help participants use Figma Make to quickly externalize structure, flows, roles, screens, and decision points so they can validate requirements earlier. This module focuses on information architecture and workflow clarity, not visual polish.",
+          lectureTopics: [
+            "IA prototype vs. UI prototype: structure, flow, grouping, roles, and terminology before visual polish.",
+            "Where requirements hide in IA: navigation, categories, statuses, filters, permissions, empty states, exception paths, data sources, and notifications.",
+            "How to prompt Figma Make from a requirement hypothesis, not from a vague feature request.",
+            "How to use a generated prototype to identify assumptions, missing rules, unclear terminology, and validation questions.",
+            "How to treat Figma Make output as a conversation artifact, not as design direction.",
+          ],
           lessons: [
             {
-              id: "8-1",
-              number: "8.1",
-              title: "How to conduct a heuristic evaluation + free workbook",
-              description:
-                "NN/g's article and workbook give BAs a tool they can use immediately: analyze a requirement, a screenshot, or an AI-generated prototype and record the issue with evidence.",
-              estimatedTime: "~11 min + tool",
-              resources: [
-                {
-                  type: "article",
-                  label: "How to Conduct a Heuristic Evaluation — NN/g",
-                  url: "https://www.nngroup.com/articles/how-to-conduct-a-heuristic-evaluation/",
-                  duration: "11 min",
-                },
-                {
-                  type: "workbook",
-                  label: "Heuristic Evaluation Workbook (PDF) — NN/g",
-                  url: "https://media.nngroup.com/media/articles/attachments/Heuristic_Evaluation_Workbook_-_Nielsen_Norman_Group.pdf",
-                  duration: "PDF",
-                },
-              ],
+              id: "5a-1",
+              number: "5A.1",
+              title: "IA prototype vs. UI prototype",
+              description: "Structure, flow, grouping, roles, and terminology come before visual polish. Understanding this distinction changes how you prompt and how you evaluate output.",
+              resources: [],
             },
             {
-              id: "8-2",
-              number: "8.2",
-              title: "Cognitive load: why \"too much\" breaks UX",
-              description:
-                "Cognitive load explains why overloaded screens fail. It matters even more on mobile, where space is limited and the task still needs to be clear.",
-              estimatedTime: "~11 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Minimize Cognitive Load to Maximize Usability — NN/g",
-                  url: "https://www.nngroup.com/articles/minimize-cognitive-load/",
-                  duration: "8 min",
-                },
-                {
-                  type: "video",
-                  label: "What Is Cognitive Load? — NN/g",
-                  url: "https://www.nngroup.com/videos/cognitive-load/",
-                  duration: "3 min",
-                },
-              ],
+              id: "5a-2",
+              number: "5A.2",
+              title: "Where requirements hide in IA",
+              description: "Navigation, categories, statuses, filters, permissions, empty states, exception paths, data sources, and notifications all carry requirement decisions.",
+              resources: [],
             },
             {
-              id: "8-3",
-              number: "8.3",
-              title: "Laws of UX: psychological laws in design",
-              description:
-                "Laws of UX collects principles such as Jakob's Law, Fitts' Law, and Hick's Law. Fitts' Law is especially useful when reviewing mobile touch targets.",
-              estimatedTime: "~20–30 min",
-              resources: [
-                {
-                  type: "resource",
-                  label: "Laws of UX — lawsofux.com (21 laws, free)",
-                  url: "https://lawsofux.com/",
-                  duration: "20–30 min",
-                },
-              ],
+              id: "5a-3",
+              number: "5A.3",
+              title: "Prompting Figma Make from a requirement hypothesis",
+              description: "A good prompt starts with a structured requirement, not a vague feature request. Prompt quality drives prototype quality.",
+              resources: [],
+            },
+            {
+              id: "5a-4",
+              number: "5A.4",
+              title: "Using a prototype to find assumptions and gaps",
+              description: "Mark what seems confirmed, invented, missing, or unclear. The prototype is a thinking tool, not a deliverable.",
+              resources: [],
+            },
+            {
+              id: "5a-5",
+              number: "5A.5",
+              title: "Prototype as conversation artifact, not design direction",
+              description: "Figma Make output is disposable. Its value is in the conversations it enables, not in its pixels.",
+              resources: [],
             },
           ],
           workshops: [
             {
-              title: "In-class workbook practice",
-              body: "The facilitator shows examples from real web and mobile applications side by side and asks: which UX solution here is more convenient, and why? The speaker demonstrates the difference between a decision that works and one that does not, then explains the design reasoning behind each. Participants then complete the Heuristic Evaluation Workbook for one product (first on web, then on mobile) and see how the same heuristic can surface differently across platforms.",
-            },
-            {
-              title: "Live practice: from generic AI UI to a distinct design",
-              body: "The speaker generates a standard UI screen using an AI tool, then demonstrates step by step how to customize it into something more unique: adjusting layout density, applying a specific visual style, reworking the hierarchy, and removing generic patterns. Participants observe the decision-making process and discuss what made the result feel less generic.",
+              title: "Live practice",
+              body: "Participants start with a vague request, for example: \"We need a better way to manage support requests.\" Then they define the user, goal, workflow, and known information; write a Figma Make prompt; generate a low-fidelity IA prototype; mark what seems confirmed, invented, missing, or unclear; and create validation questions for users or stakeholders.",
             },
           ],
+          reading: {
+            body: "TBD",
+          },
           homework: {
-            body: "Review the lesson resources on Nielsen's 10 heuristics, the Laws of UX, and cognitive load. Try applying the heuristic evaluation workbook to one interface of your choice. Independent practice exercises will be added before finalizing the learning program.",
+            body: "Create one Figma Make IA prototype for a current or realistic process and identify: 3 assumptions the prototype made, 3 missing or unclear requirements, 3 validation questions, and 1 workflow or IA change based on expected feedback. Include the original vague request, the Figma Make prompt, and a link or screenshots of the prototype.",
+          },
+          output: {
+            name: "Figma Make IA Prototype Pack",
+            fields: [
+              "Original vague request",
+              "Figma Make prompt",
+              "Prototype link or screenshots",
+              "Assumptions identified",
+              "Missing or unclear requirements",
+              "Validation questions",
+              "Workflow/IA changes",
+            ],
           },
           outcome:
-            "After this module, a participant knows the 10 heuristics, can apply them to a screen, understands cognitive load, and has completed a first heuristic audit.",
+            "After this module, a participant can use Figma Make to create IA prototypes as validation artifacts, identify assumptions and gaps in generated output, and formulate validation questions for stakeholders.",
         },
         {
-          id: "module-09",
-          number: "09",
-          title: "Modern trends vs timeless principles",
+          id: "module-05b",
+          number: "05B",
+          title: "AI prototyping for elicitation",
           description:
-            "State of UX 2026. AI as a new UI paradigm. Where AI-generated design looks right but breaks UX. Comparative audit of two products on web and mobile.",
-          format: "Lecture and comparative audit",
-          duration: "~2h 15min",
-          goal: "Distinguish what looks modern from what works correctly. AI tools can generate trendy screens quickly. The BA still has to check the logic.",
+            "Use Claude Design or similar tools responsibly during elicitation. AI prototype as conversation artifact with visible annotations for assumptions, validation needs, and unknowns.",
+          format: "Lecture, demo, and workshop",
+          duration: "TBD",
+          purpose: "Help BSAs use Claude Design or similar tools responsibly during elicitation.",
+          lectureTopics: [
+            "AI prototype as conversation artifact.",
+            "Prompting from workflow, not from vague feature requests.",
+            "How to preserve assumptions and open questions.",
+            "How to avoid over-polished prototypes.",
+            "How to document what changed during live validation.",
+          ],
           lessons: [
             {
-              id: "10-1",
-              number: "10.1",
-              title: "State of UX 2026: where the industry is heading",
-              description:
-                "NN/g's annual review gives context for where UX is moving and why quality review matters more in the AI-generation era.",
-              estimatedTime: "~12 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "State of UX 2026: Design Deeper to Differentiate — NN/g",
-                  url: "https://www.nngroup.com/articles/state-of-ux-2026/",
-                  duration: "12 min",
-                },
-              ],
+              id: "5b-1",
+              number: "5B.1",
+              title: "AI prototype as conversation artifact",
+              description: "An AI prototype should enable conversations, not replace them. Every generated screen carries implicit assumptions that need validation.",
+              resources: [],
             },
             {
-              id: "10-2",
-              number: "10.2",
-              title: "AI as a new UI paradigm: what it means for interfaces",
-              description:
-                "Jakob Nielsen's article explains how AI changes human-computer interaction. This helps BAs evaluate both AI-powered features and AI-generated prototypes.",
-              estimatedTime: "~10 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "AI: First New UI Paradigm in 60 Years — NN/g, Jakob Nielsen",
-                  url: "https://www.nngroup.com/articles/ai-paradigm/",
-                  duration: "10 min",
-                },
-              ],
+              id: "5b-2",
+              number: "5B.2",
+              title: "Prompting from workflow, not from feature requests",
+              description: "A structured workflow produces better prompts than a vague feature description. Start from the map, not from the wish list.",
+              resources: [],
             },
             {
-              id: "10-3",
-              number: "10.3",
-              title: "Where AI design looks right but breaks UX",
-              description:
-                "AI tools often produce screens that look plausible but fail the task. This module covers common failure patterns and the \"handmade design\" trust signal.",
-              estimatedTime: "~16 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "The UX Reckoning: Prepare for 2025 and Beyond — NN/g",
-                  url: "https://www.nngroup.com/articles/ux-reset-2025/",
-                  duration: "10 min",
-                },
-                {
-                  type: "article",
-                  label: "Handmade Designs: The New Trust Signal — NN/g (2025)",
-                  url: "https://www.nngroup.com/articles/handmade-designs/",
-                  duration: "6 min",
-                },
-              ],
+              id: "5b-3",
+              number: "5B.3",
+              title: "Preserving assumptions and open questions",
+              description: "Every AI-generated prototype should include visible annotations: Assumption, Needs validation, Business rule unknown, Source of truth unknown, Role/access unknown.",
+              resources: [],
             },
             {
-              id: "10-4",
-              number: "10.4",
-              title: "Analyzing quality designs: seeing why something works",
-              description:
-                "The module returns to NN/g visual design material, now with a different question: why does this screen follow the principle, and what would break if we changed it?",
-              estimatedTime: "~8 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Visual Design in UX: Study Guide — NN/g (Testing section)",
-                  url: "https://www.nngroup.com/articles/visual-design-in-ux-study-guide/",
-                  duration: "8 min",
-                },
-              ],
+              id: "5b-4",
+              number: "5B.4",
+              title: "Avoiding over-polished prototypes",
+              description: "The more polished a prototype looks, the more stakeholders treat it as final. Keep fidelity low to keep conversation productive.",
+              resources: [],
+            },
+            {
+              id: "5b-5",
+              number: "5B.5",
+              title: "Documenting what changed during live validation",
+              description: "Feedback during validation changes requirements. How to capture those changes systematically.",
+              resources: [],
             },
           ],
           workshops: [
             {
-              title: "In-class comparative audit",
-              body: "The facilitator compares two similar product flows, such as two patient portals or two scheduling dashboards. The group checks trends, heuristics, cognitive load, and mobile behavior. The point is to decide which is better and explain why.",
+              title: "Live practice",
+              body: "Start with a vague request and create: a requirement hypothesis, a workflow sketch, an AI prototype prompt, a prototype, and a validation script.",
             },
           ],
+          reading: {
+            body: "TBD",
+          },
           homework: {
-            body: "Review the lesson resources on State of UX 2026, the AI UI paradigm, and common AI design failures. Independent practice exercises will be added before finalizing the learning program.",
+            body: "Bring one real or realistic vague request and produce an AI prototype package: prompt, prototype, assumptions, validation questions, and captured feedback structure.",
+          },
+          output: {
+            name: "AI Prototype Elicitation Pack",
+            fields: [
+              "Prompt",
+              "Prototype",
+              "Assumptions",
+              "Validation questions",
+              "Captured feedback structure",
+            ],
           },
           outcome:
-            "After this phase, a participant can evaluate interfaces using heuristics, argue problems clearly, and recognize where AI-generated design commonly fails.",
+            "After this module, a participant can use AI tools to create prototypes as elicitation instruments, annotate assumptions, and document what changed during validation.",
         },
-
         {
-          id: "module-10",
-          number: "10",
-          title: "Design system: components, tokens, how to read one",
+          id: "module-06",
+          number: "06",
+          title: "Continuous validation in the flow",
           description:
-            "What a design system is and why business analysts need it. Components, tokens, styles, Figma libraries, and public systems such as Material 3, Apple HIG, and Atlassian.",
-          format: "Lecture and Figma file walkthrough",
-          duration: "~2h 15min",
-          goal: "Understand how a design system affects requirements and prototyping. Business analysts should be able to read a system as a shared vocabulary for working with design and development.",
+            "Validate continuously, cheaply, and appropriately. What to validate at each stage: problem, workflow, terminology, requirement, prototype, edge case, priority.",
+          format: "Lecture and workshop",
+          duration: "TBD",
+          purpose: "Teach teams to validate continuously, cheaply, and appropriately.",
+          lectureTopics: [
+            "What to validate at each stage: problem, workflow, terminology, requirement, prototype, edge case, priority.",
+            "How to ask non-leading questions.",
+            "How to test a prototype without selling it.",
+            "How to capture evidence, not opinions.",
+            "How to synthesize feedback into decisions.",
+          ],
           lessons: [
             {
-              id: "11-1",
-              number: "11.1",
-              title: "What is a design system and why does it matter to business analysts",
-              description:
-                "A design system is the shared language between designers and developers, not just a component library. Business analysts who understand that language write more precise requirements and avoid unnecessary custom UI.",
-              estimatedTime: "~15 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Design Systems 101 — NN/g",
-                  url: "https://www.nngroup.com/articles/design-systems-101/",
-                  duration: "8 min",
-                },
-                {
-                  type: "article",
-                  label: "Design Systems vs. Style Guides — NN/g",
-                  url: "https://www.nngroup.com/articles/design-systems-vs-style-guides/",
-                  duration: "7 min",
-                },
-              ],
+              id: "6-1",
+              number: "6.1",
+              title: "What to validate at each stage",
+              description: "Problem, workflow, terminology, requirement, prototype, edge case, priority — each stage has different validation needs.",
+              resources: [],
             },
             {
-              id: "11-2",
-              number: "11.2",
-              title: "Components, tokens, patterns: core terminology",
-              description:
-                "A button is a component. #0058E9 can be a color token. A login form is a pattern. These terms let a BA write a precise requirement: \"use the standard button component,\" not \"make it look like the rest of the app.\"",
-              estimatedTime: "~8 min",
-              resources: [
-                {
-                  type: "article",
-                  label: "Front-End Style Guides: Definition, Requirements — NN/g",
-                  url: "https://www.nngroup.com/articles/front-end-style-guides/",
-                  duration: "8 min",
-                },
-              ],
+              id: "6-2",
+              number: "6.2",
+              title: "How to ask non-leading questions",
+              description: "Leading questions produce confirmation, not evidence. Specific techniques for neutral elicitation.",
+              resources: [],
+            },
+            {
+              id: "6-3",
+              number: "6.3",
+              title: "Testing a prototype without selling it",
+              description: "Presenting a prototype and testing a prototype are different activities. Observers watch behavior; presenters watch reactions.",
+              resources: [],
+            },
+            {
+              id: "6-4",
+              number: "6.4",
+              title: "Capturing evidence, not opinions",
+              description: "\"I like it\" is not evidence. Observation notes, task completion, and confusion points are.",
+              resources: [],
+            },
+            {
+              id: "6-5",
+              number: "6.5",
+              title: "Synthesizing feedback into decisions",
+              description: "Feedback without synthesis creates noise. How to turn observations into requirement changes.",
+              resources: [],
             },
           ],
           workshops: [
             {
-              title: "In-class Figma walkthrough",
-              body: "The facilitator opens a public Figma library, such as Material Design 3 Figma Kit or Atlassian, and walks through components, tokens, and their use on screens. Participants repeat the navigation in a real file.",
+              title: "Live practice",
+              body: "Validation session with assigned roles: moderator, participant, note-taker, and observer. Each team runs a mini-validation of a prototype from earlier modules.",
             },
           ],
+          reading: {
+            body: "NN/g's research-method guidance: user research can happen at any point in the design cycle, and usability testing observes people performing tasks so teams can uncover problems and opportunities.",
+          },
           homework: {
-            body: "Review the lesson resources on design systems, components, tokens, and industry systems (Material 3, Apple HIG, Atlassian). Independent practice exercises will be added before finalizing the learning program.",
+            body: "Conduct one mini-validation session with a colleague or representative user.",
+          },
+          output: {
+            name: "Live Validation Script",
+            fields: [
+              "Goal",
+              "Hypothesis",
+              "Tasks",
+              "Questions",
+              "Observation notes",
+              "Requirement changes",
+              "Open decisions",
+            ],
           },
           outcome:
-            "After this module, a participant understands what a design system, component, token, and pattern are; can open a Figma library; and can find the right component for a requirement.",
+            "After this module, a participant can run lightweight validation sessions, ask non-leading questions, capture evidence instead of opinions, and synthesize feedback into requirement decisions.",
+        },
+        {
+          id: "module-07",
+          number: "07",
+          title: "Requirements handoff that works",
+          description:
+            "Define what \"good enough to hand off\" means. What design needs from BSAs, what delivery needs from design, what developers need from requirements.",
+          format: "Lecture and workshop",
+          duration: "TBD",
+          purpose: "Define what \"good enough to hand off\" means.",
+          lectureTopics: [
+            "What design needs from BSAs.",
+            "What delivery needs from design.",
+            "What developers need from requirements.",
+            "How to document decisions and unresolved questions.",
+            "How to avoid \"prototype as the only source of truth.\"",
+            "How to create traceability from feedback to requirement.",
+          ],
+          lessons: [
+            {
+              id: "7-1",
+              number: "7.1",
+              title: "What each team needs from the handoff",
+              description: "Design, delivery, and development each need different things from requirements. Understanding these needs prevents rework.",
+              resources: [],
+            },
+            {
+              id: "7-2",
+              number: "7.2",
+              title: "Documenting decisions and unresolved questions",
+              description: "Not all questions will be answered. Documenting what was decided and what remains open is as important as the requirements themselves.",
+              resources: [],
+            },
+            {
+              id: "7-3",
+              number: "7.3",
+              title: "Prototype is not the only source of truth",
+              description: "A prototype shows one possible solution. The requirement lives in the problem statement, the workflow, and the validation evidence.",
+              resources: [],
+            },
+            {
+              id: "7-4",
+              number: "7.4",
+              title: "Traceability from feedback to requirement",
+              description: "Every requirement change should trace back to evidence. How to maintain that chain.",
+              resources: [],
+            },
+          ],
+          workshops: [
+            {
+              title: "Live practice",
+              body: "Package a validated prototype into a handoff bundle: problem statement, user roles, workflow map, requirement hypotheses, validated requirements, open questions, prototype link, prototype change log, evidence notes, decisions made, and risks and dependencies.",
+            },
+          ],
+          reading: {
+            body: "TBD",
+          },
+          homework: {
+            body: "Prepare a final handoff package for the shared build-along app.",
+          },
+          output: {
+            name: "Validated Requirements Handoff Template",
+            fields: [
+              "Problem statement",
+              "User roles",
+              "Workflow map",
+              "Requirement hypotheses",
+              "Validated requirements",
+              "Open questions",
+              "Prototype link",
+              "Prototype change log",
+              "Evidence notes",
+              "Decisions made",
+              "Risks and dependencies",
+            ],
+          },
+          outcome:
+            "After this module, a participant can package validated requirements into a handoff that design and delivery teams can use, with traceability from feedback to requirement.",
         },
       ],
     },
-    
   ],
 };
 
 /* ============================================================
-   AI TOOLS (Module 09 overview, promoted to its own section)
-   ============================================================ */
-export type ToolCategory = "UI / Mobile" | "UI / Concepts" | "UI / Interactive" | "UI / Live demo" | "UI / Components" | "AI Dev / CLI" | "AI Dev / IDE";
-
-export type Tool = {
-  id: string;
-  name: string;
-  url: string;
-  category: ToolCategory;
-  group: "UI" | "AI Dev";
-  tagline: string;
-  logo: string;
-};
-
-export const tools: { heading: string; items: Tool[] } = {
-  heading: "AI tools covered",
-  items: [
-    {
-      id: "google-stitch",
-      name: "Google Stitch",
-      url: "https://stitch.withgoogle.com/",
-      category: "UI / Mobile",
-      group: "UI",
-      tagline: "Fastest start. Text to mobile screen in about 90 seconds. Gemini models.",
-      logo: "/tools/google-stitch.jpg",
-    },
-    {
-      id: "claude-design",
-      name: "Claude Design",
-      url: "https://claude.ai/design",
-      category: "UI / Concepts",
-      group: "UI",
-      tagline: "UX consultant and UI concept generator. Useful alongside other tools.",
-      logo: "/tools/claude.png",
-    },
-    {
-      id: "figma-make",
-      name: "Figma Make",
-      url: "https://www.figma.com/make/",
-      category: "UI / Interactive",
-      group: "UI",
-      tagline: "Interactive prototype with navigation. Web and mobile. Close to a real product experience.",
-      logo: "/tools/figma-make.png",
-    },
-    {
-      id: "lovable",
-      name: "Lovable",
-      url: "https://lovable.dev/",
-      category: "UI / Live demo",
-      group: "UI",
-      tagline: "Live web app for demos. Generates front-end code.",
-      logo: "/tools/lovable.png",
-    },
-    {
-      id: "v0",
-      name: "v0 (Vercel)",
-      url: "https://v0.dev/",
-      category: "UI / Components",
-      group: "UI",
-      tagline: "React/Tailwind components. Strong for specific interface elements.",
-      logo: "/tools/v0.png",
-    },
-    {
-      id: "claude-code",
-      name: "Claude Code",
-      url: "https://claude.ai/code",
-      category: "AI Dev / CLI",
-      group: "AI Dev",
-      tagline: "AI development agent via terminal. Included so BAs understand how developers may use it.",
-      logo: "/tools/claude.png",
-    },
-    {
-      id: "cursor",
-      name: "Cursor",
-      url: "https://www.cursor.com/",
-      category: "AI Dev / IDE",
-      group: "AI Dev",
-      tagline: "AI-powered code editor with chat. Included so BAs understand when technical teams may use it.",
-      logo: "/tools/cursor.png",
-    },
-  ],
-};
-
-/* ============================================================
-   INCLUDED MATERIALS (§6) — 8 chips
+   INCLUDED MATERIALS (§6) — 8 artifacts
    ============================================================ */
 export const includedMaterials = {
-  heading: "Included materials",
+  heading: "Included artifacts",
   items: [
-    "Journey map and user-flow examples",
-    "Prompt structure for web and mobile prototypes",
-    "Screen anatomy reference",
-    "Visual audit worksheet",
-    "Design-system terminology reference",
-    "Heuristic evaluation workbook",
-    "AI tool comparison matrix",
+    "User Thinking Canvas",
+    "Screen Anatomy Checklist",
+    "Requirement Hypothesis Template",
+    "Workflow-to-Requirements Map",
+    "Figma Make IA Prototype Pack",
+    "AI Prototype Elicitation Pack",
+    "Live Validation Script",
+    "Validated Requirements Handoff Template",
   ],
 };
 
@@ -1204,49 +878,50 @@ export const faq = {
   items: [
     {
       id: "faq-1",
-      question: "Is this a design course?",
+      question: "Is this a UX or design course?",
       answer:
-        "No. It teaches enough UX and UI judgment for BA/BSA and technical teams to create and critique prototype drafts. Production design remains a designer responsibility.",
+        "No. It teaches enough interface literacy and design judgment for BA, BSA, PM, and delivery teams to write better requirements. Production design remains a designer responsibility.",
     },
     {
       id: "faq-2",
-      question: "Are these prototypes production-ready?",
+      question: "Do participants need coding or Figma skills?",
       answer:
-        "No. They are validation drafts. They help teams test whether they understood the requirement before design and development effort increases.",
+        "No prior Figma or coding experience is needed. Figma Make and AI tools are used as thinking and validation instruments, not as design tools.",
     },
     {
       id: "faq-3",
-      question: "Do participants need coding skills?",
+      question: "What do participants take away?",
       answer:
-        "No coding is required for the BA/BSA exercises. Claude Code and Cursor are included so participants understand how developers may use AI after handoff.",
+        "Eight reusable artifacts: User Thinking Canvas, Screen Anatomy Checklist, Requirement Hypothesis Template, Workflow-to-Requirements Map, Figma Make IA Prototype Pack, AI Prototype Elicitation Pack, Live Validation Script, and Validated Requirements Handoff Template.",
     },
     {
       id: "faq-4",
-      question: "Can the AI tools change before finalizing the learning program?",
+      question: "What is Track A vs Track B in Phase 2?",
       answer:
-        "Yes. Tool access, pricing, and features change quickly. The module can be refreshed before finalizing the learning program without changing the core course logic.",
+        "Module 05A (Figma Make) is for the broad audience — anyone involved in requirements work. Module 05B (AI Prototyping) is for advanced BSAs who want to use AI tools for elicitation. Both are sequential modules, not parallel tracks.",
     },
     {
       id: "faq-5",
       question: "How is this relevant to U.S. Renal Care?",
       answer:
-        "The examples can use healthcare workflows where useful, such as patient portal flows, scheduling, provider dashboards, lab review, and clinic operations. The underlying skills are general product skills: understand users, structure flows, prototype, critique, and validate.",
+        "The methods apply to any requirements work: patient portal flows, scheduling, provider dashboards, lab review, clinic operations. The underlying skills are universal: understand users, map workflows, structure requirements, prototype, validate, and hand off.",
     },
   ],
 };
 
 /* ============================================================
-   SKILLS AFTER COURSE (§8) — 6 items
+   SKILLS AFTER COURSE (§8) — 7 items
    ============================================================ */
 export const skillsAfterCourse = {
   heading: "Skills after the course",
   items: [
-    "Read and critique a web or mobile interface using the language of principles: heuristics, hierarchy, cognitive load, and mobile specifics.",
-    "Understand design systems: components, tokens, and patterns. Read a Figma library and write clearer requirements for the team.",
-    "Build user journey maps and user flows from stakeholder requirements for web and mobile contexts.",
-    "Select the right AI tool for the task and generate a prototype using a structured prompt.",
-    "Conduct a heuristic audit of a prototype and identify UX problems before showing it to a stakeholder.",
-    "Use the prototype as a requirements validation tool in conversation with a stakeholder.",
+    "Understand why users think in tasks and workarounds, and apply the User Thinking Canvas to capture user context before writing requirements.",
+    "Read screens by structural components and use the Screen Anatomy Checklist to find hidden business rules and missing requirements.",
+    "Transform vague stakeholder requests into structured, testable requirement hypotheses using the Requirement Hypothesis Template.",
+    "Map workflows before screens and identify hidden requirements in handoffs, exceptions, approvals, and compliance rules.",
+    "Use Figma Make or AI tools to create lightweight IA prototypes as validation artifacts, not as design deliverables.",
+    "Run continuous validation sessions with non-leading questions, capturing evidence instead of opinions.",
+    "Package validated requirements into a handoff that design and delivery teams can actually use, with full traceability from feedback to requirement.",
   ],
 };
 
@@ -1266,7 +941,6 @@ export const nav = {
   anchors: [
     { id: "about", label: "About" },
     { id: "curriculum", label: "Curriculum" },
-    { id: "tools", label: "Tools" },
     { id: "faq", label: "FAQ" },
   ],
 };

@@ -2,25 +2,27 @@
 
 import { useRef } from "react";
 import {
-  RiSearchEyeLine,
-  RiPaletteLine,
-  RiMapLine,
-  RiRobot2Line,
+  RiUserHeartLine,
+  RiLayoutLine,
+  RiFileEditLine,
+  RiFlowChart,
+  RiMagicLine,
   RiCheckboxCircleLine,
-  RiPresentationLine,
+  RiSendPlaneLine,
 } from "@remixicon/react";
 import { skillsAfterCourse } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
-type IconComponent = typeof RiMapLine;
+type IconComponent = typeof RiFlowChart;
 
 const icons: IconComponent[] = [
-  RiSearchEyeLine,
-  RiPaletteLine,
-  RiMapLine,
-  RiRobot2Line,
+  RiUserHeartLine,
+  RiLayoutLine,
+  RiFileEditLine,
+  RiFlowChart,
+  RiMagicLine,
   RiCheckboxCircleLine,
-  RiPresentationLine,
+  RiSendPlaneLine,
 ];
 
 export function SkillsAfterCourse() {

@@ -1,22 +1,67 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 @AGENTS.md
 @docs/architecture.md
 
-# CLAUDE.md — USRC Learning Landing Page
-
-This file tells every agent run in this directory which skills to invoke and when.
-The agent MUST invoke the listed skills via the `Skill` tool at the start of each
-phase before writing or editing files. Missing skill = pause and report.
-
 ## Project summary
 
-Static evaluation landing page for the "Rapid prototyping for healthcare product
-teams" learning program (Trinetix → U.S. Renal Care).
+Static landing page for the "Rapid prototyping for healthcare product teams"
+learning program (Trinetix → U.S. Renal Care). Proposal page only — no backend,
+no CTAs, no forms, no analytics.
 
-Stack: Next.js 16 · TypeScript · Tailwind v4 · GSAP v3 · `@remixicon/react`.
-No backend. No CTAs. No forms.
+Stack: Next.js 16 App Router · TypeScript · Tailwind v4 · GSAP v3 · `@remixicon/react`.
+Deployed as static export to Vercel (`output: "export"` in `next.config.ts`).
 
 Content source of truth: [USRC-Landing-Course-v2.md](USRC-Landing-Course-v2.md).
 All copy lifted verbatim into `app/(landing)/_data/course.ts` — do not paraphrase.
+
+## Commands
+
+```bash
+npm run dev          # Start dev server (turbopack)
+npm run build        # Static export → out/
+npm run lint         # ESLint (flat config, eslint-config-next)
+```
+
+Deploy (requires `vercel` CLI + login):
+```bash
+vercel pull --yes --environment production
+vercel build --prod
+vercel deploy --prebuilt --prod
+```
+
+No test runner is configured. No Prettier — formatting follows ESLint rules only.
+
+## Architecture
+
+**Static export:** `next.config.ts` sets `output: "export"` + `images: { unoptimized: true }`.
+Vercel doesn't recognise Next.js 16 — `vercel.json` points `outputDirectory` to `"out"`.
+
+**Next.js 16 warning:** APIs and conventions may differ from training data. Read
+`node_modules/next/dist/docs/` before writing Next.js code. Heed deprecation notices.
+
+**Content layer:** All page text lives in `app/(landing)/_data/course.ts` (typed exports).
+Components import from there — no hardcoded strings in JSX except structural labels.
+
+**Page composition:** `app/page.tsx` is a thin shell that composes section components
+from `app/(landing)/_components/`. Each section is a standalone client or server component.
+
+**Utilities:** `app/_lib/cn.ts` (clsx + tailwind-merge), `app/_lib/animations.ts`
+(useReveal, useStagger, prefersReducedMotion helper).
+
+**Path alias:** `@/*` maps to project root (tsconfig paths).
+
+**Fonts:** Geist Sans + Geist Mono via `next/font/local` (bundled with Next.js 16).
+
+## Styling
+
+Tailwind v4 only — tokens defined via `@theme` block in `app/globals.css`.
+**No `tailwind.config.js`.** No shadcn/ui.
+
+**Contrast rule:** never use `--color-fg-muted` (`#6a7c8a`) for body text — fails
+WCAG AA at 2.6:1 contrast ratio.
 
 ## Breakpoints
 
@@ -24,6 +69,21 @@ Mobile-first Tailwind. Three explicit targets:
 - 320px+ — base
 - 744px+ — `md:`
 - 1280px+ — `lg:`
+
+## Animation constraints
+
+- `gsap` core + `gsap/ScrollTrigger` only — **no club plugins**.
+- `@gsap/react` `useGSAP` hook for lifecycle management.
+- Entrance-only animations: `power2.out`, 0.4–0.5s, Y ≤ 12px, `once: true`.
+- Stagger 0.04–0.08s. No `elastic`/`bounce`.
+- All animation gated by `prefersReducedMotion()` from `app/_lib/animations.ts`.
+- Hover effects: CSS only (no GSAP).
+
+## Skill orchestration
+
+This file also tells agents which skills to invoke per phase.
+The agent MUST invoke the listed skills via the `Skill` tool at the start of each
+phase before writing or editing files. Missing skill = pause and report.
 
 ## Phase 0 — Scaffold + git + Vercel CLI
 

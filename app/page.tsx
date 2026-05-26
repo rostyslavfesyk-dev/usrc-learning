@@ -12,7 +12,6 @@ export default function Home() {
       <main>
         <Hero />
         <AudienceOutcome />
-        <hr className="mx-auto max-w-page border-t border-border px-5 md:px-8 lg:px-12" />
         <CurriculumAccordion />
         <FAQ />
       </main>

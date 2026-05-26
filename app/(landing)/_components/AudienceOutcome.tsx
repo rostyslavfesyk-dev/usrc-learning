@@ -1,30 +1,31 @@
 "use client";
 
 import { useRef } from "react";
-import { RiGroupLine, RiBook2Line, RiCompassLine } from "@remixicon/react";
+import {
+  RiTimeLine,
+  RiCheckLine,
+  RiCloseLine,
+  RiSlideshowLine,
+  RiGroupLine,
+  RiArticleLine,
+  RiFileEditLine,
+  RiShieldCheckLine,
+} from "@remixicon/react";
+import { basicDetails } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
-const blocks = [
-  {
-    label: "Audience",
-    body: "Business Analysts, BSAs, and product-facing team members who gather requirements from clinical staff and work on healthcare software.",
-    Icon: RiGroupLine,
-  },
-  {
-    label: "Format",
-    body: "Lectures, workshops, case studies, screen audits, workbook practice, AI-tool demos, and a final project.",
-    Icon: RiBook2Line,
-  },
-  {
-    label: "Scope",
-    body: "Practical UX/UI judgment and AI prototyping for clinical requirements work — sketch, test, and validate with doctors and nurses fast.",
-    Icon: RiCompassLine,
-  },
-];
+const formatIcons: Record<string, React.ElementType> = {
+  Lecture: RiSlideshowLine,
+  Workshop: RiGroupLine,
+  Reading: RiArticleLine,
+  Homework: RiFileEditLine,
+  "Validation habit": RiShieldCheckLine,
+  TBD: RiTimeLine,
+};
 
 export function AudienceOutcome() {
   const ref = useRef<HTMLElement>(null);
-  useStagger(ref, "[data-reveal]", { stagger: 0.08 });
+  useStagger(ref, "[data-reveal]", { stagger: 0.06 });
 
   return (
     <section
@@ -33,22 +34,60 @@ export function AudienceOutcome() {
       aria-labelledby="about-heading"
       className="bg-white"
     >
-      <div className="mx-auto max-w-page px-5 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24">
+      <div className="mx-auto max-w-page px-5 pt-16 pb-6 md:px-8 md:pt-20 md:pb-8 lg:px-12 lg:pt-24 lg:pb-10">
+        <div className="space-y-10">
 
-        <dl className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-12 lg:gap-16">
-          {blocks.map(({ label, body, Icon }) => (
-            <div key={label} data-reveal className="flex flex-col items-start">
-              <Icon size={24} aria-hidden="true" className="mb-4 text-usrc-navy" />
-              <dt className="text-sm font-bold uppercase tracking-[0.12em] text-usrc-navy">
-                {label}
-              </dt>
-              <dd className="mt-3 text-pretty text-body leading-relaxed text-fg-primary">
-                {body}
+          {/* Format — horizontal row */}
+          <div data-reveal>
+            <h2
+              id="about-heading"
+              className="mb-10 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy"
+            >
+              Format
+            </h2>
+            <ul className="flex flex-wrap gap-x-8 gap-y-4">
+              {basicDetails.format.map((f) => {
+                const Icon = formatIcons[f.label] ?? RiSlideshowLine;
+                return (
+                  <li key={f.label} className="flex flex-1 flex-col items-start">
+                    <Icon size={24} aria-hidden="true" className="mb-3 text-usrc-crimson" />
+                    <p className="text-body-sm font-semibold leading-snug text-fg-primary">{f.label}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-fg-secondary">{f.description}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* Cards row: In scope + Out of scope */}
+          <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div
+              data-reveal
+              className="rounded-lg border border-border bg-surface-subtle p-5"
+            >
+              <div className="flex items-center gap-2.5 mb-3">
+                <RiCheckLine size={18} aria-hidden="true" className="shrink-0 text-usrc-navy" />
+                <dt className="text-xs font-bold uppercase tracking-[0.14em] text-usrc-navy">In scope</dt>
+              </div>
+              <dd className="text-body-sm leading-relaxed text-fg-primary">
+                {basicDetails.inScope}
               </dd>
             </div>
-          ))}
-        </dl>
+            <div
+              data-reveal
+              className="rounded-lg border border-border bg-surface-subtle p-5"
+            >
+              <div className="flex items-center gap-2.5 mb-3">
+                <RiCloseLine size={18} aria-hidden="true" className="shrink-0 text-usrc-navy" />
+                <dt className="text-xs font-bold uppercase tracking-[0.14em] text-usrc-navy">Out of scope</dt>
+              </div>
+              <dd className="text-body-sm leading-relaxed text-fg-primary">
+                {basicDetails.outOfScope}
+              </dd>
+            </div>
+          </dl>
 
+        </div>
       </div>
     </section>
   );

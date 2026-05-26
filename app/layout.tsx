@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rapid prototyping for healthcare product teams | U.S. Renal Care × Trinetix",
+  title: "From Vague Requests to Validated Requirements | U.S. Renal Care × Trinetix",
   description:
-    "A learning program for U.S. Renal Care Business Analysts, Business Systems Analysts, and technical teams. UX, UI, and AI prototyping practice for healthcare product work.",
+    "A learning program for U.S. Renal Care BA, BSA, PM, and delivery teams. Better requirements faster through collaborative discovery, lightweight prototyping, and live validation.",
   robots: { index: false, follow: false },
 };
 

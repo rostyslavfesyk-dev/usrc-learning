@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { RiCheckboxCircleFill } from "@remixicon/react";
 import { hero } from "../_data/course";
 import { useStagger, prefersReducedMotion } from "../../_lib/animations";
 
@@ -108,35 +107,20 @@ export function Hero() {
             {hero.headline}
           </h1>
 
-          <ul data-reveal className="mt-6 flex flex-wrap items-center gap-2.5">
-            {hero.meta.map((m, idx) => (
+          <ul data-reveal className="mt-6 flex flex-wrap gap-2">
+            {hero.audienceTags.map((tag) => (
               <li
-                key={`${m.value}-${idx}`}
-                className="rounded-pill bg-white/10 px-4 py-1.5 text-small font-medium text-white/90 backdrop-blur-sm"
+                key={tag}
+                className="rounded-pill bg-white/10 px-3.5 py-1.5 text-small font-medium text-white/90 backdrop-blur-sm"
               >
-                <span className="font-semibold text-white">{m.value}</span>
-                {m.label ? (
-                  <span className="ml-1.5 text-white">{m.label}</span>
-                ) : null}
+                {tag}
               </li>
             ))}
           </ul>
 
-          <ul data-reveal className="mt-16 grid w-fit grid-cols-1 gap-x-16 gap-y-8 md:grid-cols-2">
-            {hero.bullets.map((b) => (
-              <li key={b.title} className="flex items-start gap-3">
-                <RiCheckboxCircleFill
-                  aria-hidden="true"
-                  size={20}
-                  className="mt-0.5 shrink-0 text-white/60"
-                />
-                <div>
-                  <p className="text-body font-semibold leading-snug text-white">{b.title}</p>
-                  <p className="mt-0.5 max-w-[240px] text-pretty text-body-sm leading-relaxed text-white/70">{b.description}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <p data-reveal className="mt-6 max-w-3xl text-[length:var(--text-h5)] font-normal leading-relaxed text-white/85">
+            {hero.coreOutcome}
+          </p>
         </div>
       </div>
     </section>

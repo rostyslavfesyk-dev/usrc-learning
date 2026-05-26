@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, Fragment } from "react";
-import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiPencilLine, RiBookOpenLine, RiSlideshowLine } from "@remixicon/react";
+import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiPencilLine, RiBookOpenLine, RiSlideshowLine, RiLightbulbLine, RiFileList3Line, RiArticleLine } from "@remixicon/react";
 import { curriculum, type Module, type Lesson } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
@@ -9,12 +9,14 @@ const stepIcons: Record<string, React.ElementType> = {
   Lecture: RiSlideshowLine,
   "Online Workshop": RiGroupLine,
   "Live practice": RiPencilLine,
+  Reading: RiArticleLine,
   Homework: RiBookOpenLine,
 };
 
 const stepEstimates: Record<string, string> = {
   "Live practice": "~20 min",
   "Online Workshop": "~45 min",
+  Reading: "~15 min",
   Homework: "~1 hour",
 };
 
@@ -67,7 +69,7 @@ function ModuleRow({
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
 
-  const order: Record<string, number> = { "Live practice": 0, "Online Workshop": 1, Homework: 2 };
+  const order: Record<string, number> = { "Live practice": 0, "Online Workshop": 1, Reading: 2, Homework: 3 };
 
   // Sectioned modules (e.g. module-01): use sections data
   const hasSections = !!m.sections;
@@ -75,7 +77,7 @@ function ModuleRow({
     ? new Map(m.lessons.map((l) => [l.id, l]))
     : null;
 
-  // Flat modules: build activities from workshops + homework
+  // Flat modules: build activities from workshops + reading + homework
   const activities = hasSections
     ? []
     : [
@@ -83,6 +85,7 @@ function ModuleRow({
           label: w.title.toLowerCase().includes("practice") ? "Live practice" : "Online Workshop",
           body: w.body,
         })) ?? []),
+        ...(m.reading ? [{ label: "Reading", body: m.reading.body }] : []),
         ...(m.homework ? [{ label: "Homework", body: m.homework.body }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
@@ -166,7 +169,7 @@ function ModuleRow({
                           hasLine={false}
                           loose={activityIsBreak}
                         >
-                          <p className="text-[13px] leading-relaxed text-fg-secondary">{section.activity.body}</p>
+                          <p className="max-w-prose text-[13px] leading-relaxed text-fg-secondary">{section.activity.body}</p>
                         </TimelineStep>
                       )}
                     </Fragment>
@@ -174,13 +177,17 @@ function ModuleRow({
                 })}
                 {m.homework && (
                   <TimelineStep label="Homework" estimate="~1 hour" hasLine={false}>
-                    <p className="text-[13px] leading-relaxed text-fg-secondary">{m.homework.body}</p>
+                    <p className="max-w-prose text-[13px] leading-relaxed text-fg-secondary">{m.homework.body}</p>
                   </TimelineStep>
                 )}
               </>
             ) : (
               <>
-                <TimelineStep label="Lecture" estimate="~30 min" hasLine={activities.length > 0}>
+                <TimelineStep
+                  label="Lecture"
+                  estimate="~30 min"
+                  hasLine={activities.length > 0 && activities[0].label !== "Reading" && activities[0].label !== "Homework"}
+                >
                   <ul className="space-y-2.5">
                     {m.lessons.map((lesson) => (
                       <li key={lesson.id} className="flex items-start gap-2.5">
@@ -196,18 +203,57 @@ function ModuleRow({
                     ))}
                   </ul>
                 </TimelineStep>
-                {activities.map((a, i) => (
-                  <TimelineStep
-                    key={`${a.label}-${i}`}
-                    label={a.label}
-                    estimate={stepEstimates[a.label]}
-                    hasLine={false}
-                    loose={i < activities.length - 1}
-                  >
-                    <p className="text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
-                  </TimelineStep>
-                ))}
+                {activities.map((a, i) => {
+                  const next = activities[i + 1];
+                  // Connect workshop → next workshop only; Reading/Homework are standalone
+                  const connected = a.label !== "Reading" && a.label !== "Homework"
+                    && !!next && next.label !== "Reading" && next.label !== "Homework";
+                  return (
+                    <TimelineStep
+                      key={`${a.label}-${i}`}
+                      label={a.label}
+                      estimate={stepEstimates[a.label]}
+                      hasLine={connected}
+                      loose={!connected && i < activities.length - 1}
+                    >
+                      <p className="max-w-prose text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
+                    </TimelineStep>
+                  );
+                })}
               </>
+            )}
+
+            {m.didYouKnow && m.didYouKnow.length > 0 && (
+              <div className="mt-6 rounded-lg border border-border bg-surface-subtle p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <RiLightbulbLine aria-hidden="true" size={14} className="text-usrc-navy" />
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-usrc-navy">Did you know?</p>
+                </div>
+                <ul className="space-y-2">
+                  {m.didYouKnow.map((fact, i) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <span aria-hidden="true" className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-usrc-navy/40" />
+                      <span className="text-[13px] leading-relaxed text-fg-secondary">{fact}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {m.output && (
+              <div className="mt-6 rounded-lg border border-border bg-surface-subtle p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <RiFileList3Line aria-hidden="true" size={14} className="text-usrc-crimson" />
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-usrc-crimson">Output: {m.output.name}</p>
+                </div>
+                <ul className="flex flex-wrap gap-2">
+                  {m.output.fields.map((field) => (
+                    <li key={field} className="rounded-pill bg-usrc-crimson/8 px-3 py-1 text-xs font-medium text-fg-secondary">
+                      {field}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         </div>
@@ -237,10 +283,10 @@ export function CurriculumAccordion() {
             id="curriculum-heading"
             className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy"
           >
-            Foundation
+            {curriculum.phases[0].name}
           </h2>
           <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-fg-secondary">
-            {curriculum.phases[0].tagline} Takes approximately {curriculum.phases[0].duration} to complete.
+            {curriculum.phases[0].tagline}{curriculum.phases[0].duration !== "TBD" ? ` Takes approximately ${curriculum.phases[0].duration} to complete.` : ""}
           </p>
         </div>
 
@@ -250,13 +296,13 @@ export function CurriculumAccordion() {
               {phase.number !== 1 && (
                 <div className="max-w-2xl">
                   <span className="text-xs font-semibold uppercase tracking-[0.18em] text-usrc-crimson">
-                    Phase {phase.number}{phase.name === "Optional" ? " (Optional)" : ""}
+                    Phase {phase.number}
                   </span>
                   <h3 className="mt-4 text-[length:var(--text-h2)] font-light leading-tight tracking-tight text-usrc-navy">
-                    {phase.name === "Optional" ? "Good to know" : phase.name}
+                    {phase.name}
                   </h3>
                   <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-fg-secondary">
-                    {phase.tagline} Takes approximately {phase.duration} to complete.
+                    {phase.tagline}{phase.duration !== "TBD" ? ` Takes approximately ${phase.duration} to complete.` : ""}
                   </p>
                 </div>
               )}
