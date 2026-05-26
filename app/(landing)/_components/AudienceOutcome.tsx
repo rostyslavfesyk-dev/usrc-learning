@@ -9,7 +9,6 @@ import {
   RiGroupLine,
   RiArticleLine,
   RiFileEditLine,
-  RiShieldCheckLine,
 } from "@remixicon/react";
 import { basicDetails } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
@@ -19,7 +18,6 @@ const formatIcons: Record<string, React.ElementType> = {
   Workshop: RiGroupLine,
   Reading: RiArticleLine,
   Homework: RiFileEditLine,
-  "Validation habit": RiShieldCheckLine,
   TBD: RiTimeLine,
 };
 

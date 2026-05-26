@@ -89,7 +89,6 @@ export const basicDetails = {
     { label: "Workshop", description: "Hands-on with shared app" },
     { label: "Reading", description: "NN/g video & article" },
     { label: "Homework", description: "One reusable artifact" },
-    { label: "Validation habit", description: "Check before next session" },
     { label: "TBD", description: "Course duration" },
   ],
   inScope:
