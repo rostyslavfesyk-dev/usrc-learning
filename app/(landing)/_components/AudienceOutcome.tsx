@@ -2,23 +2,23 @@
 
 import { useRef } from "react";
 import {
-  RiTimeLine,
   RiCheckLine,
   RiCloseLine,
   RiSlideshowLine,
-  RiGroupLine,
   RiArticleLine,
-  RiFileEditLine,
+  RiEditBoxLine,
+  RiFileCopyLine,
+  RiChatSmile2Line,
 } from "@remixicon/react";
 import { basicDetails } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
 const formatIcons: Record<string, React.ElementType> = {
-  Lecture: RiSlideshowLine,
-  Workshop: RiGroupLine,
+  Presentation: RiSlideshowLine,
+  Exercises: RiEditBoxLine,
   Reading: RiArticleLine,
-  Homework: RiFileEditLine,
-  TBD: RiTimeLine,
+  "Reusable Templates": RiFileCopyLine,
+  "Reusable Prompts": RiChatSmile2Line,
 };
 
 export function AudienceOutcome() {

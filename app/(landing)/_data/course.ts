@@ -85,11 +85,11 @@ export const basicDetails = {
   coreOutcome:
     "Participants learn how to turn high-level business requests into clearer, validated, buildable requirements using collaborative discovery, lightweight prototyping, and live validation.",
   format: [
-    { label: "Lecture", description: "Concepts & principles" },
-    { label: "Workshop", description: "Hands-on with shared app" },
+    { label: "Presentation", description: "Concepts & principles" },
+    { label: "Exercises", description: "Practice time and space" },
     { label: "Reading", description: "NN/g video & article" },
-    { label: "Homework", description: "One reusable artifact" },
-    { label: "TBD", description: "Course duration" },
+    { label: "Reusable Templates", description: "Ready-to-use work artifacts" },
+    { label: "Reusable Prompts", description: "Copy-paste AI starters" },
   ],
   inScope:
     "Improving requirements velocity and accuracy through better elicitation, workflow mapping, IA prototyping, continuous validation, and clearer handoff between client and vendor teams.",
@@ -167,7 +167,7 @@ export const courseStructure = {
     {
       number: 1,
       name: "Foundation",
-      modulesRange: "Modules 01–04",
+      modulesRange: "Modules 01–03",
       duration: "TBD",
       description:
         "Universal track for everyone: business, IT, operations, product, delivery, and vendor teams. General design judgment for requirements work.",
@@ -175,7 +175,7 @@ export const courseStructure = {
     {
       number: 2,
       name: "Prototyping & Validation",
-      modulesRange: "Modules 05A–07",
+      modulesRange: "Modules 04–07",
       duration: "TBD",
       description:
         "Hands-on prototyping with Figma Make (broad audience) and AI tools (advanced BSAs), continuous validation, and requirements handoff.",
@@ -198,23 +198,24 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       name: "Foundation",
       tagline:
         "Universal track for everyone: business, IT, operations, product, delivery, and vendor teams. General design judgment for requirements work.",
-      modulesRange: "Modules 01–04",
+      modulesRange: "Modules 01–03",
       duration: "TBD",
       modules: [
         {
           id: "module-01",
           number: "01",
-          title: "How users think",
+          title: "Understanding Users Through Workflow",
           description:
-            "Why vague requirements happen: stakeholders describe solutions, users describe symptoms, and teams interpret through different mental models.",
-          format: "Lecture and workshop",
+            "This module helps participants move beyond vague requests by uncovering the real work behind. Participants learn to separate problem space from solution space, map workflows, ask better questions, listen for signals, and turn findings into early requirement hypotheses.",
+          format: "Presentation 15 min",
           duration: "TBD",
           purpose: "Help participants understand why vague requirements happen: stakeholders describe solutions, users describe symptoms, and teams interpret through different mental models.",
           lectureTopics: [
-            "Users do not think in features; they think in tasks, goals, workarounds, risks, and interruptions.",
-            "Jobs-to-be-done as a practical requirements lens.",
-            "Why \"what do you need?\" often produces weak requirements.",
-            "Difference between stakeholder input, user evidence, and requirements.",
+            "Solution Space vs Problem Space",
+            "Decoding vague requests",
+            "Mapping real work",
+            "Asking good questions and listening for signals",
+            "Requirement Hypothesis",
           ],
           lessons: [
             {
@@ -248,15 +249,15 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Workshop",
-              body: "TBD",
+              title: "Exercises",
+              body: "",
             },
           ],
           reading: {
-            body: "TBD",
+            body: "",
           },
           homework: {
-            body: "TBD",
+            body: "",
           },
           output: {
             name: "User Thinking Canvas",
@@ -278,104 +279,31 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         {
           id: "module-02",
           number: "02",
-          title: "Interface anatomy: what screens are made of",
+          title: "From Workflow Signals and Requirement Hypothesis to Product Behavior",
           description:
-            "Learn the common building blocks of web and mobile interfaces, basic design dos and don'ts, and how interface choices reveal hidden requirements.",
-          format: "Lecture and homework",
+            "This module helps participants translate workflow findings into what the system may need to show, allow, prevent, track, or escalate. Participants learn to define product behavior categories, rules, states, and interface questions that prepare the team for screen anatomy, IA prototyping, and validation.",
+          format: "Presentation 15 min",
           duration: "TBD",
-          purpose: "Learn the common building blocks of web and mobile interfaces, basic design dos and don'ts, and how interface choices reveal hidden requirements around data, permissions, actions, states, and workflows.",
+          purpose: "Help participants translate workflow findings into what the system may need to show, allow, prevent, track, or escalate.",
           lectureTopics: [
-            "Web vs. mobile: what changes and why.",
-            "Basic screen anatomy. Screen element and requirement question.",
-            "Navigation patterns.",
-            "Forms, tables, cards, and dashboards.",
-            "Design dos and don'ts.",
-            "Mobile-specific dos and don'ts.",
-            "What makes forms cognitively hard.",
-            "\"Looks simple\" does not mean \"is simple.\"",
+            "Product behavior categories",
+            "Product behavior and behavior questions",
+            "Product behavior verbs",
+            "Behavior rules. Conditions that change what the system does.",
+            "Behavior-to-interface bridge",
           ],
-          lessons: [
+          lessons: [],
+          workshops: [
             {
-              id: "2-1",
-              number: "2.1",
-              title: "Web vs. mobile: what changes and why",
-              description: "Platform differences affect layout, navigation, and interaction — and each difference can surface a hidden requirement.",
-              resources: [],
+              title: "Exercises",
+              body: "",
             },
-            {
-              id: "2-2",
-              number: "2.2",
-              title: "Basic screen anatomy. Screen element and requirement question",
-              description: "Every screen element implies a requirement question. Learning to see the connection is the foundation of interface literacy.",
-              resources: [],
-            },
-            {
-              id: "2-3",
-              number: "2.3",
-              title: "Navigation patterns",
-              description: "Tabs, sidebars, breadcrumbs, bottom bars — each pattern carries assumptions about user flow and information architecture.",
-              resources: [],
-            },
-            {
-              id: "2-4",
-              number: "2.4",
-              title: "Forms, tables, cards, and dashboards",
-              description: "Four core screen patterns that account for most business applications. Each hides different requirement decisions.",
-              resources: [],
-            },
-            {
-              id: "2-5",
-              number: "2.5",
-              title: "Design dos and don'ts",
-              description: "Practical guidelines for interface decisions that affect clarity, usability, and requirement quality.",
-              resources: [],
-            },
-            {
-              id: "2-6",
-              number: "2.6",
-              title: "Mobile-specific dos and don'ts",
-              description: "Touch targets, thumb zones, offline states, and other mobile constraints that generate requirements desktop doesn't.",
-              resources: [],
-            },
-            {
-              id: "2-7",
-              number: "2.7",
-              title: "What makes forms cognitively hard",
-              description: "Forms are where most business rules live. Understanding cognitive load in forms improves requirement quality.",
-              resources: [],
-            },
-            {
-              id: "2-8",
-              number: "2.8",
-              title: "\"Looks simple\" does not mean \"is simple\"",
-              description: "Complexity hides in interfaces. Learning to see it is a key requirements skill.",
-              resources: [],
-            },
-          ],
-          didYouKnow: [
-            "A dropdown can hide a business rule.",
-            "An empty state can reveal a missing requirement.",
-            "Table columns usually represent prioritization decisions.",
-            "Error messages often expose workflow exceptions.",
-            "A required field is a policy decision, not just a UI choice.",
           ],
           reading: {
-            body: "Few Guesses, More Success: 4 Principles to Reduce Cognitive Load in Forms. Minimize Cognitive Load to Maximize Usability.",
+            body: "",
           },
           homework: {
-            body: "Choose one screen from an existing tool, prototype, or familiar product and analyze it using the screen anatomy checklist. Identify:",
-            items: [
-              "3 key screen elements",
-              "3 hidden requirements",
-              "3 design dos or don'ts observed",
-              "2 differences if this were web vs. mobile",
-              "2 missing states or edge cases",
-              "1 question to validate with a user or stakeholder",
-            ],
-          },
-          output: {
-            name: "Screen Anatomy Checklist for Requirement conversations",
-            fields: ["Reusable prompt: Design Literacy & Cognitive Load Check"],
+            body: "",
           },
           outcome:
             "After this module, a participant can read a screen by its structural components, identify where business rules and requirements hide, and use the Screen Anatomy Checklist for requirement conversations. Reusable prompt: Design Literacy & Cognitive Load Check.",
@@ -383,173 +311,35 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         {
           id: "module-03",
           number: "03",
-          title: "From requests to requirements",
+          title: "Interface Anatomy for Better Requirements",
           description:
-            "Transform vague asks into structured requirement hypotheses. Request vs. requirement vs. assumption vs. constraint.",
-          format: "Lecture and workshop",
+            "This module helps participants understand how screens communicate product behavior, user actions, rules, states, and information needs. Participants learn to use interface anatomy as a requirements discovery tool, not as visual design training.",
+          format: "Presentation 15 min",
           duration: "TBD",
-          purpose: "Teach participants to transform vague asks into structured requirement hypotheses.",
+          purpose: "Help participants understand how screens communicate product behavior, user actions, rules, states, and information needs.",
           lectureTopics: [
-            "Request vs. requirement vs. assumption vs. constraint.",
-            "How to ask better follow-up questions.",
-            "How to detect solutioning too early (problem space vs. solution space).",
-            "How to separate \"must,\" \"should,\" \"nice to have,\" and \"unknown.\"",
-            "Requirements as testable statements.",
+            "Why screen anatomy matters for requirements",
+            "From product behavior to interface elements",
+            "Basic anatomy of a screen",
+            "Interface elements as requirement clues",
+            "States, rules, and edge cases",
+            "Web vs. mobile requirements",
           ],
-          lessons: [
-            {
-              id: "3-1",
-              number: "3.1",
-              title: "Request vs. requirement vs. assumption vs. constraint",
-              description: "Four different things that often get mixed up in conversation. Separating them is the first step to structured requirements.",
-              resources: [],
-            },
-            {
-              id: "3-2",
-              number: "3.2",
-              title: "How to ask better follow-up questions",
-              description: "The quality of requirements depends on the quality of questions. Specific techniques for deeper elicitation.",
-              resources: [],
-            },
-            {
-              id: "3-3",
-              number: "3.3",
-              title: "Detecting solutioning too early",
-              description: "Problem space vs. solution space. Teams that jump to screens before understanding the problem produce weak requirements.",
-              resources: [],
-            },
-            {
-              id: "3-4",
-              number: "3.4",
-              title: "Must, should, nice to have, and unknown",
-              description: "Priority is a requirement attribute. Learning to separate these early prevents scope confusion.",
-              resources: [],
-            },
-            {
-              id: "3-5",
-              number: "3.5",
-              title: "Requirements as testable statements",
-              description: "If a requirement cannot be tested, it cannot be validated. Writing testable requirements is a core skill.",
-              resources: [],
-            },
-          ],
+          lessons: [],
           workshops: [
             {
-              title: "Workshop",
-              body: "Take vague requests and improve them. Example: \"Clinicians need a dashboard.\" Turn into:",
-              items: [
-                "Which clinicians?",
-                "During which task?",
-                "What decision must they make?",
-                "What information is missing today?",
-                "What happens if the decision is wrong?",
-                "How often is this needed?",
-                "What source of truth should be used?",
-                "What would make this successful?",
-              ],
+              title: "Exercises",
+              body: "",
             },
           ],
           reading: {
-            body: "NN/g's stakeholder-interview guidance: stakeholder conversations should uncover success metrics, concerns, constraints, and alignment issues early.",
+            body: "",
           },
           homework: {
-            body: "Rewrite three vague requirements using a structured format:",
-            items: [
-              "Context",
-              "User",
-              "Task",
-              "Pain",
-              "Needed decision",
-              "Requirement hypothesis",
-              "Validation question",
-              "Evidence needed",
-            ],
-          },
-          output: {
-            name: "Requirement Hypothesis Template",
-            fields: [
-              "Context",
-              "User",
-              "Task",
-              "Pain",
-              "Needed decision",
-              "Requirement hypothesis",
-              "Validation question",
-              "Evidence needed",
-            ],
+            body: "",
           },
           outcome:
-            "After this module, a participant can distinguish requests from requirements, ask better follow-up questions, detect premature solutioning, and write structured requirement hypotheses.",
-        },
-        {
-          id: "module-04",
-          number: "04",
-          title: "Mapping workflows before screens",
-          description:
-            "Prevent teams from jumping straight into screens before understanding process. Process map vs. journey map vs. task flow.",
-          format: "Lecture and workshop",
-          duration: "TBD",
-          purpose: "Prevent teams from jumping straight into screens before understanding process. Mapping methods create shared understanding and shared artifacts for decision-making.",
-          lectureTopics: [
-            "Process map vs. journey map vs. task flow.",
-            "Where requirements hide: handoffs, exceptions, waiting, duplicate entry, approvals, and compliance rules.",
-            "How to map \"as-is\" and \"to-be\" without overcomplicating.",
-            "How to identify requirement gaps from a workflow.",
-          ],
-          lessons: [
-            {
-              id: "4-1",
-              number: "4.1",
-              title: "Process map vs. journey map vs. task flow",
-              description: "Three mapping methods for three different purposes. Choosing the right one depends on the question you need answered.",
-              resources: [],
-            },
-            {
-              id: "4-2",
-              number: "4.2",
-              title: "Where requirements hide in workflows",
-              description: "Handoffs, exceptions, waiting, duplicate entry, approvals, and compliance rules all hide requirements that screens must eventually handle.",
-              resources: [],
-            },
-            {
-              id: "4-3",
-              number: "4.3",
-              title: "Mapping \"as-is\" and \"to-be\" without overcomplicating",
-              description: "Workflow mapping should clarify, not create analysis paralysis. Practical guidelines for useful maps.",
-              resources: [],
-            },
-            {
-              id: "4-4",
-              number: "4.4",
-              title: "Identifying requirement gaps from a workflow",
-              description: "A workflow map is not the goal — the requirements it reveals are. How to read a map for gaps.",
-              resources: [],
-            },
-          ],
-          workshops: [
-            {
-              title: "Workshop",
-              body: "Build a simple workflow map for a non-clinical process, such as:",
-              items: [
-                "Requesting access to a tool",
-                "Scheduling a meeting with multiple departments",
-                "Submitting an internal support ticket",
-                "Approving a document",
-              ],
-            },
-          ],
-          reading: {
-            body: "TBD",
-          },
-          homework: {
-            body: "TBD",
-          },
-          output: {
-            name: "Workflow-to-Requirements Map",
-            fields: ["TBD"],
-          },
-          outcome:
-            "After this module, a participant can choose the right mapping method, build workflow maps, and identify hidden requirements in handoffs, exceptions, and approvals.",
+            "After this module, a participant can read interface anatomy as a requirements discovery tool and identify hidden requirements in screen elements, states, and rules.",
         },
       ],
     },
@@ -562,15 +352,15 @@ export const curriculum: { heading: string; phases: Phase[] } = {
       name: "Prototyping & Validation",
       tagline:
         "Hands-on prototyping with Figma Make (broad audience) and AI tools (advanced BSAs), continuous validation, and requirements handoff.",
-      modulesRange: "Modules 05A–07",
+      modulesRange: "Modules 04–07",
       duration: "TBD",
       modules: [
         {
-          id: "module-05a",
-          number: "05A",
-          title: "Figma as a shared thinking tool",
+          id: "module-04",
+          number: "04",
+          title: "IA Prototyping with Figma Make",
           description:
-            "Use Figma Make to quickly externalize structure, flows, roles, screens, and decision points so teams can validate requirements earlier. Focus on information architecture, not visual polish.",
+            "Participants use workflow maps, requirement hypotheses, product behaviors, and interface questions to create a rough IA prototype in Figma Make. The focus is not polished UI design, but making assumptions visible enough to support discussion, validation, and better requirements handoff.",
           format: "Lecture, demo, and workshop",
           duration: "TBD",
           purpose: "Help participants use Figma Make to quickly externalize structure, flows, roles, screens, and decision points so they can validate requirements earlier. This module focuses on information architecture and workflow clarity, not visual polish.",
@@ -651,11 +441,11 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant can use Figma Make to create IA prototypes as validation artifacts, identify assumptions and gaps in generated output, and formulate validation questions for stakeholders.",
         },
         {
-          id: "module-05b",
-          number: "05B",
-          title: "AI prototyping for elicitation",
+          id: "module-05",
+          number: "05",
+          title: "Advanced IA Prototyping with Claude",
           description:
-            "Use Claude Design or similar tools responsibly during elicitation. AI prototype as conversation artifact with visible annotations for assumptions, validation needs, and unknowns.",
+            "Participants use Claude to refine IA prototype inputs, structure complex product behavior, generate screen-by-screen logic. This module focuses on using AI as a reasoning partner to clarify roles, rules, states, edge cases, validation questions, and handoff-ready prototype guidance before detailed design begins.",
           format: "Lecture, demo, and workshop",
           duration: "TBD",
           purpose: "Help BSAs use Claude Design or similar tools responsibly during elicitation.",
@@ -739,9 +529,9 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         {
           id: "module-06",
           number: "06",
-          title: "Continuous validation in the flow",
+          title: "Validating the Requirements and the Prototype",
           description:
-            "Validate continuously, cheaply, and appropriately. What to validate at each stage: problem, workflow, terminology, requirement, prototype, edge case, priority.",
+            "This module helps participants validate continuously, cheaply, and appropriately before detailed design or development begins. Participants learn how to test requirement hypotheses, prototype assumptions, workflow fit, terminology, roles, rules, and edge cases so teams can reduce rework and move forward with stronger evidence.",
           format: "Lecture and workshop",
           duration: "TBD",
           purpose: "Teach teams to validate continuously, cheaply, and appropriately.",
@@ -826,9 +616,9 @@ export const curriculum: { heading: string; phases: Phase[] } = {
         {
           id: "module-07",
           number: "07",
-          title: "Collaborative requirements handoff for design and delivery",
+          title: "Collaborative Handoff for Design and Delivery",
           description:
-            "Define what a useful, design-ready handoff looks like. Align around a shared best-practice format for transferring knowledge, decisions, evidence, and open questions.",
+            "This module helps participants package validated understanding into a design-ready handoff that supports faster and more accurate design iteration. Participants learn how to transfer the right mix of context, decisions, evidence, assumptions, open questions, prototype notes, and next steps so client and vendor teams can move forward with shared clarity.",
           format: "Lecture and workshop",
           duration: "TBD",
           purpose: "Define what a useful, design-ready handoff looks like. Align around a shared best-practice format for transferring knowledge, decisions, evidence, and open questions in a way that supports faster and more accurate design iteration.",

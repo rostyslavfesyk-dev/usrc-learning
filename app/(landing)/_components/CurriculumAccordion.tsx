@@ -1,21 +1,26 @@
 "use client";
 
 import { useRef, useState, Fragment } from "react";
-import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiBookOpenLine, RiSlideshowLine, RiLightbulbLine, RiFileList3Line, RiArticleLine } from "@remixicon/react";
+import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiBookOpenLine, RiSlideshowLine, RiLightbulbLine, RiFileList3Line, RiArticleLine, RiEditBoxLine } from "@remixicon/react";
 import { curriculum, type Module, type Lesson } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
 
 const stepIcons: Record<string, React.ElementType> = {
   Lecture: RiSlideshowLine,
+  Presentation: RiSlideshowLine,
   Workshop: RiGroupLine,
+  Exercises: RiEditBoxLine,
   Reading: RiArticleLine,
   Homework: RiBookOpenLine,
+  Templates: RiFileList3Line,
 };
 
 const stepEstimates: Record<string, string> = {
   Workshop: "~45 min",
-  Reading: "~15 min",
+  Exercises: "25 min",
+  Reading: "15 min",
   Homework: "~1 hour",
+  Templates: "",
 };
 
 function TimelineStep({
@@ -41,7 +46,7 @@ function TimelineStep({
         {hasLine && <div className="absolute left-3.5 top-7 bottom-0 w-px -translate-x-px bg-border" />}
       </div>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2 mb-3 mt-1.5">
+        <div className="flex items-center gap-2 mb-3 h-7">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-fg-muted leading-none">
             {label}
           </p>
@@ -67,7 +72,7 @@ function ModuleRow({
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
 
-  const order: Record<string, number> = { Workshop: 0, Reading: 1, Homework: 2 };
+  const order: Record<string, number> = { Workshop: 0, Exercises: 0, Reading: 1, Templates: 2, Homework: 2 };
 
   // Sectioned modules (e.g. module-01): use sections data
   const hasSections = !!m.sections;
@@ -85,7 +90,7 @@ function ModuleRow({
           items: w.items,
         })) ?? []),
         ...(m.reading ? [{ label: "Reading", body: m.reading.body, items: undefined }] : []),
-        ...(m.homework ? [{ label: "Homework", body: m.homework.body, items: m.homework.items }] : []),
+        ...(m.homework ? [{ label: "Templates", body: m.homework.body, items: m.homework.items }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
   return (
@@ -109,7 +114,7 @@ function ModuleRow({
           <h3 className="text-[length:var(--text-h5)] font-semibold leading-snug tracking-tight text-fg-primary">
             {m.title}
           </h3>
-          <p className="mt-1 hidden max-w-xl text-[13px] leading-relaxed text-fg-secondary md:line-clamp-2">
+          <p className={`mt-1 hidden max-w-xl text-[13px] leading-relaxed text-fg-secondary ${isOpen ? "md:block" : "md:line-clamp-2"}`}>
             {m.description}
           </p>
         </div>
@@ -151,7 +156,7 @@ function ModuleRow({
                   const activityIsBreak = !isLastSection || !!m.homework;
                   return (
                     <Fragment key={si}>
-                      <TimelineStep label="Lecture" estimate="~30 min" hasLine={!!section.activity}>
+                      <TimelineStep label={m.format.split(/\s(.+)/)[0]} estimate={m.format.split(/\s(.+)/)[1] ?? "~30 min"} hasLine={!!section.activity}>
                         <ul className="space-y-2.5">
                           {sectionLessons.map((lesson) => (
                             <li key={lesson.id} className="flex items-start gap-2.5">
@@ -190,20 +195,20 @@ function ModuleRow({
             ) : (
               <>
                 <TimelineStep
-                  label="Lecture"
-                  estimate="~30 min"
+                  label={m.format.split(/\s(.+)/)[0]}
+                  estimate={m.format.split(/\s(.+)/)[1] ?? "~30 min"}
                   hasLine={activities.length > 0 && activities[0].label !== "Reading" && activities[0].label !== "Homework"}
                 >
                   <ul className="space-y-2.5">
-                    {m.lessons.map((lesson) => (
-                      <li key={lesson.id} className="flex items-start gap-2.5">
+                    {m.lectureTopics.map((topic) => (
+                      <li key={topic} className="flex items-start gap-2.5">
                         <RiCheckLine
                           aria-hidden="true"
                           size={14}
                           className="mt-0.5 shrink-0 text-usrc-crimson"
                         />
                         <span className="text-[13px] leading-relaxed text-fg-primary">
-                          {lesson.title}
+                          {topic}
                         </span>
                       </li>
                     ))}
@@ -253,21 +258,6 @@ function ModuleRow({
               </div>
             )}
 
-            {m.output && (
-              <div className="mt-6 rounded-lg border border-border bg-surface-subtle p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <RiFileList3Line aria-hidden="true" size={14} className="text-usrc-crimson" />
-                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-usrc-crimson">Output: {m.output.name}</p>
-                </div>
-                <ul className="flex flex-wrap gap-2">
-                  {m.output.fields.map((field) => (
-                    <li key={field} className="rounded-pill bg-usrc-crimson/8 px-3 py-1 text-xs font-medium text-fg-secondary">
-                      {field}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
         </div>
       </div>
