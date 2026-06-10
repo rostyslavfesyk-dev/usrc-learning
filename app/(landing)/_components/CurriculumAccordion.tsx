@@ -92,9 +92,10 @@ function ModuleRow({
           label: w.title,
           body: w.body,
           items: w.items,
+          links: undefined,
         })) ?? []),
         ...(m.reading ? [{ label: "Reading", body: m.reading.body, items: undefined, links: m.reading.items }] : []),
-        ...(m.homework ? [{ label: "Templates", body: m.homework.body, items: m.homework.items }] : []),
+        ...(m.homework ? [{ label: "Templates", body: m.homework.body, items: m.homework.items, links: undefined }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
   return (
