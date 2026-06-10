@@ -10,6 +10,7 @@ const stepIcons: Record<string, React.ElementType> = {
   Presentation: RiSlideshowLine,
   Workshop: RiGroupLine,
   Exercises: RiEditBoxLine,
+  "Live Exercises": RiEditBoxLine,
   Reading: RiArticleLine,
   Homework: RiBookOpenLine,
   Templates: RiFileList3Line,
@@ -18,6 +19,7 @@ const stepIcons: Record<string, React.ElementType> = {
 const stepEstimates: Record<string, string> = {
   Workshop: "~45 min",
   Exercises: "25 min",
+  "Live Exercises": "25 min",
   Reading: "15 min",
   Homework: "~1 hour",
   Templates: "",
@@ -64,10 +66,12 @@ function ModuleRow({
   m,
   isOpen,
   onToggle,
+  disabled = false,
 }: {
   m: Module;
   isOpen: boolean;
   onToggle: () => void;
+  disabled?: boolean;
 }) {
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
@@ -89,23 +93,25 @@ function ModuleRow({
           body: w.body,
           items: w.items,
         })) ?? []),
-        ...(m.reading ? [{ label: "Reading", body: m.reading.body, items: undefined }] : []),
+        ...(m.reading ? [{ label: "Reading", body: m.reading.body, items: undefined, links: m.reading.items }] : []),
         ...(m.homework ? [{ label: "Templates", body: m.homework.body, items: m.homework.items }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
   return (
     <li className="border-b border-border last:border-b-0">
-      <button
+      <div
         id={triggerId}
-        type="button"
-        aria-expanded={isOpen}
-        aria-controls={panelId}
-        onClick={onToggle}
-        className="group flex w-full items-center gap-3 px-4 py-5 text-left transition-colors hover:bg-surface-subtle focus-visible:bg-surface-subtle md:gap-5 md:px-6 md:py-6"
+        role={disabled ? undefined : "button"}
+        tabIndex={disabled ? undefined : 0}
+        aria-expanded={disabled ? undefined : isOpen}
+        aria-controls={disabled ? undefined : panelId}
+        onClick={disabled ? undefined : onToggle}
+        onKeyDown={disabled ? undefined : (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onToggle(); } }}
+        className={`group flex w-full items-center gap-3 px-4 py-5 text-left md:gap-5 md:px-6 md:py-6 ${disabled ? "cursor-default" : "cursor-pointer transition-colors hover:bg-surface-subtle focus-visible:bg-surface-subtle"}`}
       >
         <span
           aria-hidden="true"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-usrc-crimson font-mono text-small font-semibold text-fg-on-dark md:h-10 md:w-10"
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md font-mono text-small font-semibold md:h-10 md:w-10 ${disabled ? "bg-ink-200 text-fg-muted" : "bg-usrc-crimson text-fg-on-dark"}`}
         >
           {m.number}
         </span>
@@ -119,19 +125,23 @@ function ModuleRow({
           </p>
         </div>
 
-        <div className="hidden shrink-0 items-center gap-2 md:flex">
-          <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-fg-secondary">
-            {m.duration}
-          </span>
-        </div>
+        {m.duration !== "TBD" && (
+          <div className="hidden shrink-0 items-center gap-2 md:flex">
+            <span className="inline-flex items-center rounded-pill bg-ink-100 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-fg-secondary">
+              {m.duration}
+            </span>
+          </div>
+        )}
 
-        <RiArrowDownSLine
-          aria-hidden="true"
-          size={22}
-          data-state={isOpen ? "open" : "closed"}
-          className="shrink-0 text-fg-muted transition-transform duration-300 ease-[--ease-out] data-[state=open]:rotate-180"
-        />
-      </button>
+        {!disabled && (
+          <RiArrowDownSLine
+            aria-hidden="true"
+            size={22}
+            data-state={isOpen ? "open" : "closed"}
+            className="shrink-0 text-fg-muted transition-transform duration-300 ease-[--ease-out] data-[state=open]:rotate-180"
+          />
+        )}
+      </div>
 
       <div
         id={panelId}
@@ -227,11 +237,20 @@ function ModuleRow({
                       hasLine={connected}
                       loose={!connected && i < activities.length - 1}
                     >
-                      <p className="max-w-prose text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>
+                      {a.body && <p className="max-w-prose text-[13px] leading-relaxed text-fg-secondary">{a.body}</p>}
                       {a.items && (
                         <ul className="mt-2 list-disc pl-4 space-y-1">
                           {a.items.map((item) => (
                             <li key={item} className="text-[13px] leading-relaxed text-fg-secondary">{item}</li>
+                          ))}
+                        </ul>
+                      )}
+                      {a.links && (
+                        <ul className="mt-2 list-disc pl-4 space-y-1">
+                          {a.links.map((link) => (
+                            <li key={link.url} className="text-[13px] leading-relaxed">
+                              <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-usrc-navy underline decoration-usrc-navy/30 underline-offset-2 hover:decoration-usrc-navy">{link.label}</a>
+                            </li>
                           ))}
                         </ul>
                       )}
@@ -317,6 +336,7 @@ export function CurriculumAccordion() {
                     m={m}
                     isOpen={openId === m.id}
                     onToggle={() => setOpenId(openId === m.id ? null : m.id)}
+                    disabled={phase.number === 2}
                   />
                 ))}
               </ul>

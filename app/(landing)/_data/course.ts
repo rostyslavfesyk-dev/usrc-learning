@@ -49,7 +49,7 @@ export type Module = {
   lessons: Lesson[];
   sections?: Section[];
   workshops?: { title: string; body: string; items?: string[] }[];
-  reading?: { body: string };
+  reading?: { body: string; items?: { label: string; url: string }[] };
   homework?: { body: string; items?: string[] };
   outcome: string;
   output?: ModuleOutput;
@@ -87,7 +87,7 @@ export const basicDetails = {
   format: [
     { label: "Presentation", description: "Concepts & principles" },
     { label: "Exercises", description: "Practice time and space" },
-    { label: "Reading", description: "NN/g video & article" },
+    { label: "Reading", description: "Curated videos & articles for deeper exploration" },
     { label: "Reusable Templates", description: "Ready-to-use work artifacts" },
     { label: "Reusable Prompts", description: "Copy-paste AI starters" },
   ],
@@ -249,15 +249,20 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           ],
           workshops: [
             {
-              title: "Exercises",
+              title: "Live Exercises",
               body: "",
             },
           ],
           reading: {
             body: "",
+            items: [
+              { label: "Problem Space and Solution Space Research (video)", url: "https://www.nngroup.com/videos/problem-solution-space/" },
+              { label: "UX Mapping Methods: When to Use Which (video)", url: "https://www.nngroup.com/articles/ux-mapping-cheat-sheet/" },
+              { label: "Wireflows: A UX Deliverable for Workflows and Apps (article)", url: "https://www.nngroup.com/articles/wireflows/" },
+            ],
           },
           homework: {
-            body: "",
+            body: "TBD",
           },
           output: {
             name: "User Thinking Canvas",
@@ -296,14 +301,14 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           workshops: [
             {
               title: "Exercises",
-              body: "",
+              body: "TBD",
             },
           ],
           reading: {
-            body: "",
+            body: "TBD",
           },
           homework: {
-            body: "",
+            body: "TBD",
           },
           outcome:
             "After this module, a participant can read a screen by its structural components, identify where business rules and requirements hide, and use the Screen Anatomy Checklist for requirement conversations. Reusable prompt: Design Literacy & Cognitive Load Check.",
@@ -329,14 +334,14 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           workshops: [
             {
               title: "Exercises",
-              body: "",
+              body: "TBD",
             },
           ],
           reading: {
-            body: "",
+            body: "TBD",
           },
           homework: {
-            body: "",
+            body: "TBD",
           },
           outcome:
             "After this module, a participant can read interface anatomy as a requirements discovery tool and identify hidden requirements in screen elements, states, and rules.",
