@@ -1301,8 +1301,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           templates: [
             { label: "Workflow Discovery Template", fileName: "Workflow_Discovery_Template.pages" },
             { label: "AI Prompt: Discovery Interview Planner", content: PROMPT_DISCOVERY_INTERVIEW_PLANNER },
-            { label: "How to Use: AI Prompt — Discovery Interview Planner", content: HOW_TO_USE_DISCOVERY_INTERVIEW_PLANNER },
             { label: "AI Prompt: Discovery Transcript Analyzer", content: PROMPT_DISCOVERY_TRANSCRIPT_ANALYZER },
+            { label: "How to Use: AI Prompt — Discovery Interview Planner", content: HOW_TO_USE_DISCOVERY_INTERVIEW_PLANNER },
             { label: "How to Use: AI Prompt — Discovery Transcript Analyzer", content: HOW_TO_USE_DISCOVERY_TRANSCRIPT_ANALYZER },
           ],
         },
