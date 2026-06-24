@@ -182,15 +182,18 @@ export function TemplatePreviewModal({
   label,
   fileName,
   content,
+  promptContent,
   onClose,
 }: {
   label: string;
   fileName?: string;
   content?: string;
+  promptContent?: string;
   onClose: () => void;
 }) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [copied, setCopied] = useState(false);
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
 
   const isFileMode = !!fileName;
   const isCopyMode = !isFileMode;
@@ -217,6 +220,13 @@ export function TemplatePreviewModal({
     await navigator.clipboard.writeText(content);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyPrompt = async () => {
+    if (!promptContent) return;
+    await navigator.clipboard.writeText(promptContent);
+    setCopiedPrompt(true);
+    setTimeout(() => setCopiedPrompt(false), 2000);
   };
 
   return (
@@ -269,13 +279,42 @@ export function TemplatePreviewModal({
               ))}
             </div>
           ) : (
-            <div className="mx-auto max-w-[640px] rounded bg-white shadow-[0_1px_4px_rgba(0,0,0,0.15)] px-8 py-7 md:px-10 md:py-9">
-              {content ? (
-                <RenderedContent content={content} />
-              ) : (
-                <p className="text-center text-[13px] text-fg-muted italic py-8">
-                  Content coming soon
-                </p>
+            <div className="mx-auto max-w-[640px] flex flex-col gap-5">
+              <div className="rounded bg-white shadow-[0_1px_4px_rgba(0,0,0,0.15)] px-8 py-7 md:px-10 md:py-9">
+                {content ? (
+                  <RenderedContent content={content} />
+                ) : (
+                  <p className="text-center text-[13px] text-fg-muted italic py-8">
+                    Content coming soon
+                  </p>
+                )}
+              </div>
+
+              {promptContent && (
+                <div className="rounded-lg bg-white border border-[#d5d5d5] shadow-[0_1px_4px_rgba(0,0,0,0.15)] px-8 py-7 md:px-10 md:py-9">
+                  <div className="flex items-center justify-between gap-3 mb-5">
+                    <h3 className="text-[14px] font-semibold text-fg-primary">AI Prompt</h3>
+                    <button
+                      onClick={handleCopyPrompt}
+                      className="inline-flex items-center gap-1.5 rounded-md bg-usrc-navy px-3 py-1.5 text-[12px] font-medium text-fg-on-dark transition-colors hover:bg-usrc-navy/85"
+                    >
+                      {copiedPrompt ? (
+                        <>
+                          <RiCheckLine size={12} aria-hidden="true" />
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <RiFileCopyLine size={12} aria-hidden="true" />
+                          Copy prompt
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <div className="text-[12px] leading-relaxed text-fg-secondary font-mono whitespace-pre-wrap break-words mt-2">
+                    {promptContent}
+                  </div>
+                </div>
               )}
             </div>
           )}
@@ -309,7 +348,7 @@ export function TemplatePreviewModal({
               </a>
             </>
           )}
-          {isCopyMode && content && (
+          {isCopyMode && !promptContent && content && (
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-2 rounded-md bg-usrc-crimson px-4 py-2 text-[13px] font-medium text-fg-on-dark transition-colors hover:bg-usrc-crimson-deep"

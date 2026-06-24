@@ -74,7 +74,7 @@ function ModuleRow({
   isOpen: boolean;
   onToggle: () => void;
   disabled?: boolean;
-  onPreviewTemplate?: (t: { label: string; fileName?: string; content?: string }) => void;
+  onPreviewTemplate?: (t: { label: string; fileName?: string; content?: string; promptContent?: string }) => void;
 }) {
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
@@ -261,7 +261,7 @@ function ModuleRow({
                       )}
                       {"templateFiles" in a && a.templateFiles && (
                         <ul className="mt-2 list-disc pl-4 space-y-1">
-                          {(a.templateFiles as { label: string; fileName?: string; content?: string }[]).map((t) => (
+                          {(a.templateFiles as { label: string; fileName?: string; content?: string; promptContent?: string }[]).map((t) => (
                             <li key={t.fileName ?? t.label} className="text-[13px] leading-relaxed">
                               <button
                                 type="button"
@@ -306,7 +306,7 @@ function ModuleRow({
 
 export function CurriculumAccordion() {
   const [openId, setOpenId] = useState<string | null>(null);
-  const [previewTemplate, setPreviewTemplate] = useState<{ label: string; fileName?: string; content?: string } | null>(null);
+  const [previewTemplate, setPreviewTemplate] = useState<{ label: string; fileName?: string; content?: string; promptContent?: string } | null>(null);
   const ref = useRef<HTMLElement>(null);
   useStagger(ref, "[data-reveal]", { stagger: 0.1 });
 
@@ -372,6 +372,7 @@ export function CurriculumAccordion() {
           label={previewTemplate.label}
           fileName={previewTemplate.fileName}
           content={previewTemplate.content}
+          promptContent={previewTemplate.promptContent}
           onClose={() => setPreviewTemplate(null)}
         />
       )}

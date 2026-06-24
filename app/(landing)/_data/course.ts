@@ -54,7 +54,7 @@ export type Module = {
   outcome: string;
   output?: ModuleOutput;
   didYouKnow?: string[];
-  templates?: { label: string; fileName?: string; content?: string }[];
+  templates?: { label: string; fileName?: string; content?: string; promptContent?: string }[];
 };
 
 export type Phase = {
@@ -1279,9 +1279,6 @@ export const curriculum: { heading: string; phases: Phase[] } = {
               { label: "Wireflows: A UX Deliverable for Workflows and Apps (article)", url: "https://www.nngroup.com/articles/wireflows/" },
             ],
           },
-          homework: {
-            body: "TBD",
-          },
           output: {
             name: "User Thinking Canvas",
             fields: [
@@ -1300,10 +1297,8 @@ export const curriculum: { heading: string; phases: Phase[] } = {
             "After this module, a participant understands why users and stakeholders describe needs differently, can use the JTBD lens for elicitation, and has a User Thinking Canvas for structuring user understanding.",
           templates: [
             { label: "Workflow Discovery Template", fileName: "Workflow_Discovery_Template.pages" },
-            { label: "AI Prompt: Discovery Interview Planner", content: PROMPT_DISCOVERY_INTERVIEW_PLANNER },
-            { label: "AI Prompt: Discovery Transcript Analyzer", content: PROMPT_DISCOVERY_TRANSCRIPT_ANALYZER },
-            { label: "How to Use: AI Prompt — Discovery Interview Planner", content: HOW_TO_USE_DISCOVERY_INTERVIEW_PLANNER },
-            { label: "How to Use: AI Prompt — Discovery Transcript Analyzer", content: HOW_TO_USE_DISCOVERY_TRANSCRIPT_ANALYZER },
+            { label: "Discovery Interview Planner", content: HOW_TO_USE_DISCOVERY_INTERVIEW_PLANNER, promptContent: PROMPT_DISCOVERY_INTERVIEW_PLANNER },
+            { label: "Discovery Transcript Analyzer", content: HOW_TO_USE_DISCOVERY_TRANSCRIPT_ANALYZER, promptContent: PROMPT_DISCOVERY_TRANSCRIPT_ANALYZER },
           ],
         },
         {
