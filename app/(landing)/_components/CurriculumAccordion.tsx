@@ -4,6 +4,7 @@ import { useRef, useState, Fragment } from "react";
 import { RiArrowDownSLine, RiCheckLine, RiGroupLine, RiBookOpenLine, RiSlideshowLine, RiLightbulbLine, RiFileList3Line, RiArticleLine, RiEditBoxLine } from "@remixicon/react";
 import { curriculum, type Module, type Lesson } from "../_data/course";
 import { useStagger } from "../../_lib/animations";
+import { TemplatePreviewModal } from "./TemplatePreviewModal";
 
 const stepIcons: Record<string, React.ElementType> = {
   Lecture: RiSlideshowLine,
@@ -13,7 +14,7 @@ const stepIcons: Record<string, React.ElementType> = {
   "Live Exercises": RiEditBoxLine,
   Reading: RiArticleLine,
   Homework: RiBookOpenLine,
-  Templates: RiFileList3Line,
+  "Reusable Practice Assets": RiFileList3Line,
 };
 
 const stepEstimates: Record<string, string> = {
@@ -22,7 +23,7 @@ const stepEstimates: Record<string, string> = {
   "Live Exercises": "25 min",
   Reading: "15 min",
   Homework: "~1 hour",
-  Templates: "",
+  "Reusable Practice Assets": "",
 };
 
 function TimelineStep({
@@ -67,16 +68,18 @@ function ModuleRow({
   isOpen,
   onToggle,
   disabled = false,
+  onPreviewTemplate,
 }: {
   m: Module;
   isOpen: boolean;
   onToggle: () => void;
   disabled?: boolean;
+  onPreviewTemplate?: (t: { label: string; fileName: string }) => void;
 }) {
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
 
-  const order: Record<string, number> = { Workshop: 0, Exercises: 0, Reading: 1, Templates: 2, Homework: 2 };
+  const order: Record<string, number> = { Workshop: 0, Exercises: 0, Reading: 1, "Reusable Practice Assets": 2, Homework: 2 };
 
   // Sectioned modules (e.g. module-01): use sections data
   const hasSections = !!m.sections;
@@ -84,7 +87,7 @@ function ModuleRow({
     ? new Map(m.lessons.map((l) => [l.id, l]))
     : null;
 
-  // Flat modules: build activities from workshops + reading + homework
+  // Flat modules: build activities from workshops + reading + homework + templates
   const activities = hasSections
     ? []
     : [
@@ -95,7 +98,8 @@ function ModuleRow({
           links: undefined,
         })) ?? []),
         ...(m.reading ? [{ label: "Reading", body: m.reading.body, items: undefined, links: m.reading.items }] : []),
-        ...(m.homework ? [{ label: "Templates", body: m.homework.body, items: m.homework.items, links: undefined }] : []),
+        ...(m.templates ? [{ label: "Reusable Practice Assets", body: "", items: undefined, links: undefined, templateFiles: m.templates }] : []),
+        ...(m.homework ? [{ label: "Homework", body: m.homework.body, items: m.homework.items, links: undefined }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
   return (
@@ -227,9 +231,9 @@ function ModuleRow({
                 </TimelineStep>
                 {activities.map((a, i) => {
                   const next = activities[i + 1];
-                  // Connect workshop → next workshop only; Reading/Homework are standalone
-                  const connected = a.label !== "Reading" && a.label !== "Homework"
-                    && !!next && next.label !== "Reading" && next.label !== "Homework";
+                  // Connect workshop → next workshop only; Reading/Homework/Reusable Practice Assets are standalone
+                  const connected = a.label !== "Reading" && a.label !== "Homework" && a.label !== "Reusable Practice Assets"
+                    && !!next && next.label !== "Reading" && next.label !== "Homework" && next.label !== "Reusable Practice Assets";
                   return (
                     <TimelineStep
                       key={`${a.label}-${i}`}
@@ -251,6 +255,21 @@ function ModuleRow({
                           {a.links.map((link) => (
                             <li key={link.url} className="text-[13px] leading-relaxed">
                               <a href={link.url} target="_blank" rel="noopener noreferrer" className="text-usrc-navy underline decoration-usrc-navy/30 underline-offset-2 hover:decoration-usrc-navy">{link.label}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {"templateFiles" in a && a.templateFiles && (
+                        <ul className="mt-2 list-disc pl-4 space-y-1">
+                          {(a.templateFiles as { label: string; fileName: string }[]).map((t) => (
+                            <li key={t.fileName} className="text-[13px] leading-relaxed">
+                              <button
+                                type="button"
+                                onClick={() => onPreviewTemplate?.(t)}
+                                className="text-usrc-navy underline decoration-usrc-navy/30 underline-offset-2 hover:decoration-usrc-navy"
+                              >
+                                {t.label}
+                              </button>
                             </li>
                           ))}
                         </ul>
@@ -287,6 +306,7 @@ function ModuleRow({
 
 export function CurriculumAccordion() {
   const [openId, setOpenId] = useState<string | null>(null);
+  const [previewTemplate, setPreviewTemplate] = useState<{ label: string; fileName: string } | null>(null);
   const ref = useRef<HTMLElement>(null);
   useStagger(ref, "[data-reveal]", { stagger: 0.1 });
 
@@ -338,6 +358,7 @@ export function CurriculumAccordion() {
                     isOpen={openId === m.id}
                     onToggle={() => setOpenId(openId === m.id ? null : m.id)}
                     disabled={phase.number === 2}
+                    onPreviewTemplate={setPreviewTemplate}
                   />
                 ))}
               </ul>
@@ -345,6 +366,14 @@ export function CurriculumAccordion() {
           ))}
         </div>
       </div>
+
+      {previewTemplate && (
+        <TemplatePreviewModal
+          label={previewTemplate.label}
+          fileName={previewTemplate.fileName}
+          onClose={() => setPreviewTemplate(null)}
+        />
+      )}
     </section>
   );
 }

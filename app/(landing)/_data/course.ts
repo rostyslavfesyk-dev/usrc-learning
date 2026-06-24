@@ -54,6 +54,7 @@ export type Module = {
   outcome: string;
   output?: ModuleOutput;
   didYouKnow?: string[];
+  templates?: { label: string; fileName: string }[];
 };
 
 export type Phase = {
@@ -280,6 +281,9 @@ export const curriculum: { heading: string; phases: Phase[] } = {
           },
           outcome:
             "After this module, a participant understands why users and stakeholders describe needs differently, can use the JTBD lens for elicitation, and has a User Thinking Canvas for structuring user understanding.",
+          templates: [
+            { label: "Workflow Discovery Template", fileName: "Workflow_Discovery_Template.pages" },
+          ],
         },
         {
           id: "module-02",
