@@ -312,7 +312,12 @@ export function TemplatePreviewModal({
                     </button>
                   </div>
                   <div className="text-[12px] leading-relaxed text-fg-secondary font-mono whitespace-pre-wrap break-words mt-2">
-                    {promptContent}
+                    {promptContent.split("\n").map((line, i) => (
+                      <Fragment key={i}>
+                        {i > 0 && "\n"}
+                        <InlineText text={line} />
+                      </Fragment>
+                    ))}
                   </div>
                 </div>
               )}
