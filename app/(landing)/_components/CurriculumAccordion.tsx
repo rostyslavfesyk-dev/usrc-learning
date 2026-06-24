@@ -74,7 +74,7 @@ function ModuleRow({
   isOpen: boolean;
   onToggle: () => void;
   disabled?: boolean;
-  onPreviewTemplate?: (t: { label: string; fileName: string }) => void;
+  onPreviewTemplate?: (t: { label: string; fileName?: string; content?: string }) => void;
 }) {
   const triggerId = `module-trigger-${m.id}`;
   const panelId = `module-panel-${m.id}`;
@@ -95,11 +95,11 @@ function ModuleRow({
           label: w.title,
           body: w.body,
           items: w.items,
-          links: undefined,
+          links: undefined as { label: string; url: string }[] | undefined,
         })) ?? []),
         ...(m.reading ? [{ label: "Reading", body: m.reading.body, items: undefined, links: m.reading.items }] : []),
         ...(m.templates ? [{ label: "Reusable Practice Assets", body: "", items: undefined, links: undefined, templateFiles: m.templates }] : []),
-        ...(m.homework ? [{ label: "Homework", body: m.homework.body, items: m.homework.items, links: undefined }] : []),
+        ...(m.homework ? [{ label: "Homework", body: m.homework.body, items: m.homework.items, links: undefined as { label: string; url: string }[] | undefined }] : []),
       ].sort((a, b) => (order[a.label] ?? 0) - (order[b.label] ?? 0));
 
   return (
@@ -261,8 +261,8 @@ function ModuleRow({
                       )}
                       {"templateFiles" in a && a.templateFiles && (
                         <ul className="mt-2 list-disc pl-4 space-y-1">
-                          {(a.templateFiles as { label: string; fileName: string }[]).map((t) => (
-                            <li key={t.fileName} className="text-[13px] leading-relaxed">
+                          {(a.templateFiles as { label: string; fileName?: string; content?: string }[]).map((t) => (
+                            <li key={t.fileName ?? t.label} className="text-[13px] leading-relaxed">
                               <button
                                 type="button"
                                 onClick={() => onPreviewTemplate?.(t)}
@@ -306,7 +306,7 @@ function ModuleRow({
 
 export function CurriculumAccordion() {
   const [openId, setOpenId] = useState<string | null>(null);
-  const [previewTemplate, setPreviewTemplate] = useState<{ label: string; fileName: string } | null>(null);
+  const [previewTemplate, setPreviewTemplate] = useState<{ label: string; fileName?: string; content?: string } | null>(null);
   const ref = useRef<HTMLElement>(null);
   useStagger(ref, "[data-reveal]", { stagger: 0.1 });
 
@@ -371,6 +371,7 @@ export function CurriculumAccordion() {
         <TemplatePreviewModal
           label={previewTemplate.label}
           fileName={previewTemplate.fileName}
+          content={previewTemplate.content}
           onClose={() => setPreviewTemplate(null)}
         />
       )}
